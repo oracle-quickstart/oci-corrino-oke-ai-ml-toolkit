@@ -253,7 +253,7 @@ locals {
   ]
 #  external_ip = var.ingress_nginx_enabled ? kubernetes_ingress_v1.corrino_cp_ingress.0.status.0.load_balancer.0.ingress.0.ip : "#Ingress_Not_Deployed"
 #  external_ip = "144.24.24.171"
-  external_ip = var.ingress_nginx_enabled ? data.kubernetes_service.ingress_nginx_controller_service.status.load_balancer.ingress.0.ip : "#Ingress_Not_Deployed"
+  external_ip = var.ingress_nginx_enabled ? data.kubernetes_service.ingress_nginx_controller_service.0.status.load_balancer.ingress.0.ip : "#Ingress_Not_Deployed"
 }
 
 #locals {
