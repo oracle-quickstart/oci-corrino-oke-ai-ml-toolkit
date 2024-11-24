@@ -84,27 +84,27 @@ output "cluster_ca_certificate" {
   sensitive = false
 }
 
-#output "cluster_id" {
-#  value = local.cluster_id
-#  sensitive = false
-#}
+output "cluster_id" {
+  value = local.cluster_id
+  sensitive = false
+}
 
-#output "cluster_region" {
-#  value = local.cluster_region
-#  sensitive = false
-#}
+output "cluster_region" {
+  value = local.cluster_region
+  sensitive = false
+}
 
 output "external_ip" {
   value = local.external_ip
   depends_on = [kubernetes_ingress_v1.corrino_cp_ingress]
 }
 
-#output "corrino_source_code" {
-#  value = "https://github.com/oracle-quickstart/corrino/"
-#}
-#output "corrino_version" {
-#  value = file("${path.module}/VERSION")
-#}
+output "corrino_source_code" {
+  value = "https://github.com/oracle-quickstart/corrino/"
+}
+output "corrino_version" {
+  value = file("${path.module}/VERSION")
+}
 
 # ----------------------------------------
 # Public endpoints

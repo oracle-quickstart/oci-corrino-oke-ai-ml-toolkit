@@ -1094,20 +1094,18 @@ outputs:
 
   autonomous_database_password:
     type: string
-    title: DB Admin Password
-    displayText: Autonomous Database Admin Password
+    title: "DB Admin Password"
     visible: true
 
   grafana_admin_password:
     type: string
-    title: Grafana Admin Password
-    displayText: Grafana Admin Password
+    title: "Grafana Admin Password"
     visible: true
 
   deploy_id:
     type: string
     title: "Deploy Id"
-    visible: true
+    visible: false
 
   deployed_to_region:
     type: string
@@ -1128,6 +1126,9 @@ outputs:
   oke_nodes_subnet:
     visible: false
 
+  cluster_id:
+    visible: false
+
   oke_cluster_ocid:
     visible: false
 
@@ -1142,6 +1143,16 @@ outputs:
 
   cluster_ca_certificate:
     visible: false
+
+  corrino_source_code:
+    visible: false
+
+  corrino_version:
+    visible: false
+
+  cluster_region:
+    visible: false
+
 
 #  comments:
 #    type: string
