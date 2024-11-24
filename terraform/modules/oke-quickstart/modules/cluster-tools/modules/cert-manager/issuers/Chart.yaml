@@ -1,0 +1,7 @@
+apiVersion: v2
+name: issuers
+description: cert-manager ClusterIssuer and Issuer resources, simplified for use with terraform helm provider
+
+type: application
+version: 0.1.0
+appVersion: "1"

@@ -1,0 +1,4 @@
+issuer:
+
+  # Used for ACME registration (if TLS is set)
+  email: "no-reply@ateam-oracle.com"

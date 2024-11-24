@@ -1,0 +1,1097 @@
+# Copyright (c) 2020-2024 Oracle and/or its affiliates. All rights reserved.
+# Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
+# 
+
+title: Corrino
+description: Corrino OKE Starter Kit for AI/ML Workloads
+informationalText: This OKE Starter Kit is a comprehensive collection of Terraform scripts designed to automate the creation and deployment of resources to easily run AI/ML workloads in OCI. This stack provisions resources such as an OKE cluster, an ATP database instance, and other essential components, which enable you to deploy AI/ML workloads with a simple UI or an API. The kit includes services such as Grafana and Prometheus for infrastructure monitoring, MLFlow for tracking experiment-level metrics, and KEDA for dynamic auto-scaling based on AI/ML workload metrics rather than infrastructure metrics.
+schemaVersion: 1.1.0
+version: "20190304"
+
+#logoUrl: data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2aWV3Qm94PSIwIDAgMTI4IDEyOCI+CiAgPGRlZnM+CiAgICA8ZmlsdGVyIGlkPSJQYXRoXzI3IiB4PSIwIiB5PSIwIiB3aWR0aD0iNjguMjciIGhlaWdodD0iNjIuOTUxIiBmaWx0ZXJVbml0cz0idXNlclNwYWNlT25Vc2UiPgogICAgICA8ZmVPZmZzZXQgZHg9IjEiIGR5PSIzIiBpbnB1dD0iU291cmNlQWxwaGEiLz4KICAgICAgPGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMyIgcmVzdWx0PSJibHVyIi8+CiAgICAgIDxmZUZsb29kIGZsb29kLW9wYWNpdHk9IjAuNTAyIi8+CiAgICAgIDxmZUNvbXBvc2l0ZSBvcGVyYXRvcj0iaW4iIGluMj0iYmx1ciIvPgogICAgICA8ZmVDb21wb3NpdGUgaW49IlNvdXJjZUdyYXBoaWMiLz4KICAgIDwvZmlsdGVyPgogICAgPGZpbHRlciBpZD0icGF0aDUiIHg9IjE3LjYzNyIgeT0iMTEuNCIgd2lkdGg9IjMyLjUzNyIgaGVpZ2h0PSIzOS4xNzMiIGZpbHRlclVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgIDxmZU9mZnNldCBkeT0iMyIgaW5wdXQ9IlNvdXJjZUFscGhhIi8+CiAgICAgIDxmZUdhdXNzaWFuQmx1ciBzdGREZXZpYXRpb249IjMiIHJlc3VsdD0iYmx1ci0yIi8+CiAgICAgIDxmZUZsb29kIGZsb29kLW9wYWNpdHk9IjAuMjc1Ii8+CiAgICAgIDxmZUNvbXBvc2l0ZSBvcGVyYXRvcj0iaW4iIGluMj0iYmx1ci0yIi8+CiAgICAgIDxmZUNvbXBvc2l0ZSBpbj0iU291cmNlR3JhcGhpYyIvPgogICAgPC9maWx0ZXI+CiAgPC9kZWZzPgogIDxnIGlkPSJHcm91cF81MCIgZGF0YS1uYW1lPSJHcm91cCA1MCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIzIC0xNzUpIj4KICAgIDxnIGlkPSJHcm91cF80NCIgZGF0YS1uYW1lPSJHcm91cCA0NCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTE3IC0yMjcpIj4KICAgICAgPGcgaWQ9ImFpbHVyb3BoaWxlIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1Ni4xNDYgNDI0KSI+CiAgICAgICAgPHBhdGggaWQ9IlBhdGhfMjIiIGRhdGEtbmFtZT0iUGF0aCAyMiIgZD0iTTkyLjQxOSwzOS45M2MxLjM2Ni0zLjc1MywyLjQ1Mi05LjI4OC0uMTM0LTE0LjM0MkExNC4xNTcsMTQuMTU3LDAsMCwxLDkwLjgsMTkuMDc3Yy4wMzYtNi4wNzEuMTI4LTEyLjM5NS4yLTE2LjYzMUEyLjQsMi40LDAsMCwwLDg2Ljg4LjcyNmwtOS41MTUsOS43MjZhMjQuNDcxLDI0LjQ3MSwwLDAsMC0xNC4yOTMsMS4wMzVjLTIuNjg1LTIuNjA2LTcuNzE1LTcuMDI5LTEwLjYtOS41NGEyLjM3LDIuMzcsMCwwLDAtMi42MjMtLjM1MiwyLjQsMi40LDAsMCwwLTEuMzU4LDIuMjc1bC42ODEsMTUuMTUyYTQyLjQ2LDQyLjQ2LDAsMCwxLS43NjksMTAuMjQzQTU4LjY2NCw1OC42NjQsMCwwLDAsNDcuMiw0My40NTksMjYuNzE2LDI2LjcxNiwwLDAsMCwzMi44NzksNDkuNWMtNy44MDYsNi4zMjItMTIuODU3LDE2LjYyMS0xNS4wMTIsMzAuNjEzYTEuMTUsMS4xNSwwLDAsMCwyLjI3NC4zNUMyMi4yMDcsNjcuMDU3LDI2Ljk4LDU3LjI0MSwzNC4zMjcsNTEuMjljNi41NjgtNS4zMTksMTIuOS01LjU4OSwxNC4xLTUuNTg5YTEuMTUsMS4xNSwwLDAsMCwxLjE0Ni0xLjI0OCw1NC41NTksNTQuNTU5LDAsMCwxLDEuMDg4LTE0LjczNyw0NC43NDgsNDQuNzQ4LDAsMCwwLC44MTItMTAuOEw1MC43OTIsMy43NjZhLjA5MS4wOTEsMCwwLDEsLjA1OS0uMS4wODcuMDg3LDAsMCwxLC4xMTIuMDE1YzMuMDY3LDIuNjcxLDguNTc2LDcuNTE3LDExLjAyLDkuOTYyYTEuMTUsMS4xNSwwLDAsMCwxLjI0OC4yNTIsMjIuMDU5LDIyLjA1OSwwLDAsMSwxNC4xMDctMS4wNiwxLjE1MSwxLjE1MSwwLDAsMCwxLjE5Mi0uMjg1TDg4LjUyNCwyLjMzNWEuMDg5LjA4OSwwLDAsMSwuMTE2LS4wMjQuMDg2LjA4NiwwLDAsMSwuMDYzLjFjLS4wNzIsNC4yNDItLjE2NCwxMC41NzUtLjIsMTYuNjU2YTE2LjQ2OCwxNi40NjgsMCwwLDAsMS43MzMsNy41NzNjMi4yMDgsNC4zMTYsMS4yMyw5LjE4My4wMiwxMi41MDdhMTYuNzUyLDE2Ljc1MiwwLDAsMC0uNTA2LDkuNzVjMS42NTQsNi43NDQsMy4zNTgsMTkuOS0zLjgxNywzMi4yMjRhMS4xNSwxLjE1LDAsMSwwLDEuOTg4LDEuMTU3YzcuNTgxLTEzLjAyNCw1LjgtMjYuODQ4LDQuMDYzLTMzLjkzQTE0LjQ2MSwxNC40NjEsMCwwLDEsOTIuNDE5LDM5LjkzWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwKSIvPgogICAgICAgIDxwYXRoIGlkPSJQYXRoXzIzIiBkYXRhLW5hbWU9IlBhdGggMjMiIGQ9Ik0yNDQuMDA4LDEyOS42ODVhMS4xNSwxLjE1LDAsMCwwLDIuMywwLDQuNyw0LjcsMCwwLDAtOS4zOTQsMCwxLjE1LDEuMTUsMCwwLDAsMi4zLDAsMi40LDIuNCwwLDAsMSw0Ljc5MywwWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTE3Ny4wNjIgLTEwMS4wMjUpIi8+CiAgICAgICAgPHBhdGggaWQ9IlBhdGhfMjQiIGRhdGEtbmFtZT0iUGF0aCAyNCIgZD0iTTMyNS42MTQsMTI0Ljk4OGE0LjcsNC43LDAsMCwwLTQuNyw0LjcsMS4xNSwxLjE1LDAsMSwwLDIuMywwLDIuNCwyLjQsMCwwLDEsNC43OTMsMCwxLjE1LDEuMTUsMCwxLDAsMi4zLDBBNC43LDQuNywwLDAsMCwzMjUuNjE0LDEyNC45ODhaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMjQ0Ljk2IC0xMDEuMDI1KSIvPgogICAgICAgIDxwYXRoIGlkPSJQYXRoXzI1IiBkYXRhLW5hbWU9IlBhdGggMjUiIGQ9Ik0yNzQuOTU3LDE4Mi41MTdhMS4xNSwxLjE1LDAsMCwwLTEuMTUsMS4xNSwzLjMsMy4zLDAsMSwxLTYuNjA2LDAsMS4xNSwxLjE1LDAsMCwwLTIuMywwLDMuMywzLjMsMCwxLDEtNi42MDYsMCwxLjE1LDEuMTUsMCwwLDAtMi4zLDAsNS42LDUuNiwwLDAsMCwxMC4wNTcsMy40LDUuNiw1LjYsMCwwLDAsMTAuMDU3LTMuNEExLjE1LDEuMTUsMCwwLDAsMjc0Ljk1NywxODIuNTE3WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTE5Mi40ODMgLTE0Ny41MjUpIi8+CiAgICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJjb252ZXJzYXRpb24tc3BlZWNoLWJ1YmJsZXMtIiB0cmFuc2Zvcm09Im1hdHJpeCgwLjk5NSwgLTAuMTA1LCAwLjEwNSwgMC45OTUsIDMyLjI2NSwgMTk4LjYwMSkiPgogICAgICA8ZyB0cmFuc2Zvcm09Im1hdHJpeCgwLjk5LCAwLjEsIC0wLjEsIDAuOTksIC02LjgyLCAtMTAuNjgpIiBmaWx0ZXI9InVybCgjUGF0aF8yNykiPgogICAgICAgIDxwYXRoIGlkPSJQYXRoXzI3LTIiIGRhdGEtbmFtZT0iUGF0aCAyNyIgZD0iTTIzLjE1NC45MzVjMTIuNzg4LDAsMjMuMTU0LDguMTg5LDIzLjE1NCwxOC4yODdhMTYuMzY0LDE2LjM2NCwwLDAsMS02LjEzMiwxMi40Yy4xNDYsMy4xNzUuOCw3LjQ0NCwzLjExNiw5LjY0Ni00LjQyMiwwLTguOTUxLTIuOTI2LTExLjYzNi01LjAzNGEyOC40NjMsMjguNDYzLDAsMCwxLTguNSwxLjI3N0MxMC4zNjYsMzcuNTA5LDAsMjkuMzIsMCwxOS4yMjJTMTAuMzY2LjkzNSwyMy4xNTQuOTM1WiIgdHJhbnNmb3JtPSJtYXRyaXgoMC45OSwgLTAuMSwgMC4xLCAwLjk5LCA3LjksIDkuOTEpIiBvcGFjaXR5PSIwLjA5NyIvPgogICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyB0cmFuc2Zvcm09Im1hdHJpeCgxLCAwLCAwLCAxLCAyNC4zNiwgMTg4LjY5KSIgZmlsdGVyPSJ1cmwoI3BhdGg1KSI+CiAgICAgIDxwYXRoIGlkPSJwYXRoNS0yIiBkYXRhLW5hbWU9InBhdGg1IiBkPSJNMTYuODksMjQuNTA4aDBhMi4zNCwyLjM0LDAsMCwwLDIuNTI4LDIuMjEyQTMuMzMyLDMuMzMyLDAsMCwwLDIyLjEsMjUuM2MwLS4xNTgtLjE1OC0uNDc0LS4zMTYtLjQ3NHMtLjMxNi40NzQtMS4xMDYuNDc0Yy0xLjI2NCwwLTEuMjY0LTEuMjY0LTEuMjY0LTIuNjg2VjEyLjY1N2MtLjc5LDAtMS43MzguMzE2LTIuNTI4LjMxNlYyMy4wODZBNi4yMTksNi4yMTksMCwwLDEsMTIuNzgxLDI1LjNjLTEuOSwwLTIuMzctMS41OC0yLjM3LTMuNDc2VjE1LjY1OWMwLTEuMTA2LS4xNTgtMy0uMTU4LTMtLjk0OCwwLTEuOS4zMTYtMi42ODYuMzE2LDAsMCwuMzE2LDIuMzcuMzE2LDMuMzE4djUuODQ2YzAsMS45LjMxNiwzLjQ3Ni4zMTYsNC41ODIsMCwxLjktLjQ3NCwzLjMxOC0uNDc0LDUuMDU2QTIuMjE0LDIuMjE0LDAsMCwwLDkuNDYzLDMzLjgzYy43OSwwLDEuNDIyLS42MzIsMS40MjItMS45LDAtMS40MjItMS4xMDYtMy42MzQtMS4xMDYtNS42ODgsMC0uMTU4LjE1OC0uMzE2LjQ3NC0uMzE2YTIuMzY3LDIuMzY3LDAsMCwwLDEuOS43OUE1LjkyNCw1LjkyNCwwLDAsMCwxNi44OSwyNC41MDhaTTE2Ljg5LDI0LjUwOFoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE5LjA3IDQuNzQpIi8+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4=
+
+source:
+#  type: quickstart
+  type: web
+
+locale: "en"
+variableGroups:
+  - title: "Basic Hidden"
+    variables:
+    - compartment_ocid
+    - tenancy_ocid
+    - region
+    visible: false
+
+
+  - title: "Corrino Workspace"
+    variables:
+    - app_name
+    - deploy_id
+#    - show_advanced
+#    - mushop_atp
+    # - mushop_oss
+
+  - title: "Corrino Admin"
+    variables:
+    - corrino_admin_username
+    - corrino_admin_nonce
+    - corrino_admin_email
+
+  - title: "Corrino IAM"
+    variables:
+    - policy_creation_enabled
+
+  - title: "OKE Cluster & VCN"
+    variables:
+      - existent_oke_cluster_compartment_ocid
+      - existent_oke_cluster_id
+      - existent_vcn_compartment_ocid
+      - existent_vcn_ocid
+      - existent_oke_nodes_subnet_ocid
+      - existent_oke_load_balancer_subnet_ocid
+      - existent_oke_k8s_endpoint_subnet_ocid
+
+#          existent_vcn_ocid:
+    #    type: oci:identity:compartment:id
+    #    title: "OKE VCN"
+    #    description: "OKE VCN OCID"
+    #    required: true
+    #
+    #  existent_vcn_compartment_ocid:
+    #    type: string
+    #    default: compartment_ocid
+    #    title: "OKE VCN Compartment"
+    #    description: "OKE VCN Compartment OCID"
+    #    required: true
+    #
+    #  existent_oke_k8s_endpoint_subnet_ocid:
+    #    type: string
+    #    title: "OKE VCN Endpoint Subnet"
+    #    description: "OKE VCN Endpoint Subnet OCID"
+    #    required: true
+    #
+    #  existent_oke_nodes_subnet_ocid:
+    #    type: string
+    #    title: "OKE VCN Node Subnet"
+    #    description: "OKE VCN Node Subnet OCID"
+    #    required: true
+    #
+    #  existent_oke_load_balancer_subnet_ocid:
+    #    type: string
+    #    title: "OKE VCN Load Balancer Subnet"
+    #    description: "OKE VCN Load Balancer Subnet OCID"
+    #    required: true
+    #
+    #  existent_oke_cluster_id:
+    #    type: oci:container:cluster:id
+    #    title: "Existent OKE Cluster"
+    #    description: "Existent OKE Cluster OCID"
+    #    required: true
+    #
+    #  existent_oke_cluster_compartment_ocid:
+    #    type: oci:identity:compartment:id
+    #    title: "Existent OKE Cluster Compartment"
+    #    description: "The compartment where you find the existent OKE Cluster"
+    #    default: compartment_ocid
+    #    required: true
+
+
+#  - title: "OKE Cluster Configuration"
+#    variables:
+#    - create_new_oke_cluster
+#    - existent_oke_cluster_compartment_ocid
+#    - existent_oke_cluster_id
+#    - k8s_version
+#    - cluster_workers_visibility
+#    - cluster_endpoint_visibility
+#    - create_new_compartment_for_oke
+
+#  - title: "OKE Worker Nodes"
+#    variables:
+#    - cluster_autoscaler_enabled
+#    - num_pool_workers
+#    - cluster_autoscaler_min_nodes
+#    - cluster_autoscaler_max_nodes
+#    - existent_oke_nodepool_id_for_autoscaler
+#    - node_pool_instance_shape
+#    - generate_public_ssh_key
+#    - public_ssh_key
+#    - image_operating_system
+#    - image_operating_system_version
+#    - node_pool_name
+
+#  - title: "Dynamic Group and Policies"
+#    variables:
+#    - create_dynamic_group_for_nodes_in_compartment
+#    - existent_dynamic_group_for_nodes_in_compartment
+#    - create_compartment_policies
+#    - create_tenancy_policies
+
+#  - title: "Encryption using OCI Vault (KMS)"
+#    variables:
+#    - use_encryption_from_oci_vault
+#    - create_new_encryption_key
+#    - existent_encryption_key_id
+#    - create_vault_policies_for_group
+#    - user_admin_group_for_vault_policy
+
+  - title: "Public Endpoints"
+    variables:
+    - ingress_nginx_enabled
+    - ingress_hosts
+    - corrino_ingress_host
+    - cert_manager_enabled
+    - ingress_tls
+    - ingress_cluster_issuer
+    - ingress_email_issuer
+    visible: true
+
+
+  - title: "Observability"
+    variables:
+    - grafana_enabled
+    - prometheus_enabled
+    - mlflow_enabled
+    - nvidia_dcgm_enabled
+    visible: true
+
+  - title: "Autoscaling"
+    variables:
+    - metrics_server_enabled
+    - keda_enabled
+    visible: true
+
+
+
+#  - title: "Oracle Digital Assistant support"
+#    variables:
+#    - oda_enabled
+#    - oda_uri
+#    - oda_channel_id
+#    - oda_channel_secret
+#    - oda_user_init_message
+#    visible:
+#      and:
+#        - show_advanced
+
+#  - title: "Network Configuration"
+#    variables:
+#      - network_strategy
+#      - vcn_id
+#      - vcn_display_name
+#      - vcn_cidr_block
+#      - vcn_dns_label
+#      - subnet_type
+#      - subnet_span
+#      - subnet_id
+#      - subnet_display_name
+#      - subnet_cidr_block
+#      - subnet_dns_label
+#    visible:
+#      and:
+#        - show_advanced
+
+#  - title: "Extras Hidden"
+#    variables:
+#      - user_ocid
+#      - fingerprint
+#      - private_key_path
+#      - network_cidrs
+#      - cluster_options_admission_controller_options_is_pod_security_policy_enabled
+#      - cluster_options_add_ons_is_kubernetes_dashboard_enabled
+#      - ingress_load_balancer_shape
+#      - node_pool_boot_volume_size_in_gbs
+#      - oke_compartment_description
+#      - newsletter_subscription_enabled
+#      - newsletter_email_sender
+#      - newsletter_subscription_function_image
+#      - newsletter_subscription_function_image_version
+#      - oos_bucket_name
+#      - catalog_enabled
+#      - mushop_mock_mode_all
+#      - create_oci_service_user
+#    visible: false
+
+  - title: "Autonomous Database"
+    variables:
+      - autonomous_database_cpu_core_count
+      - autonomous_database_data_storage_size_in_tbs
+      - autonomous_database_data_safe_status
+      - autonomous_database_db_version
+      - autonomous_database_license_model
+      - autonomous_database_is_auto_scaling_enabled
+      - autonomous_database_is_free_tier
+      - autonomous_database_wallet_generate_type
+      - autonomous_database_visibility
+    visible: false
+
+# ------------------------------------------------
+# ------------------------------------------------
+
+variables:
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    title: "Compartment"
+    description: "The compartment in which to create compute instance(s)"
+    required: true
+
+  existent_oke_cluster_compartment_ocid:
+    type: oci:identity:compartment:id
+    title: "Existent OKE Cluster Compartment"
+    description: "The compartment where you find the existent OKE Cluster"
+    default: compartment_ocid
+    required: true
+
+  existent_vcn_compartment_ocid:
+    type: oci:identity:compartment:id
+    default: compartment_ocid
+    title: "OKE VCN Compartment"
+    description: "OKE VCN Compartment"
+    required: true
+
+  existent_vcn_ocid:
+    type: oci:core:vcn:id
+    title: "OKE VCN"
+    description: "OKE VCN OCID"
+    required: true
+    dependsOn:
+      compartmentId: existent_vcn_compartment_ocid
+
+  existent_oke_k8s_endpoint_subnet_ocid:
+    type: oci:core:subnet:id
+    title: "OKE VCN Endpoint Subnet"
+    description: "OKE VCN Endpoint Subnet OCID (oke-k8sApiEndpoint)"
+    required: true
+    dependsOn:
+      vcnId: ${existent_vcn_ocid}
+      compartmentId: existent_vcn_compartment_ocid
+
+
+  existent_oke_nodes_subnet_ocid:
+    type: oci:core:subnet:id
+    title: "Node Subnet"
+    description: "OKE VCN Node Subnet OCID (oke-nodesubnet)"
+    required: true
+    dependsOn:
+      vcnId: ${existent_vcn_ocid}
+      compartmentId: existent_vcn_compartment_ocid
+
+  existent_oke_load_balancer_subnet_ocid:
+    type: oci:core:subnet:id
+    title: "Service Load Balancer Subnet"
+    description: "OKE VCN Load Balancer Subnet OCID (oke-svclbsubnet)"
+    required: true
+    dependsOn:
+      vcnId: ${existent_vcn_ocid}
+      compartmentId: existent_vcn_compartment_ocid
+
+  # ---------------------------------
+  # OKE Elements
+  # ---------------------------------
+
+  existent_oke_cluster_id:
+    type: oci:container:cluster:id
+    title: "OKE Cluster"
+    description: "OKE Cluster OCID"
+    required: true
+    dependsOn:
+      compartmentId: existent_oke_cluster_compartment_ocid
+
+
+
+  # ---------------------------------
+  #
+  # ---------------------------------
+
+  app_name:
+    type: string
+    title: "Workspace name"
+    description: "This is the name that will be assigned for your workspace"
+    required: true
+#    visible:
+#      and:
+#        - create_new_oke_cluster
+
+  deploy_id:
+    type: string
+    title: "Deploy ID"
+    description: "The deployment ID is combined with the workspace for naming of objects it creates"
+    required: true
+
+#  show_advanced:
+#    type: boolean
+#    title: "Show advanced options?"
+#    description: "Shows advanced options, allowing enable customer-managed encryption keys, select your ssh key, select/unselect cluster utilities, do not create policies, and other advanced options"
+#    visible: true
+
+  # Corrino
+
+  corrino_ingress_host:
+    type: string
+    title: "Corrino FQDN"
+    required: true
+
+  corrino_admin_username:
+    type: string
+    title: "Corrino admin username"
+    description: "Corrino admin username used to login to API or portal."
+    required: true
+
+  corrino_admin_email:
+    type: string
+    title: "Corrino admin email address"
+    description: "Corrino admin email address for tracking who owns this account"
+    required: true
+
+  corrino_admin_nonce:
+    type: string
+    title: "Corrino admin password / nonce"
+    description: "Corrino admin password / nonce -- you will be required to change this at first usage"
+    required: true
+
+  policy_creation_enabled:
+    type: boolean
+    title: "Create OCI policy and dynamic group for control plane?"
+    required: true
+
+
+  oadb_admin_secret_name:
+    visible: false
+
+  oadb_admin_user_name:
+    visible: false
+
+  oadb_connection_secret_name:
+    visible: false
+
+  oadb_wallet_secret_name:
+    visible: false
+
+  private_key_path:
+    visible: false
+
+  fingerprint:
+    visible: false
+
+  home_region:
+    visible: false
+
+  user_ocid:
+    visible: false
+
+
+  # MuShop
+#  mushop_mock_mode_all:
+#    type: boolean
+#    title: "Enable Mock Mode (If enabled, does NOT provision ATP Database, Streaming or Object Storage)"
+#    required: true
+#    visible: yes
+
+#  create_oci_service_user:
+#    type: boolean
+#    title: "Creates OCI Service User"
+#    required: true
+#    visible: yes
+
+#  newsletter_subscription_enabled:
+#    type: boolean
+#    title: "Enable Newsletter Subscription Function"
+#    required: true
+#    visible: yes
+
+  # OKE Cluster
+#  create_new_oke_cluster:
+#    type: boolean
+#    title: "Create new OKE Cluster"
+
+
+#  k8s_version:
+#    type: enum
+#    enum: # Necessary hardcoded supported versions, as ORM does not retrieve the versions from OKE.
+#    - "Latest"
+#    - "v1.29.1"
+#    - "v1.28.2"
+#    - "v1.27.2"
+#    title: "Kubernetes Version"
+#    required: true
+#    visible:
+#      and:
+#        - create_new_oke_cluster
+#        - show_advanced
+
+#  cluster_workers_visibility:
+#    type: enum
+#    enum:
+#    - "Private"
+#    - "Public"
+#    title: "Choose Worker Nodes visibility type"
+#    required: true
+#    visible:
+#      and:
+#        - create_new_oke_cluster
+#
+#  cluster_endpoint_visibility:
+#    type: enum
+#    enum:
+#    # - "Private"
+#    - "Public"
+#    title: "Choose Kubernetes API Endpoint visibility type"
+#    required: true
+#    visible:
+#      and:
+#        - create_new_oke_cluster
+
+#  create_new_compartment_for_oke:
+#    type: boolean
+#    title: "Create new Compartment"
+#    visible:
+#      and:
+#        - create_new_oke_cluster
+#        - show_advanced
+
+#  cluster_autoscaler_enabled:
+#    type: boolean
+#    title: "Enable Cluster Autoscaler"
+
+#  num_pool_workers:
+#    type: integer
+#    title: "Number of Worker Nodes"
+#    minimum: 1
+#    maximum: 1000
+#    required: true
+#    visible:
+#      and:
+#        - and:
+#          - create_new_oke_cluster
+#        - not:
+#          - cluster_autoscaler_enabled
+
+#  cluster_autoscaler_min_nodes:
+#    type: integer
+#    title: "Autoscaler: Minimum number of nodes"
+#    minimum: 1
+#    maximum: 1000
+#    required: true
+#    visible:
+#      and:
+#        - cluster_autoscaler_enabled
+#
+#  cluster_autoscaler_max_nodes:
+#    type: integer
+#    title: "Autoscaler: Maximum number of nodes"
+#    minimum: 1
+#    maximum: 1000
+#    required: true
+#    visible:
+#      and:
+#        - cluster_autoscaler_enabled
+
+#  existent_oke_nodepool_id_for_autoscaler:
+#    type: string
+#    title: "OKE Nodepool id"
+#    required: true
+#    visible:
+#      and:
+#        - and:
+#          - cluster_autoscaler_enabled
+#        - not:
+#          - create_new_oke_cluster
+#
+#  node_pool_instance_shape:
+#    type: oci:core:instanceshapewithflex:name
+#    title: "Select a shape for the Worker Nodes instances"
+#    required: true
+#    dependsOn:
+#      compartmentId: compartment_ocid
+#    visible:
+#      and:
+#        - create_new_oke_cluster
+
+#  node_pool_name:
+#    type: string
+#    title: "Node Pool Name"
+#    required: true
+#    visible:
+#      and:
+#        - create_new_oke_cluster
+#        - show_advanced
+#
+#  cluster_options_add_ons_is_kubernetes_dashboard_enabled:
+#    type: boolean
+#    title: "Kubernetes Dashboard Enabled"
+#    visible: false
+#
+#  generate_public_ssh_key:
+#    type: boolean
+#    title: "Auto generate public ssh key?"
+#    required: true
+#    visible:
+#      and:
+#        - create_new_oke_cluster
+#        - show_advanced
+
+#  public_ssh_key:
+#    type: oci:core:ssh:publickey
+#    title: "Import your own SSH public key"
+#    additionalProps:
+#      allowMultiple: true
+#    required: false
+#    pattern: "((^(ssh-rsa AAAAB3NzaC1yc2|ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNT|ecdsa-sha2-nistp384 AAAAE2VjZHNhLXNoYTItbmlzdHAzODQAAAAIbmlzdHAzOD|ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1Mj|ssh-ed25519 AAAAC3NzaC1lZDI1NTE5|ssh-dss AAAAB3NzaC1kc3)[0-9A-Za-z+\/]+[=]{0,3})( [^,]*)?)(,((ssh-rsa AAAAB3NzaC1yc2|ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNT|ecdsa-sha2-nistp384 AAAAE2VjZHNhLXNoYTItbmlzdHAzODQAAAAIbmlzdHAzOD|ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1Mj|ssh-ed25519 AAAAC3NzaC1lZDI1NTE5|ssh-dss AAAAB3NzaC1kc3)[0-9A-Za-z+\/]+[=]{0,3})( [^,]*)?)*$"
+#    visible:
+#      and:
+#        - and:
+#          - create_new_oke_cluster
+#          - show_advanced
+#        - not:
+#          - generate_public_ssh_key
+
+#  image_operating_system:
+#    type: enum
+#    title: "Image OS"
+#    enum:
+#      - "Oracle Linux"
+#    required: true
+#    visible:
+#      and:
+#        - create_new_oke_cluster
+#        - show_advanced
+#
+#  image_operating_system_version:
+#    type: string
+#    title: "Image OS Version"
+#    required: true
+#    visible:
+#      and:
+#        - create_new_oke_cluster
+#        - show_advanced
+
+  # Dynamic Groups and Policies for Instance Principals and Autoscaler
+#  create_dynamic_group_for_nodes_in_compartment:
+#    type: boolean
+#    title: "Create Dynamic Group for Worker Nodes in the Compartment"
+#    required: true
+#    visible:
+#      and:
+#        - show_advanced
+#
+#  existent_dynamic_group_for_nodes_in_compartment:
+#    type: string
+#    title: "Existent Dynamic Group"
+#    required: true
+#    visible:
+#      and:
+#        - and:
+#          - show_advanced
+#        - or:
+#          - create_compartment_policies
+#          - create_tenancy_policies
+#        - not:
+#          - create_dynamic_group_for_nodes_in_compartment
+
+#  create_compartment_policies:
+#    type: boolean
+#    title: "Create Compartment Policies"
+#    required: true
+#    visible:
+#      and:
+#        - show_advanced
+#
+#  create_tenancy_policies:
+#    type: boolean
+#    title: "Create Tenancy Policies"
+#    required: true
+#    visible:
+#      and:
+#        - show_advanced
+
+  # Encryption options
+#  use_encryption_from_oci_vault:
+#    type: boolean
+#    title: "Encrypt using Customer-Managed Keys instead of Oracle Managed Encryption"
+#    visible:
+#      and:
+#        - create_new_oke_cluster
+#        - show_advanced
+#
+#  create_new_encryption_key:
+#    type: boolean
+#    title: "Create new Vault and Key"
+#    visible:
+#      and:
+#        - create_new_oke_cluster
+#        - show_advanced
+#        - use_encryption_from_oci_vault
+#
+#  existent_encryption_key_id:
+#    type: string
+#    title: "Existent Encryption Key OCID"
+#    required: true
+#    visible:
+#      and:
+#        - and:
+#          - create_new_oke_cluster
+#          - show_advanced
+#          - use_encryption_from_oci_vault
+#        - not:
+#          - create_new_encryption_key
+#
+#  create_vault_policies_for_group:
+#    type: boolean
+#    title: "Create policies for the user group to manage vault and keys"
+#    visible:
+#      and:
+#        - create_new_oke_cluster
+#        - show_advanced
+#        - use_encryption_from_oci_vault
+#        - create_new_encryption_key
+#
+#  user_admin_group_for_vault_policy:
+#    type: string
+#    title: "Specify your group to include the policy"
+#    visible:
+#      and:
+#        - create_new_oke_cluster
+#        - show_advanced
+#        - use_encryption_from_oci_vault
+#        - create_new_encryption_key
+#        - create_vault_policies_for_group
+
+  # Cluster Utilities - Ingress
+#  ingress_nginx_enabled:
+#    type: boolean
+#    title: "Ingress NGINX"
+
+#  ingress_load_balancer_shape:
+#    type: enum
+#    enum:
+#    - "flexible"
+#    - "10Mbps"
+#    - "100Mbps"
+#    - "400Mbps"
+#    - "8000Mbps"
+#    title: "Select a shape for the load balancer created by the Ingress"
+#    visible:
+#      and:
+#        - show_advanced
+#        - ingress_nginx_enabled
+#
+#  ingress_load_balancer_shape_flex_min:
+#    type: integer
+#    minimum: 10
+#    maximum: 8000
+#    title: "Choose the minimum bandwidth"
+#    required: true
+#    visible:
+#      and:
+#        - and:
+#          - show_advanced
+#          - ingress_nginx_enabled
+#        - eq:
+#          - ingress_load_balancer_shape
+#          - "flexible"
+#
+#  ingress_load_balancer_shape_flex_max:
+#    type: integer
+#    minimum: 10
+#    maximum: 8000
+#    title: "Choose the maximum bandwidth"
+#    required: true
+#    visible:
+#      and:
+#        - and:
+#          - show_advanced
+#          - ingress_nginx_enabled
+#        - eq:
+#          - ingress_load_balancer_shape
+#          - "flexible"
+
+  ingress_nginx_enabled:
+    type: boolean
+    title: "Enable access public FQDN?"
+    description: "Enabling this feature requires that a fully qualified domain name be mapped to the resulting load balancer public IP address."
+
+  ingress_hosts:
+    type: string
+    title: "Optional valid domain name"
+    visible: false
+#      and:
+##        - show_advanced
+#        - ingress_nginx_enabled
+
+  cert_manager_enabled:
+    type: boolean
+    title: "Certificate Management"
+    visible: false
+
+  ingress_tls:
+    type: boolean
+    title: "Use TLS to enable HTTPS on the valid domain name"
+    visible: false
+#      and:
+##        - show_advanced
+#        - ingress_nginx_enabled
+#        - cert_manager_enabled
+
+  ingress_cluster_issuer:
+    type: enum
+    enum:
+    - "letsencrypt-prod"
+    title: "Certificate Issuer"
+    required: true
+    visible: false
+#      and:
+##        - show_advanced
+#        - ingress_nginx_enabled
+#        - ingress_tls
+#        - cert_manager_enabled
+
+  ingress_email_issuer:
+    type: string
+    title: "Certificate Issuer Email"
+    required: true
+    visible: false
+#    visible:
+#      and:
+##        - show_advanced
+#        - ingress_nginx_enabled
+#        - ingress_tls
+#        - cert_manager_enabled
+
+  # Cluster Utilities
+  grafana_enabled:
+    type: boolean
+    title: "Grafana"
+    description: "Kubernetes Grafana is a solution that provides monitoring, visualization, and analytics for Kubernetes"
+
+  prometheus_enabled:
+    type: boolean
+    title: "Prometheus"
+    description: "Prometheus is an open-source monitoring and alerting system that's often used with Kubernetes to monitor containerized applications, APIs, and workloads"
+
+  metrics_server_enabled:
+    type: boolean
+    title: "Kubernetes Metrics Server"
+    description: "The Metrics Server collects resource metrics, such as CPU and memory usage, and makes them available for users to query. It also delivers these metrics to the Kubernetes API server for use by other Kubernetes add-ons, such as the Horizontal Pod Autoscaler (HPA) and the Vertical Pod Autoscaler (VPA)"
+
+  mlflow_enabled:
+    type: boolean
+    title: "MLflow Server"
+    description: "MLflow is a versatile, expandable, open-source platform for managing workflows and artifacts across the machine learning lifecycle. It has built-in integrations with many popular ML libraries, but can be used with any library, algorithm, or deployment tool."
+
+  nvidia_dcgm_enabled:
+    type: boolean
+    title: "NVIDIA DCGM Metrics Exporter"
+    description: "DCGM-Exporter is an exporter for Prometheus to monitor the health and get metrics from GPUs. It leverages DCGM using Go bindings to collect GPU telemetry and exposes GPU metrics to Prometheus using an http endpoint ( /metrics ). DCGM-Exporter can be used either standalone or deployed as part of the NVIDIA GPU Operator"
+
+  keda_enabled:
+    type: boolean
+    title: "Kubernetes Event-driven Autoscaler (KEDA)"
+    description: "KEDA is a tool that allows users to scale Kubernetes workloads based on events or metrics.  It is an Event Driven Autoscaler. With KEDA, you can drive the scaling of any container in Kubernetes based on the number of events needing to be processed"
+
+#  external_ip:
+#    type: string
+#    title: "LoadBalancer External IP"
+#    displayText: "Ingress Nginx LoadBalancer External IP Address"
+#    visible: true
+
+#  catalog_enabled:
+#    type: boolean
+#    title: "Service Catalog"
+#
+#  # Oracle Digital Assistant
+#  oda_enabled:
+#    type: boolean
+#    title: "Enable Oracle Digital Assistant support?"
+#
+#  oda_uri:
+#    type: string
+#    title: "Oracle Digital Assistant URI"
+#    required: true
+#    visible:
+#      and:
+#        - show_advanced
+#        - oda_enabled
+#
+#  oda_channel_id:
+#    type: string
+#    title: "Oracle Digital Assistant channel ID"
+#    required: true
+#    visible:
+#      and:
+#        - show_advanced
+#        - oda_enabled
+#
+#  oda_channel_secret:
+#    type: string
+#    title: "Oracle Digital Assistant channel secret"
+#    required: false
+#    visible:
+#      and:
+#        - show_advanced
+#        - oda_enabled
+#
+#  oda_user_init_message:
+#    type: string
+#    title: "Oracle Digital Assistant initial user hidden message"
+#    required: false
+#    visible:
+#      and:
+#        - show_advanced
+#        - oda_enabled
+#
+  # mushop_atp:
+  #   visible: yes
+  #   type: boolean
+  #   default: true
+  #   required: true
+  #   title: "Deploy ATP for services"
+  #   description: "Enable Oracle Autonomous Database ATP for all Services"
+
+  # mushop_oss:
+  #   visible: yes
+  #   type: boolean
+  #   default: true
+  #   required: true
+  #   title: "Deploy Streaming for services"
+  #   description: "Enable Oracle Streaming for all Services"
+
+  # Network Type Options
+  # network_strategy:
+  #   type: enum
+  #   title: Network Strategy
+  #   description: Create or use existing Network Stack (VCN and Subnet)
+  #   enum:
+  #     - "Create New VCN and Subnet"
+  #     # - "Use Existing VCN and Subnet"
+  #   required: true
+  #   default: "Create New VCN and Subnet"
+  #   visible:
+  #     and:
+  #       - create_new_oke_cluster
+  #       - show_advanced
+
+  # subnet_type:
+  #   visible: #($network_strategy  == ""Create New VCN and Subnet"")
+  #     eq:
+  #       - network_strategy 
+  #       - "Create New VCN and Subnet"
+  #   type: enum
+  #   title: Subnet Type
+  #   description: Choose between private and public subnets
+  #   enum:
+  #     - "Private Subnet"
+  #     - "Public Subnet"
+  #   required: true
+  #   default: "Private Subnet"
+
+  # vcn_id:
+  #   visible: #($network_strategy  == "Use Existing VCN and Subnet")
+  #     eq:
+  #       - network_strategy 
+  #       - "Use Existing VCN and Subnet"
+  #   type: oci:core:vcn:id
+  #   dependsOn:
+  #     compartmentId: compartment_ocid 
+  #   required: true
+  #   title: Existing Network
+  #   description: An existing Virtual Cloud Network (VCN) in which to create the compute instances, network resources, and load balancers. If not specified, a new VCN is created.
+
+  # vcn_cidr_block:
+  #   visible: #($network_strategy  == ""Create New VCN and Subnet"")
+  #     eq:
+  #       - network_strategy 
+  #       - "Create New VCN and Subnet"
+  #   type: string
+  #   required: true
+  #   default: 10.20.0.0/16
+  #   pattern: "^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\/(3[0-2]|[1-2]?[0-9])$"
+  #   title: VCN CIDR BLOCK
+  #   description: The CIDR of the new Virtual Cloud Network (VCN). If you plan to peer this VCN with another VCN, the VCNs must not have overlapping CIDRs.
+
+  # subnet_cidr_block:
+  #   visible: #($network_strategy  == ""Create New VCN and Subnet"")
+  #     eq:
+  #       - network_strategy 
+  #       - "Create New VCN and Subnet"
+  #   type: string
+  #   default: 10.20.10.0/24
+  #   pattern: "^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\/(3[0-2]|[1-2]?[0-9])$"
+  #   required: true
+  #   title: Subnet CIDR
+  #   description: The CIDR of the new Subnet. The new subnet's CIDR should not overlap with any other subnet CIDRs.
+
+outputGroups:
+#  - title: Mushop endpoints
+#    outputs:
+#      - mushop_url
+##      - grafana_url
+#      - external_ip
+#      - domain_name
+#      - mushop_url_https
+#      - mushop_url_alternative
+
+  - title: Corrino Services
+    outputs:
+      - ${api_url}
+      - ${portal_url}
+      - ${domain_name}
+      - ${external_ip}
+
+  - title: Workspace
+    outputs:
+#      - comments
+      - deploy_id
+      - deployed_to_region
+      - deployed_oke_kubernetes_version
+
+  - title: Autonomous DB
+    outputs:
+      - autonomous_database_password
+      - generated_private_key_pem
+
+  - title: Observability
+      - prometheus_url
+      - mlflow_url
+      - grafana_url
+      - grafana_admin_password
+
+
+#  - title: Dev Notes
+#    outputs:
+##      - dev
+#      - deploy_id
+#      - corrino_source_code
+#      - corrino_version
+
+outputs:
+#  mushop_url_button:
+#    type: link
+#    title: MuShop URL Button
+#    displayText: Open MuShop
+#    visible: true
+#
+#  mushop_url:
+#    type: link
+#    title: MuShop
+#    displayText: Storefront
+#    visible: true
+
+#  mushop_url_https:
+#    type: string
+#    title: MuShop URL with HTTPS and Hostname
+#    displayText: https://<hostname>
+#    visible: false
+
+
+  external_ip:
+    type: link
+    title: Ingress LoadBalancer External IP
+    displayText: Ingress Nginx LoadBalancer External IP Address
+    visible: true
+
+  grafana_url:
+    type: link
+    title: Grafana
+    displayText: Dashboards
+    visible: true
+
+  prometheus_url:
+    type: link
+    title: Prometheus
+    displayText: Prometheus User Interface
+    visible: true
+
+  mlflow_url:
+    type: link
+    title: MLflow
+    displayText: MLflow User Interface
+    visible: true
+
+  api_url:
+    type: link
+    title: Corrino API
+    displayText: REST API Endpoint
+    visible: true
+
+  portal_url:
+    type: link
+    title: Corrino Portal
+    displayText: User Interface
+    visible: true
+
+  domain_name:
+    type: link
+    title: Domain Name
+    displayText: Full Qualified Domain Name
+    visible: true
+
+#  mushop_url_alternative:
+#    type: link
+#    title: "Alternative Hostname"
+#    visible: true
+
+  autonomous_database_password:
+    type: string
+    title: DB Admin Password
+    displayText: Autonomous Database Admin Password
+    visible: true
+
+  grafana_admin_password:
+    type: string
+    title: Grafana Admin Password
+    displayText: Grafana Admin Password
+    visible: true
+
+  deploy_id:
+    type: string
+    title: "Deploy Id"
+    visible: true
+
+  deployed_to_region:
+    type: string
+    title: "Deployed using Region"
+    visible: true
+
+  deployed_oke_kubernetes_version:
+    type: string
+    title: "OKE Kubernetes version deployed"
+    visible: true
+
+#  comments:
+#    type: string
+#    title: Comments
+#    displayText: Comments
+#    visible: true
+#
+#  dev:
+#    type: string
+#    title: dev
+#    displayText: dev note from Oracle Developers
+#    visible: true
+
+#  corrino_source_code:
+#    type: link
+#    title: MuShop Repo with sources and deployment scripts
+#    visible: true
+#
+#  corrino_version:
+#    type: string
+#    title: MuShop Version used
+#    visible: true
+
+#  kubeconfig_for_kubectl:
+#    type: string
+#    title: kubeconfig
+#    displayText: kubeconfig for local kubectl run. Not used by ORM
+#    visible: false
+#
+#  sensitive_comments_local_tf:
+#    type: string
+#    title: Sensitive Output Comments
+#    displayText: Instructions to get sensitive outputs on local Terraform/OpenToFu cli. Not used by ORM
+#    visible: false
+
+#primaryOutputButton: mushop_url_button
+primaryOutputButton: api_url
