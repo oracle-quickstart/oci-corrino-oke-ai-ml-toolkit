@@ -850,12 +850,6 @@ variables:
     title: "Kubernetes Event-driven Autoscaler (KEDA)"
     description: "KEDA is a tool that allows users to scale Kubernetes workloads based on events or metrics.  It is an Event Driven Autoscaler. With KEDA, you can drive the scaling of any container in Kubernetes based on the number of events needing to be processed"
 
-#  external_ip:
-#    type: string
-#    title: "LoadBalancer External IP"
-#    displayText: "Ingress Nginx LoadBalancer External IP Address"
-#    visible: true
-
 #  catalog_enabled:
 #    type: boolean
 #    title: "Service Catalog"
@@ -1044,6 +1038,10 @@ outputs:
 #    displayText: https://<hostname>
 #    visible: false
 
+  external_ip:
+    type: link
+    title: "LoadBalancer External IP"
+    visible: true
 
 #  external_ip:
 #    type: link
