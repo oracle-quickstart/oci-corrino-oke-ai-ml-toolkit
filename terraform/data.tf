@@ -12,4 +12,8 @@ data "kubernetes_ingress" "corrino_cp_ingress" {
   metadata {
     name      = local.app.backend_service_name_ingress
   }
+
+  depends_on = [module.oke-quickstart.helm_release_ingress_nginx]
+  count = var.ingress_nginx_enabled ? 1 : 0
+
 }
