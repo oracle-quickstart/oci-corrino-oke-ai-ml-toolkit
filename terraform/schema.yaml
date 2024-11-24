@@ -1047,35 +1047,20 @@ outputs:
 #    displayText: Ingress Nginx LoadBalancer External IP Address
 #    visible: true
 #
-#  corrino_grafana_url:
-#    type: link
-#    title: Grafana
-#    displayText: Dashboards
-#    visible: true
-#
-#  corrino_prometheus_url:
-#    type: link
-#    title: Prometheus
-#    displayText: Prometheus User Interface
-#    visible: true
-#
-#  corrino_mlflow_url:
-#    type: link
-#    title: MLflow
-#    displayText: MLflow User Interface
-#    visible: true
-#
-#  corrino_api_url:
-#    type: link
-#    title: Corrino API
-#    displayText: REST API Endpoint
-#    visible: true
-#
-#  corrino_portal_url:
-#    type: link
-#    title: Corrino Portal
-#    displayText: User Interface
-#    visible: true
+  corrino_grafana_url:
+    visible: true
+
+  corrino_prometheus_url:
+    visible: true
+
+  corrino_mlflow_url:
+    visible: true
+
+  corrino_api_url:
+    visible: true
+
+  corrino_portal_url:
+    visible: true
 #
 #  domain_name:
 #    type: link
