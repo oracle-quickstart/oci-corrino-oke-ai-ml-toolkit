@@ -85,15 +85,15 @@ locals {
 }
 
 #locals {
-#  cluster_endpoint          = yamldecode(module.oke-quickstart.kubeconfig)["clusters"][0]["cluster"]["server"]
+#  cluster_endpoint          = yamldecode(module.corrino.kubeconfig)["clusters"][0]["cluster"]["server"]
 #  external_private_endpoint = false
 #  # cluster_endpoint = (var.cluster_endpoint_visibility == "Private") ? (
 #  #   "https://${module.oke.orm_private_endpoint_oke_api_ip_address}:6443") : (
 #  # yamldecode(module.oke.kubeconfig)["clusters"][0]["cluster"]["server"])
 #  # external_private_endpoint = (var.cluster_endpoint_visibility == "Private") ? true : false
-#  cluster_ca_certificate = base64decode(yamldecode(module.oke-quickstart.kubeconfig)["clusters"][0]["cluster"]["certificate-authority-data"])
-#  cluster_id             = yamldecode(module.oke-quickstart.kubeconfig)["users"][0]["user"]["exec"]["args"][4]
-#  cluster_region         = yamldecode(module.oke-quickstart.kubeconfig)["users"][0]["user"]["exec"]["args"][6]
+#  cluster_ca_certificate = base64decode(yamldecode(module.corrino.kubeconfig)["clusters"][0]["cluster"]["certificate-authority-data"])
+#  cluster_id             = yamldecode(module.corrino.kubeconfig)["users"][0]["user"]["exec"]["args"][4]
+#  cluster_region         = yamldecode(module.corrino.kubeconfig)["users"][0]["user"]["exec"]["args"][6]
 #}
 
 # Gets home and current regions
