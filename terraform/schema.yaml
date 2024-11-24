@@ -1131,6 +1131,17 @@ outputs:
   oke_cluster_ocid:
     visible: false
 
+  kubeconfig:
+    visible: false
+
+  kubeconfig_for_kubectl:
+    visible: false
+
+  generated_private_key_pem:
+    visible: false
+
+  cluster_ca_certificate:
+    visible: false
 
 #  comments:
 #    type: string
