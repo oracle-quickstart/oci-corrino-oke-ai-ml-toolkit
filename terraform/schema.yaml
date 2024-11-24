@@ -19,7 +19,7 @@ source:
   type: quickstart
 
 outputGroups:
-  - title: Mushop endpoints
+  - title: Mushop endpoints (Corrino)
     outputs:
       - mushop_url
       - grafana_url
@@ -28,20 +28,20 @@ outputGroups:
       - mushop_url_https
       - mushop_url_alternative
 
-  - title: Passwords and Keys
+  - title: Passwords and Keys (Corrino)
     outputs:
       - autonomous_database_password
       - grafana_admin_password
       - generated_private_key_pem
 
-  - title: Comments
+  - title: Comments (Corrino)
     outputs:
       - comments
       - deploy_id
       - deployed_to_region
       - deployed_oke_kubernetes_version
 
-  - title: Dev Notes
+  - title: Dev Notes (Corrino)
     outputs:
       - dev
       - mushop_source_code
@@ -49,6 +49,7 @@ outputGroups:
 
   - title: Corrino Services
     outputs:
+      - domain_name
       - ${api_url}
       - portal_url
       - ${domain_name}
@@ -56,17 +57,19 @@ outputGroups:
 
   - title: Workspace
     outputs:
-#      - comments
+      - domain_name
       - deploy_id
       - deployed_to_region
       - deployed_oke_kubernetes_version
 
   - title: Autonomous DB
     outputs:
+      - domain_name
       - autonomous_database_password
       - generated_private_key_pem
 
   - title: Observability
+      - domain_name
       - prometheus_url
       - mlflow_url
       - grafana_url
