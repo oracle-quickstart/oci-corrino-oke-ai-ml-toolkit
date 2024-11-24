@@ -112,31 +112,39 @@ output "corrino_version" {
 # ----------------------------------------
 
 output "corrino_api_url" {
-  value       = local.public_endpoint.api
+  value       = format("${local.public_endpoint.api}")
   description = "API Service"
   depends_on = [module.oke-quickstart.helm_release_ingress_nginx]
 }
 
 output "corrino_portal_url" {
-  value       = local.public_endpoint.portal
+  value       = format("${local.public_endpoint.portal}")
   description = "Portal Service"
   depends_on = [module.oke-quickstart.helm_release_ingress_nginx]
 }
 
 output "corrino_grafana_url" {
-  value       = var.grafana_enabled ? local.public_endpoint.grafana : null
+  value       = var.grafana_enabled ? format("${local.public_endpoint.grafana}") : null
   description = "Grafana Service"
   depends_on = [module.oke-quickstart.helm_release_ingress_nginx]
 }
 
+# Mushop example
+#output "grafana_url" {
+#  value       = var.grafana_enabled ? format("${local.mushop_url_protocol}://%s/grafana", local.mushop_ingress_hostname) : null
+#  description = "Grafana Dashboards URL"
+#
+#  depends_on = [helm_release.ingress_nginx]
+#}
+
 output "corrino_prometheus_url" {
-  value       = var.prometheus_enabled ? local.public_endpoint.prometheus : null
+  value       = var.prometheus_enabled ? format("${local.public_endpoint.prometheus}") : null
   description = "Prometheus Service"
   depends_on = [module.oke-quickstart.helm_release_ingress_nginx]
 }
 
 output "corrino_mlflow_url" {
-  value       = var.mlflow_enabled ? local.public_endpoint.mlflow : null
+  value       = var.mlflow_enabled ? format("${local.public_endpoint.mlflow}") : null
   description = "MLflow Service"
   depends_on = [module.oke-quickstart.helm_release_ingress_nginx]
 }
