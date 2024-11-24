@@ -121,7 +121,7 @@ variable "grafana_enabled" {
 ## grafana
 output "grafana_admin_password" {
   value     = module.cluster-tools.grafana_admin_password
-  sensitive = true
+  sensitive = false
 }
 
 ## Ingress Controller
