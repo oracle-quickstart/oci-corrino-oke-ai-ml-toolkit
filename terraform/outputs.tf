@@ -111,31 +111,31 @@ output "corrino_version" {
 # Public endpoints
 # ----------------------------------------
 
-output "api_url" {
+output "corrino_api_url" {
   value       = local.public_endpoint.api
   description = "API Service"
   depends_on = [module.oke-quickstart.helm_release_ingress_nginx]
 }
 
-output "portal_url" {
+output "corrino_portal_url" {
   value       = local.public_endpoint.portal
   description = "Portal Service"
   depends_on = [module.oke-quickstart.helm_release_ingress_nginx]
 }
 
-output "grafana_url" {
+output "corrino_grafana_url" {
   value       = var.grafana_enabled ? local.public_endpoint.grafana : null
   description = "Grafana Service"
   depends_on = [module.oke-quickstart.helm_release_ingress_nginx]
 }
 
-output "prometheus_url" {
+output "corrino_prometheus_url" {
   value       = var.prometheus_enabled ? local.public_endpoint.prometheus : null
   description = "Prometheus Service"
   depends_on = [module.oke-quickstart.helm_release_ingress_nginx]
 }
 
-output "mlflow_url" {
+output "corrino_mlflow_url" {
   value       = var.mlflow_enabled ? local.public_endpoint.mlflow : null
   description = "MLflow Service"
   depends_on = [module.oke-quickstart.helm_release_ingress_nginx]
