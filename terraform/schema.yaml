@@ -442,6 +442,18 @@ variables:
   user_ocid:
     visible: false
 
+  oke_node_pools:
+    visible: false
+
+  oke_subnets:
+    visible: false
+
+  oke_nodes_subnet:
+    visible: false
+
+  oke_cluster_ocid:
+    visible: false
+
 
   # MuShop
 #  mushop_mock_mode_all:
@@ -1113,12 +1125,12 @@ outputs:
   deployed_to_region:
     type: string
     title: "Deployed using Region"
-    visible: true
+    visible: false
 
   deployed_oke_kubernetes_version:
     type: string
     title: "OKE Kubernetes version deployed"
-    visible: true
+    visible: false
 
 #  comments:
 #    type: string
