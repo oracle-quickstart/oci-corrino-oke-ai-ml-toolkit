@@ -18,62 +18,62 @@ logoUrl: data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwM
 source:
   type: quickstart
 
-outputGroups:
-  - title: Mushop endpoints (Corrino)
-    outputs:
-      - mushop_url
-      - grafana_url
-      - external_ip
-      - domain_name
-      - mushop_url_https
-      - mushop_url_alternative
-
-  - title: Passwords and Keys (Corrino)
-    outputs:
-      - autonomous_database_password
-      - grafana_admin_password
-      - generated_private_key_pem
-
-  - title: Comments (Corrino)
-    outputs:
-      - comments
-      - deploy_id
-      - deployed_to_region
-      - deployed_oke_kubernetes_version
-
-  - title: Dev Notes (Corrino)
-    outputs:
-      - dev
-      - mushop_source_code
-      - mushop_version
-
-  - title: Corrino Services
-    outputs:
-      - domain_name
-      - ${api_url}
-      - portal_url
-      - ${domain_name}
-      - ${external_ip}
-
-  - title: Workspace
-    outputs:
-      - domain_name
-      - deploy_id
-      - deployed_to_region
-      - deployed_oke_kubernetes_version
-
-  - title: Autonomous DB
-    outputs:
-      - domain_name
-      - autonomous_database_password
-      - generated_private_key_pem
-
-  - title: Observability
-      - domain_name
-      - prometheus_url
-      - mlflow_url
-      - grafana_url
-      - grafana_admin_password
+#outputGroups:
+#  - title: Mushop endpoints (Corrino)
+#    outputs:
+#      - mushop_url
+#      - grafana_url
+#      - external_ip
+#      - domain_name
+#      - mushop_url_https
+#      - mushop_url_alternative
+#
+#  - title: Passwords and Keys (Corrino)
+#    outputs:
+#      - autonomous_database_password
+#      - grafana_admin_password
+#      - generated_private_key_pem
+#
+#  - title: Comments (Corrino)
+#    outputs:
+#      - comments
+#      - deploy_id
+#      - deployed_to_region
+#      - deployed_oke_kubernetes_version
+#
+#  - title: Dev Notes (Corrino)
+#    outputs:
+#      - dev
+#      - mushop_source_code
+#      - mushop_version
+#
+#  - title: Corrino Services
+#    outputs:
+#      - domain_name
+#      - ${api_url}
+#      - portal_url
+#      - ${domain_name}
+#      - ${external_ip}
+#
+#  - title: Workspace
+#    outputs:
+#      - domain_name
+#      - deploy_id
+#      - deployed_to_region
+#      - deployed_oke_kubernetes_version
+#
+#  - title: Autonomous DB
+#    outputs:
+#      - domain_name
+#      - autonomous_database_password
+#      - generated_private_key_pem
+#
+#  - title: Observability
+#      - domain_name
+#      - prometheus_url
+#      - mlflow_url
+#      - grafana_url
+#      - grafana_admin_password
 
 locale: "en"
 variableGroups:
