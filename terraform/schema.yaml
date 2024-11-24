@@ -1039,8 +1039,6 @@ outputs:
 #    visible: false
 
   external_ip:
-    type: link
-    title: "LoadBalancer External IP"
     visible: true
 
 #  external_ip:
