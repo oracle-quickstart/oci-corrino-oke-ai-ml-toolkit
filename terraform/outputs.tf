@@ -149,5 +149,5 @@ output "corrino_mlflow_url" {
 }
 
 output "autonomous_database_password" {
-  value = random_string.autonomous_database_admin_password
+  value = random_string.autonomous_database_admin_password.result
 }
