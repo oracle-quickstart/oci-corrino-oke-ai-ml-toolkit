@@ -222,6 +222,5 @@ locals {
 }
 
 output "grafana_admin_password" {
-  value     = var.grafana_enabled ? local.grafana_admin_password : null
-  sensitive = true
+  value     = var.grafana_enabled ? nonsensitive(local.grafana_admin_password) : "Grafana_Not_Deployed"
 }
