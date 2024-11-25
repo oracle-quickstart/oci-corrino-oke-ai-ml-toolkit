@@ -21,8 +21,8 @@ locals {
   }
 
   addon = {
-    grafana_user  = "not-configured"
-    grafana_token = "not-configured"
+    grafana_user  = "admin"
+    grafana_token = module.oke-quickstart.grafana_admin_password
   }
 
   django = {
