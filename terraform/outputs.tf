@@ -129,6 +129,7 @@ output "corrino_grafana_url" {
 
 output "grafana_admin_password" {
   value = module.oke-quickstart.grafana_admin_password
+  sensitive = true
 }
 
 # Mushop example

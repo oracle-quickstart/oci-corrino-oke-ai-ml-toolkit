@@ -223,5 +223,5 @@ locals {
 
 output "grafana_admin_password" {
   value     = var.grafana_enabled ? local.grafana_admin_password : null
-  sensitive = false
+  sensitive = true
 }
