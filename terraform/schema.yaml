@@ -976,40 +976,33 @@ variables:
   #   title: Subnet CIDR
   #   description: The CIDR of the new Subnet. The new subnet's CIDR should not overlap with any other subnet CIDRs.
 
-#outputGroups:
-##  - title: Mushop endpoints
-##    outputs:
-##      - mushop_url
-###      - grafana_url
-##      - external_ip
-##      - domain_name
-##      - mushop_url_https
-##      - mushop_url_alternative
-#
-#  - title: Corrino Services
-#    outputs:
-#      - ${api_url}
-#      - ${portal_url}
-#      - ${domain_name}
-#      - ${external_ip}
-#
-#  - title: Workspace
-#    outputs:
-##      - comments
-#      - deploy_id
-#      - deployed_to_region
-#      - deployed_oke_kubernetes_version
-#
-#  - title: Autonomous DB
-#    outputs:
-#      - autonomous_database_password
-#      - generated_private_key_pem
-#
-#  - title: Observability
-#      - prometheus_url
-#      - mlflow_url
-#      - grafana_url
-#      - grafana_admin_password
+outputGroups:
+
+  - title: Public IP
+    outputs:
+      - external_ip
+
+  - title: Corrino Services
+    outputs:
+      - corrino_api_url
+      - corrino_portal_url
+
+  - title: Prometheus
+    outputs:
+      - corrino_prometheus_url
+
+  - title: MLflow
+    outputs:
+      - corrino_mlflow_url
+
+  - title: Grafana
+    outputs:
+      - corrino_grafana_url
+      - grafana_admin_password
+
+  - title: Autonomous DB
+    outputs:
+      - autonomous_database_password
 
 
 #  - title: Dev Notes
