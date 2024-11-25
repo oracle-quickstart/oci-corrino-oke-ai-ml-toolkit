@@ -2,6 +2,7 @@ locals {
 
   app = {
     backend_service_name                         = "corrino-cp"
+    backend_service_name_origin                  = "http://corrino-cp"
     backend_service_name_ingress                 = "corrino-cp-ingress"
     backend_image_uri                            = join(":", [local.ocir.base_uri, local.ocir.backend_image])
     frontend_image_uri                           = join(":", [local.ocir.base_uri, local.ocir.frontend_image])
@@ -29,7 +30,7 @@ locals {
     logging_level        = "DEBUG"
     secret               = random_string.corrino_django_secret.result
     allowed_hosts        = join(",", [local.network.localhost, local.network.loopback, local.public_endpoint.api, local.app.backend_service_name])
-    csrf_trusted_origins = join(",", [local.network.localhost_origin, local.network.loopback_origin, local.public_endpoint.api_origin_secure, local.public_endpoint.api_origin_insecure, local.app.backend_service_name])
+    csrf_trusted_origins = join(",", [local.network.localhost_origin, local.network.loopback_origin, local.public_endpoint.api_origin_secure, local.public_endpoint.api_origin_insecure, local.app.backend_service_name_origin])
   }
 
   oci = {
