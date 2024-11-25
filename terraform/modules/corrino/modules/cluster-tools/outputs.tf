@@ -9,3 +9,7 @@ output "helm_release_ingress_nginx" {
    value = helm_release.ingress_nginx
 }
 
+output "helm_release_grafana" {
+   value = helm_release.grafana
+}
+

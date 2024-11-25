@@ -57,3 +57,7 @@ output "cluster_tools_namespace" {
 output "helm_release_ingress_nginx" {
    value = module.cluster-tools.helm_release_ingress_nginx
 }
+
+output "helm_release_grafana" {
+   value = module.cluster-tools.helm_release_grafana
+}

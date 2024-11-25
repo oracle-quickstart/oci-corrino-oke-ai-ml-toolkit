@@ -28,3 +28,13 @@ data "kubernetes_service" "ingress_nginx_controller_service" {
   count = var.ingress_nginx_enabled ? 1 : 0
 
 }
+
+data "kubernetes_secret" "grafana_password" {
+  metadata {
+    name      = "grafana"
+    namespace = "cluster-tools"
+  }
+  depends_on = [module.oke-quickstart.helm_release_grafana]
+  count = var.grafana_enabled ? 1 : 0
+}
+

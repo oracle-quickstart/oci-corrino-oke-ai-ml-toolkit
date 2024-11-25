@@ -253,6 +253,8 @@ locals {
   ]
 
   external_ip = var.ingress_nginx_enabled ? data.kubernetes_service.ingress_nginx_controller_service.0.status.0.load_balancer.0.ingress.0.ip : "#Ingress_Not_Deployed"
+  grafana_admin_password  = var.grafana_enabled ? data.kubernetes_secret.grafana_password.0.data.admin-password : "Grafana_Not_Deployed"
+
 }
 
 #locals {
