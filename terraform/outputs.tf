@@ -94,10 +94,10 @@ output "cluster_region" {
   sensitive = false
 }
 
-output "external_ip" {
-  value = local.external_ip
-  depends_on = [kubernetes_ingress_v1.corrino_cp_ingress]
-}
+#output "external_ip" {
+#  value = local.external_ip
+#  depends_on = [kubernetes_ingress_v1.corrino_cp_ingress]
+#}
 
 output "corrino_source_code" {
   value = "https://github.com/oracle-quickstart/corrino/"
