@@ -24,6 +24,5 @@ resource "kubernetes_config_map" "corrino-configmap" {
     REGION_NAME                                  = local.oci.region_name
     TENANCY_ID                                   = local.oci.tenancy_id
     TENANCY_NAMESPACE                            = local.oci.tenancy_namespace
-    EXISTENT_OKE_CLUSTER_MODE = "True"
   }
 }

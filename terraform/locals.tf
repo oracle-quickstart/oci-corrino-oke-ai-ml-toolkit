@@ -8,7 +8,7 @@ locals {
     recipe_bucket_name                           = "corrino-recipes"
     recipe_validation_enabled                    = "True"
     recipe_validation_shape_availability_enabled = "True"
-    https_flag                                   = "True"
+    https_flag                                   = "False"
   }
 
   oke = {
@@ -28,8 +28,8 @@ locals {
   django = {
     logging_level        = "DEBUG"
     secret               = random_string.corrino_django_secret.result
-    allowed_hosts        = join(",", [local.network.localhost, local.network.loopback, local.public_endpoint.api])
-    csrf_trusted_origins = join(",", [local.network.localhost_origin, local.network.loopback_origin, local.public_endpoint.api_origin_secure, local.public_endpoint.api_origin_insecure])
+    allowed_hosts        = join(",", [local.network.localhost, local.network.loopback, local.public_endpoint.api, local.app.backend_service_name])
+    csrf_trusted_origins = join(",", [local.network.localhost_origin, local.network.loopback_origin, local.public_endpoint.api_origin_secure, local.public_endpoint.api_origin_insecure, local.app.backend_service_name])
   }
 
   oci = {
