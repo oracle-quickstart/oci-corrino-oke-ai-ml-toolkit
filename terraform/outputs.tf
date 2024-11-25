@@ -41,6 +41,7 @@ output "kubeconfig_for_kubectl" {
   description = "If using Terraform locally, this command set KUBECONFIG environment variable to run kubectl locally"
 }
 
+
 #output "dev" {
 #  value = module.corrino.dev
 #}
