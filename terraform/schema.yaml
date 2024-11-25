@@ -1166,4 +1166,4 @@ outputs:
 #    visible: false
 
 #primaryOutputButton: mushop_url_button
-primaryOutputButton: api_url
+primaryOutputButton: corrino_api_url
