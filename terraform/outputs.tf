@@ -94,10 +94,9 @@ output "cluster_region" {
   sensitive = false
 }
 
-#output "external_ip" {
-#  value = local.external_ip
-#  depends_on = [kubernetes_ingress_v1.corrino_cp_ingress]
-#}
+output "external_ip" {
+  value = local.external_ip
+}
 
 output "corrino_source_code" {
   value = "https://github.com/oracle-quickstart/corrino/"
@@ -126,6 +125,10 @@ output "corrino_grafana_url" {
   value       = var.grafana_enabled ? format("https://${local.public_endpoint.grafana}") : null
   description = "Grafana Service"
   depends_on = [module.oke-quickstart.helm_release_ingress_nginx]
+}
+
+output "grafana_admin_password" {
+  value = module.oke-quickstart.grafana_admin_password
 }
 
 # Mushop example

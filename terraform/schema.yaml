@@ -1076,12 +1076,12 @@ outputs:
   autonomous_database_password:
     type: string
     title: "DB Admin Password"
-    visible: false
+    visible: true
 
   grafana_admin_password:
     type: string
     title: "Grafana Admin Password"
-    visible: false
+    visible: true
 
   deploy_id:
     type: string
