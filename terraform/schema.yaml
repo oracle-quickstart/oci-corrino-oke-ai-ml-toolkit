@@ -976,33 +976,33 @@ variables:
   #   title: Subnet CIDR
   #   description: The CIDR of the new Subnet. The new subnet's CIDR should not overlap with any other subnet CIDRs.
 
-outputGroups:
-
-  - title: Public IP
-    outputs:
-      - external_ip
-
-  - title: Corrino Services
-    outputs:
-      - corrino_api_url
-      - corrino_portal_url
-
-  - title: Prometheus
-    outputs:
-      - corrino_prometheus_url
-
-  - title: MLflow
-    outputs:
-      - corrino_mlflow_url
-
-  - title: Grafana
-    outputs:
-      - corrino_grafana_url
-      - grafana_admin_password
-
-  - title: Autonomous DB
-    outputs:
-      - autonomous_database_password
+#outputGroups:
+#
+#  - title: Public IP
+#    outputs:
+#      - external_ip
+#
+#  - title: Corrino Services
+#    outputs:
+#      - corrino_api_url
+#      - corrino_portal_url
+#
+#  - title: Prometheus
+#    outputs:
+#      - corrino_prometheus_url
+#
+#  - title: MLflow
+#    outputs:
+#      - corrino_mlflow_url
+#
+#  - title: Grafana
+#    outputs:
+#      - corrino_grafana_url
+#      - grafana_admin_password
+#
+#  - title: Autonomous DB
+#    outputs:
+#      - autonomous_database_password
 
 
 #  - title: Dev Notes
