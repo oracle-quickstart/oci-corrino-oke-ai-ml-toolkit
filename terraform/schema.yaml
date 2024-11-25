@@ -1039,7 +1039,7 @@ outputs:
 #    visible: false
 
   external_ip:
-    visible: true
+    visible: false
 
 #  external_ip:
 #    type: link
