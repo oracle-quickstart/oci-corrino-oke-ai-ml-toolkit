@@ -52,6 +52,7 @@ locals {
     localhost_origin = "http://localhost"
     loopback = "127.0.0.1"
     loopback_origin = "http://127.0.0.1"
+    external_ip = var.ingress_nginx_enabled ? data.kubernetes_service.ingress_nginx_controller_service.0.status.0.load_balancer.0.ingress.0.ip : "#Ingress_Not_Deployed"
   }
 
   registry = {
@@ -258,7 +259,6 @@ locals {
     }
   ]
 
-  external_ip = var.ingress_nginx_enabled ? data.kubernetes_service.ingress_nginx_controller_service.0.status.0.load_balancer.0.ingress.0.ip : "#Ingress_Not_Deployed"
 }
 
 #   kubectl get secret --namespace cluster-tools grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo

@@ -95,7 +95,7 @@
 #}
 
 output "external_ip" {
-  value = local.external_ip
+  value = local.network.external_ip
 }
 
 output "corrino_source_code" {
