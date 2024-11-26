@@ -58,10 +58,11 @@ locals {
   registry = {
     subdomain = "iad.ocir.io"
     name      = "corrino-devops-repository"
+    source_tenancy_namespace = "iduyx1qnmway"
   }
 
   ocir = {
-    base_uri             = join("/", [local.registry.subdomain, local.oci.tenancy_namespace, local.registry.name])
+    base_uri             = join("/", [local.registry.subdomain, local.registry.source_tenancy_namespace, local.registry.name])
     backend_image        = "oci-corrino-cp"
     frontend_image       = "corrino-portal"
     cli_util_amd64_image = "oci-util-amd64"
