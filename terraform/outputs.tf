@@ -95,14 +95,15 @@
 #}
 
 output "external_ip" {
-  value = local.external_ip
+  value = local.network.external_ip
 }
 
 output "corrino_source_code" {
   value = "https://github.com/oracle-quickstart/corrino/"
 }
 output "corrino_version" {
-  value = file("${path.module}/VERSION")
+#  value = file("${path.module}/VERSION")
+  value = local.versions.corrino_version
 }
 
 # ----------------------------------------

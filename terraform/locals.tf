@@ -4,12 +4,17 @@ locals {
     backend_service_name                         = "corrino-cp"
     backend_service_name_origin                  = "http://corrino-cp"
     backend_service_name_ingress                 = "corrino-cp-ingress"
-    backend_image_uri                            = join(":", [local.ocir.base_uri, local.ocir.backend_image])
+#    backend_image_uri_base                       = join(":", [local.ocir.base_uri, local.ocir.backend_image])
+    backend_image_uri                            = format("${local.ocir.base_uri}:${local.ocir.backend_image}-${local.versions.corrino_version}")
     frontend_image_uri                           = join(":", [local.ocir.base_uri, local.ocir.frontend_image])
     recipe_bucket_name                           = "corrino-recipes"
     recipe_validation_enabled                    = "True"
     recipe_validation_shape_availability_enabled = "True"
     https_flag                                   = "False"
+  }
+
+  versions = {
+    corrino_version   = file("${path.module}/VERSION")
   }
 
   oke = {
@@ -47,6 +52,7 @@ locals {
     localhost_origin = "http://localhost"
     loopback = "127.0.0.1"
     loopback_origin = "http://127.0.0.1"
+    external_ip = var.ingress_nginx_enabled ? data.kubernetes_service.ingress_nginx_controller_service.0.status.0.load_balancer.0.ingress.0.ip : "#Ingress_Not_Deployed"
   }
 
   registry = {
@@ -56,7 +62,7 @@ locals {
 
   ocir = {
     base_uri             = join("/", [local.registry.subdomain, local.oci.tenancy_namespace, local.registry.name])
-    backend_image        = "oci-corrino-control-plane-qs"
+    backend_image        = "oci-corrino-cp"
     frontend_image       = "corrino-portal"
     cli_util_amd64_image = "oci-util-amd64"
     cli_util_arm64_image = "oci-util-arm64"
@@ -253,11 +259,10 @@ locals {
     }
   ]
 
-  external_ip = var.ingress_nginx_enabled ? data.kubernetes_service.ingress_nginx_controller_service.0.status.0.load_balancer.0.ingress.0.ip : "#Ingress_Not_Deployed"
+}
 
 #   kubectl get secret --namespace cluster-tools grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
 #  grafana_admin_password  = var.grafana_enabled ? data.kubernetes_secret.grafana_password.0.data.admin-password : "Grafana_Not_Deployed"
-}
 
 #locals {
 #  external_ip = var.ingress_nginx_enabled ? kubernetes_ingress_v1.corrino_cp_ingress.0.status.0.load_balancer.0.ingress.0.ip : "#Ingress_Not_Deployed"

@@ -1122,7 +1122,7 @@ outputs:
     visible: false
 
   corrino_version:
-    visible: false
+    visible: true
 
   cluster_region:
     visible: false
