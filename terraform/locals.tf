@@ -263,7 +263,6 @@ locals {
 
 #   kubectl get secret --namespace cluster-tools grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
 #  grafana_admin_password  = var.grafana_enabled ? data.kubernetes_secret.grafana_password.0.data.admin-password : "Grafana_Not_Deployed"
-}
 
 #locals {
 #  external_ip = var.ingress_nginx_enabled ? kubernetes_ingress_v1.corrino_cp_ingress.0.status.0.load_balancer.0.ingress.0.ip : "#Ingress_Not_Deployed"
