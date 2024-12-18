@@ -8,7 +8,7 @@ After installing this kit, you can deploy any container image for your AI/ML wor
 
 You can deploy the OKE Starter Kit using the button below:
 
-[![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?region=home&zipUrl=https://github.com/oracle-quickstart/oci-oke-starter-kit/blob/main/corrino-quick-start.zip)
+[![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?region=home&zipUrl=https://github.com/oracle-quickstart/oci-oke-starter-kit/blob/main/corrino-quick-start-vF.zip)
 
 ## Getting Started with OKE Starter Kit
 
