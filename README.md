@@ -6,7 +6,7 @@ The kit includes services such as Grafana and Prometheus for infrastructure moni
 
 After installing this kit, you can deploy any container image for your AI/ML workloads by simply pointing to the container image, configuring it via the UI / API (container arguments, no. of replicas, shape to deploy the container onto, etc.), and deploying it with the click of a button.
 
-## Getting Started
+### Getting Started
 You can deploy the Corrino OKE Toolkit using the button below:
 
 [![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?region=home&zipUrl=https://github.com/oracle-quickstart/oci-oke-starter-kit/blob/main/corrino-quick-start-vF.zip)
