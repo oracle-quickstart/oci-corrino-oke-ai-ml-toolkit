@@ -68,30 +68,55 @@ Corrino Sample recipes: https://github.com/vishnukam3/oci-oke-ai-ml-sample-recip
 
 ## Policies 
 Allow group 'Default'/'SecondUserGroup' to inspect all-resources in tenancy  
+
 Allow group 'Default'/'SecondUserGroup' to manage instance-family in compartment corrino 
+
 Allow group 'Default'/'SecondUserGroup' to use subnets in compartment corrino 
+
 Allow group 'Default'/'SecondUserGroup' to manage virtual-network-family in compartment corrino 
+
 Allow group 'Default'/'SecondUserGroup' to use vnics in compartment corrino 
+
 Allow group 'Default'/'SecondUserGroup' to use network-security-groups in compartment corrino 
+
 Allow group 'Default'/'SecondUserGroup' to manage public-ips in compartment corrino 
+
 Allow group 'Default'/'SecondUserGroup' to manage cluster-family in compartment corrino 
+
 Allow group 'Default'/'SecondUserGroup' to manage orm-stacks in compartment corrino 
+
 Allow group 'Default'/'SecondUserGroup' to manage orm-jobs in compartment corrino 
+
 Allow group 'Default'/'SecondUserGroup' to manage vcns in compartment corrino 
+
 Allow group 'Default'/'SecondUserGroup' to manage subnets in compartment corrino 
+
 Allow group 'Default'/'SecondUserGroup' to manage internet-gateways in compartment corrino 
+
 Allow group 'Default'/'SecondUserGroup' to manage nat-gateways in compartment corrino 
+
 Allow group 'Default'/'SecondUserGroup' to manage route-tables in compartment corrino 
+
 Allow group 'Default'/'SecondUserGroup' to manage security-lists in compartment corrino 
+
 Allow group 'Default'/'SecondUserGroup' to inspect clusters in compartment corrino 
+
 Allow group 'Default'/'SecondUserGroup' to use cluster-node-pools in compartment corrino 
+
 Allow group 'Default'/'SecondUserGroup' to read cluster-work-requests in compartment corrino 
+
 Allow group 'Default'/'SecondUserGroup' to manage service-gateways in compartment corrino 
+
 Allow group 'Default'/'SecondUserGroup' to use cloud-shell in compartment corrino 
+
 Allow group 'Default'/'SecondUserGroup' to read vaults in compartment corrino 
+
 Allow group 'Default'/'SecondUserGroup' to read keys in compartment corrino 
+
 Allow group 'Default'/'SecondUserGroup' to use compute-capacity-reservations in compartment corrino 
+
 Allow group 'Default'/'SecondUserGroup' to read metrics in compartment corrino 
+
 Allow group 'Default'/'SecondUserGroup' to manage autonomous-database-family in compartment corrino 
 
 ## Frequently asked questions 
