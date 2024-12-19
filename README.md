@@ -1,51 +1,114 @@
-# OKE Starter Kit for AI/ML Workloads
+# Corrino OKE Toolkit for AI/ML Workloads
 
-The OKE Starter Kit is a comprehensive collection of Terraform scripts designed to automate the creation and deployment of resources to easily run AI/ML workloads in OCI. It provisions resources such as an OKE cluster, an ATP database instance, and other essential components, which enable you to deploy AI/ML workloads with a simple UI or an API.
+The Corrino OKE Toolkit is a comprehensive collection of Terraform scripts designed to automate the creation and deployment of resources to easily run AI/ML workloads in OCI. It provisions resources such as an OKE cluster, an ATP database instance, and other essential components, which enable you to deploy AI/ML workloads with a simple UI or an API.
 
 The kit includes services such as Grafana and Prometheus for infrastructure monitoring, MLFlow for tracking experiment-level metrics, and KEDA for dynamic auto-scaling based on AI/ML workload metrics rather than infrastructure metrics. This combination provides a scalable, monitored environment optimized for easy deployment and management of AI/ML workloads.
 
 After installing this kit, you can deploy any container image for your AI/ML workloads by simply pointing to the container image, configuring it via the UI / API (container arguments, no. of replicas, shape to deploy the container onto, etc.), and deploying it with the click of a button.
 
-You can deploy the OKE Starter Kit using the button below:
+You can deploy the Corrino OKE Toolkit using the button below:
 
 [![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?region=home&zipUrl=https://github.com/oracle-quickstart/oci-oke-starter-kit/blob/main/corrino-quick-start-vF.zip)
 
-## Getting Started with OKE Starter Kit
+## Getting Started Guide with Corrino OKE Toolkit
+In this "Getting Started" guide, we will walk you through 3 steps: 
+1. Deploying Corrino to your tenancy
+2. Deploying and monitoring a Corrino recipe
+3. Undeploying a recipe
 
-This is a Terraform configuration that deploys the OKE Starter Kit on [Oracle Cloud Infrastructure][oci].
+### Pre-requisites
+1. VM.GPU.A10.2 GPUs available in the region 
 
-The repository contains the application code as well as the [Terraform][tf] code to create a [Resource Manager][orm] stack, that creates all the required resources and configures the application on the created resources. To simplify getting started, the Resource Manager Stack is created as part of each [release](https://github.com/oracle-quickstart/oci-cloudnative/releases)
+### Step 1: Deploy Corrino 
+1. If you have Admin rights, create a compartment called "corrino". Otherwise, have a tenancy admin (1) create a compartment named "corrino" and (2) apply the policies in the Policies section below inside the root compartment of your tenancy.
+2. Create an OKE cluster from OCI console in the compartment (select version v1.30.1; select “Managed” for node type; do not change other default options).
+3. Click on “Deploy to Oracle Cloud” in this page above, which will navigate you to the “Create Stack” page in OCI Console.
+4. Follow the on-screen instructions on the Create Stack screen. _Additional notes: (1) Select the OKE cluster that you want to deploy Corrino to; (2) Select “Run apply” in the “Review” section and click on Create; (3) Select “Create OCI policy and dynamic group for control plane?”_
+5. Monitor the deployment status under Resource Manager -> Stacks. After the Job status changes to “Succeeded”, go to the Application Information tab under Stack Details. Note the Load Balancer public IP address.
+6. Create a domain registrar A-Record using the load balancer public IP that is provisioned. Note: if you don’t have your own domain, <sub-domain>.corrino-oci.com
+7. Send us a note with the sub-domain and the public IP
+8. After we update the A-records, go back to the Application Information tab under Stack Details and click on “Corrino API URL” button to access the Corrino API 
 
-The steps below guide you through deploying the application on your tenancy using the OCI Resource Manager.
+### Step 2: Deploy a recipe 
+1. Click on the /deployment endpoint in the API
+2. Copy and paste this sample inference recipe in the “Content:” text area and click “POST”
+3. Check the deployment status using the /deployment endpoint. Note down the deployment ID. Once the status changes to “monitoring”, you can proceed to the next step
+4. Go to the /deployment_digests/<deployment_id> endpoint to find the endpoint URL (digest.data.assigned_service_endpoint)
+5. Test the endpoint on postman 
+    POST https://<digest.data.assigned_service_endpoint>/v1/completions 
+    { 
+        "model": "/models/NousResearch/Meta-Llama-3.1-8B-Instruct", 
+        "prompt": "Q: What is the capital of the United States?\nA:", 
+        "max_tokens": 100, 
+        "temperature": 0.7, 
+        "top_p": 1.0, 
+        "n": 1, 
+        "stream": false, 
+        "stop": "\n" 
+    } 
+6. Go to Grafana to monitor the node. Click on the /workspaces endpoint and go to the URL under add_ons.grafana.public_endpoint. Use add_ons.grafana.username and add_ons.grafana.token as the username and password to sign into Grafana 
 
-1. Download the latest [`oke-starter-kit-stack-latest.zip`](../../releases/latest/download/mushop-basic-stack-latest.zip) file.
-2. [Login](https://cloud.oracle.com/resourcemanager/stacks/create) to Oracle Cloud Infrastructure to import the stack
-    > `Home > Developer Services > Resource Manager > Stacks > Create Stack`
-3. Upload the `oke-starter-kit-stack-latest.zip` file that was downloaded earlier, and provide a name and description for the stack
-4. Configure the stack
-   1. **Database Name** - You can choose to provide a database name (optional)
-   2. **Node Count** - Select if you want to deploy one or two application instances.
-   3. **SSH Public Key** - (Optional) Provide a public SSH key if you wish to establish SSH access to the compute node(s).
-5. Review the information and click Create button.
-   > The upload can take a few seconds, after which you will be taken to the newly created stack
-6. On Stack details page, click on `Terraform Actions > Apply`
+### Step 3: Undeploy the recipe 
+Undeploy the recipe to free up the resources again by going to the /undeploy endpoint and sending the following POST request: 
+{“deployment_uuid”: “<deployment_id>”} 
 
-All the resources will be created, and the URL to the load balancer will be displayed as `lb_public_url` as in the example below.
-> The same information is displayed on the Application Information tab
+### Additional Resources
+Corrino API Documentation: Coming Soon 
+Corrino Sample recipes: https://github.com/vishnukam3/oci-oke-ai-ml-sample-recipes 
 
-```text
-Outputs:
+## Policies 
+Allow group 'Default'/'SecondUserGroup' to inspect all-resources in tenancy  
+Allow group 'Default'/'SecondUserGroup' to manage instance-family in compartment corrino 
+Allow group 'Default'/'SecondUserGroup' to use subnets in compartment corrino 
+Allow group 'Default'/'SecondUserGroup' to manage virtual-network-family in compartment corrino 
+Allow group 'Default'/'SecondUserGroup' to use vnics in compartment corrino 
+Allow group 'Default'/'SecondUserGroup' to use network-security-groups in compartment corrino 
+Allow group 'Default'/'SecondUserGroup' to manage public-ips in compartment corrino 
+Allow group 'Default'/'SecondUserGroup' to manage cluster-family in compartment corrino 
+Allow group 'Default'/'SecondUserGroup' to manage orm-stacks in compartment corrino 
+Allow group 'Default'/'SecondUserGroup' to manage orm-jobs in compartment corrino 
+Allow group 'Default'/'SecondUserGroup' to manage vcns in compartment corrino 
+Allow group 'Default'/'SecondUserGroup' to manage subnets in compartment corrino 
+Allow group 'Default'/'SecondUserGroup' to manage internet-gateways in compartment corrino 
+Allow group 'Default'/'SecondUserGroup' to manage nat-gateways in compartment corrino 
+Allow group 'Default'/'SecondUserGroup' to manage route-tables in compartment corrino 
+Allow group 'Default'/'SecondUserGroup' to manage security-lists in compartment corrino 
+Allow group 'Default'/'SecondUserGroup' to inspect clusters in compartment corrino 
+Allow group 'Default'/'SecondUserGroup' to use cluster-node-pools in compartment corrino 
+Allow group 'Default'/'SecondUserGroup' to read cluster-work-requests in compartment corrino 
+Allow group 'Default'/'SecondUserGroup' to manage service-gateways in compartment corrino 
+Allow group 'Default'/'SecondUserGroup' to use cloud-shell in compartment corrino 
+Allow group 'Default'/'SecondUserGroup' to read vaults in compartment corrino 
+Allow group 'Default'/'SecondUserGroup' to read keys in compartment corrino 
+Allow group 'Default'/'SecondUserGroup' to use compute-capacity-reservations in compartment corrino 
+Allow group 'Default'/'SecondUserGroup' to read metrics in compartment corrino 
+Allow group 'Default'/'SecondUserGroup' to manage autonomous-database-family in compartment corrino 
 
-autonomous_database_password = <generated>
+## Frequently asked questions 
 
-comments = The application URL will be unavailable for a few minutes after provisioning, while the application is configured
+**What is a secure way for me to test Corrino out in my tenancy?**
+Create a seperate compartment, create a new OKE cluster, and then deploy Corrino to the cluster. 
 
-dev = Made with ❤ by Oracle Developers
+**What containers and resources exactly get deployed to my tenancy when I deploy Corrino?**
+Corrino’s deployment Terraform deploys Corrino’s front-end and back-end containers, Grafana, Prometheus for infrastructure monitoring, MLFlow for tracking experiment-level metrics, and KEDA for dynamic auto-scaling based on AI/ML workload metrics rather than infrastructure metrics. 
 
-lb_public_url = http://xxx.xxx.xxx.xxx
-```
+**How can I run an inference benchmarking script?**
+For inference benchmarking, we recommend deploying a vLLM recipe with Corrino and then using LLMPerf to run benchmarking using the endpoint. Reach out to us if you are interested in more details. 
 
-> The application is being deployed to the compute instances asynchronously, and it may take a couple of minutes for the URL to serve the application.
+**What is the full list of recipes available?**
+Currently, we have an inference recipe, a fine-tuning recipe, and an MLCommons fine-tuning benchmarking recipe with a Llama-2-70B model that are complete. We have several others in the works (e.g. a RAG recipe) that we have built POCs for. If you are interested in additional recipes, please contact us. 
+
+**How can I view the deployment logs to see if something is wrong?**
+You can use kubectl to view the pod logs. 
+
+**Can you set up auto-scaling?**
+Yes. If you are interested in this, please reach out to us. 
+
+**Which GPUs can I deploy this to?**
+Any Nvidia GPUs that are available in your region. 
+
+**What if you already have another cluster?**
+You can deploy Corrino to the existing cluster as well. However, we have not yet done extensive testing to confirm if Corrino would be stable on a cluster that already has other workloads running. 
 
 ### Cleanup
 
@@ -71,84 +134,3 @@ Follow these steps to completely remove all provisioned resources:
 ## Questions
 
 If you have an issue or a question, please contact Vishnu Kammari at vishnu.kammari@oracle.com.
-
-
-## Create Prerequisites
-
----
-
-### Administrative Role
-
-You will need roles to:
-
-* Create a compartment
-* Create a dynamic group within an Identity Domain
-* Create a policy at the root Compartment level
-* Create an OKE Cluster
-* Create a VCN
-* Create a LoadBalancer
-* Create an Object Storage Bucket
-
-### Compartment
-
-* Create a compartment
-  * Capture the OCID for the compartment
-  * Assuming your compartment is named `corrino-compartment`
-
-  
-### Dynamic Group
-
-* Create a dynamic group
-  * Assuming you are creating dynamic group in the `Default` Identity Domain:
-  * Assuming your dynamic group name is `corrino-dg`:
-
-
-    ALL {instance.compartment.id = 'ocid1.compartment.oc1..'}	
-    ALL {resource.compartment.id = 'ocid1.compartment.oc1..'}
-
-### Policy
-
-* Create a new policy in the root compartment.
-  * Assuming you are creating dynamic group in the `Default` Identity Domain:
-  * Assuming your dynamic group name is `corrino-dg`
-
-
-    Allow dynamic-group 'Default'/'corrino-dg' to use all-resources in tenancy	
-    Allow dynamic-group 'Default'/'corrino-dg' to manage all-resources in compartment corrino-compartment
-
-If your compartment is nested beneath other compartments (ie not at the top level) as in:
-
-* root
-  * compA
-    * compB
-      * compC
-        * corrino-compartment
-
-
-    Allow dynamic-group 'Default'/'corrino-dg' to manage all-resources in compartment compA:compB:compC:corrino-compartment
-
-### OKE Cluster
-
-* Create an OKE cluster using the OCI Console
-* Using the wizard is fine.
-
-Write Down:
-
-* The OKE Cluster OCID
-* The VCN OCID
-* Each Subnet OCID (there will be 3)
-
----
-
-## Create a Resource Manager Stack
-
-* Use the `Deploy to Oracle Cloud` link.
-* Provide the inputs for OCIDS
-  * Compartment OCID
-  * OKE Cluster OCID
-  * VCN OCID
-    * Node Subnet
-    * LB Subnet
-    * Endpoint Subnet
-
-
