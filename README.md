@@ -20,21 +20,26 @@ In this "Getting Started" guide, we will walk you through 3 steps:
 1. VM.GPU.A10.2 GPUs available in the region 
 
 ### Step 1: Deploy Corrino 
-1. If you have Admin rights, create a compartment called "corrino". Otherwise, have a tenancy admin (1) create a compartment named "corrino" and (2) apply the policies in the Policies section below inside the root compartment of your tenancy.
-2. Create an OKE cluster from OCI console in the compartment (select version v1.30.1; select “Managed” for node type; do not change other default options).
+1. If you have Admin rights, create a compartment called `corrino`. Otherwise, have a tenancy admin do the following: (1) create a compartment named `corrino` and (2) apply the policies in the Policies section below inside the root compartment of your tenancy.
+2. Create an OKE cluster from OCI console in the compartment (select version v1.30.1; select “Managed” for node type; select "Public endpoint" for the Kubernetes API endpoint; do not change other default options).
 3. Click on “Deploy to Oracle Cloud” in this page above, which will navigate you to the “Create Stack” page in OCI Console.
-4. Follow the on-screen instructions on the Create Stack screen. _Additional notes: (1) Select the OKE cluster that you want to deploy Corrino to; (2) Select “Run apply” in the “Review” section and click on Create; (3) Select “Create OCI policy and dynamic group for control plane?”_
-5. Monitor the deployment status under Resource Manager -> Stacks. After the Job status changes to “Succeeded”, go to the Application Information tab under Stack Details. Note the Load Balancer public IP address.
-6. Create a domain registrar A-Record using the load balancer public IP that is provisioned. Note: if you don’t have your own domain, <sub-domain>.corrino-oci.com
-7. Send us a note with the sub-domain and the public IP
-8. After we update the A-records, go back to the Application Information tab under Stack Details and click on “Corrino API URL” button to access the Corrino API 
+4. Follow the on-screen instructions on the Create Stack screen. Additional notes:
+    - Select the OKE cluster that you just created
+    - Select “Create OCI policy and dynamic group for control plane?”
+    - If you are a tenancy admin, select "Create OCI policy and dynamic group for control plane?”. If you are not the tenancy admin and your tenancy admin already applied the policies in the Policies section, do not select “Create OCI policy and dynamic group for control plane?”
+    - Important: For the FQDN, enter `<sub-domain>.corrino-oci.com`. Make sure the sub-domain is unique (e.g. your-first-last-name).
+5. Select “Run apply” in the “Review” section and click on Create
+6. Monitor the deployment status under Resource Manager -> Stacks. After the Job status changes to `Succeeded`, go to the Application Information tab under Stack Details.
+7. Send the load balancer IP address and the sub-domain to the Corrino team (vishnu.kammari@oracle.com). The Corrino team will create an A-record in the domain registrar.
+9. After the Corrino team updates the A-records, go back to the Application Information tab under Stack Details and click on “Corrino API URL” button to access the Corrino API 
 
-### Step 2: Deploy a recipe 
-1. Click on the /deployment endpoint in the API
+### Step 2: Deploy a vLLM Inference recipe 
+1. Click on the `/deployment` endpoint in the API
 2. Copy and paste this sample inference recipe in the “Content:” text area and click “POST”
-3. Check the deployment status using the /deployment endpoint. Note down the deployment ID. Once the status changes to “monitoring”, you can proceed to the next step
-4. Go to the /deployment_digests/<deployment_id> endpoint to find the endpoint URL (digest.data.assigned_service_endpoint)
-5. Test the endpoint on postman 
+3. Check the deployment status using the `/deployment` endpoint. Note down the `deployment ID`. Once the status changes to `monitoring`, you can proceed to the next step
+4. Go to the `/deployment_digests/<deployment_id>` endpoint to find the endpoint URL (`digest.data.assigned_service_endpoint`)
+5. Test the endpoint on Postman
+    ```json
     POST https://<digest.data.assigned_service_endpoint>/v1/completions 
     { 
         "model": "/models/NousResearch/Meta-Llama-3.1-8B-Instruct", 
@@ -45,12 +50,17 @@ In this "Getting Started" guide, we will walk you through 3 steps:
         "n": 1, 
         "stream": false, 
         "stop": "\n" 
-    } 
-6. Go to Grafana to monitor the node. Click on the /workspaces endpoint and go to the URL under add_ons.grafana.public_endpoint. Use add_ons.grafana.username and add_ons.grafana.token as the username and password to sign into Grafana 
+    }
+    ```
+7. Go to Grafana to monitor the node. Click on the `/workspaces` endpoint and go to the URL under `add_ons.grafana.public_endpoint` in the response JSON. Use `add_ons.grafana.username` and `add_ons.grafana.token` as the username and password to sign into Grafana. 
 
 ### Step 3: Undeploy the recipe 
-Undeploy the recipe to free up the resources again by going to the /undeploy endpoint and sending the following POST request: 
-{“deployment_uuid”: “<deployment_id>”} 
+Undeploy the recipe to free up the resources again by going to the `/undeploy` endpoint and sending the following POST request: 
+```json
+{
+    “deployment_uuid”: “<deployment_id>”
+}
+```
 
 ### Additional Resources
 Corrino API Documentation: Coming Soon 
@@ -120,14 +130,14 @@ Follow these steps to completely remove all provisioned resources:
 
   > `Home > Developer Services > Resource Manager > Stacks`
 
-1. Select the stack created previously to open the Stack Details view
-1. From the Stack Details, select `Terraform Actions > Destroy`
-1. Confirm the **Destroy** job when prompted
+2. Select the stack created previously to open the Stack Details view
+3. From the Stack Details, select `Terraform Actions > Destroy`
+4. Confirm the **Destroy** job when prompted
 
   > The job status will be **In Progress** while resources are terminated
 
-1. Once the destroy job has succeeded, return to the Stack Details page
-1. Click `Delete Stack` and confirm when prompted
+5. Once the destroy job has succeeded, return to the Stack Details page
+6. Click `Delete Stack` and confirm when prompted
 
 ---
 
