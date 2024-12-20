@@ -34,7 +34,7 @@ In this "Getting Started" guide, we will walk you through 3 steps:
 9. After the Corrino team updates the A-records, go back to the Application Information tab under Stack Details and click on “Corrino API URL” button to access the Corrino API 
 
 ### Step 2: Deploy a vLLM Inference recipe 
-1. Click on the `/deployment` endpoint in the API
+1. Click on the `/deployment` endpoint in the API (api.<sub-domain>.corrino-oci.com)
 2. Copy and paste this sample inference recipe (https://github.com/vishnukam3/oci-oke-ai-ml-sample-recipes/blob/main/vllm_inference_sample_recipe.json) in the “Content:” text area and click “POST”
 3. Check the deployment status using the `/deployment` endpoint. Note down the `deployment ID`. Once the status changes to `monitoring`, you can proceed to the next step
 4. Go to the `/deployment_digests/<deployment_id>` endpoint to find the endpoint URL (`digest.data.assigned_service_endpoint`)
