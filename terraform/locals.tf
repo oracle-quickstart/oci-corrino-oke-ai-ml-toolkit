@@ -14,7 +14,7 @@ locals {
   }
 
   versions = {
-    corrino_version   = file("${path.module}/VERSION")
+    corrino_version   = var.corrino_version
   }
 
   oke = {
@@ -89,6 +89,10 @@ locals {
     {
       name  = "OCI_CLI_PROFILE"
       value = "instance_principal"
+    },
+    {
+      name  = "TERRAFORM_TIMESTAMP"
+      value = timestamp()
     }
   ]
 
@@ -164,6 +168,11 @@ locals {
       name            = "COMPARTMENT_ID"
       config_map_name = "corrino-configmap"
       config_map_key  = "COMPARTMENT_ID"
+    },
+    {
+      name            = "CORRINO_VERSION"
+      config_map_name = "corrino-configmap"
+      config_map_key  = "CORRINO_VERSION"
     },
     {
       name            = "DJANGO_ALLOWED_HOSTS"
@@ -277,3 +286,4 @@ locals {
 #  mushop_url_protocol     = var.ingress_tls ? "https" : "http"
 #  grafana_admin_password  = var.grafana_enabled ? data.kubernetes_secret.mushop_utils_grafana.0.data.admin-password : "Grafana_Not_Deployed"
 #}
+

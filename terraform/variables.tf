@@ -56,6 +56,12 @@ variable "policy_creation_enabled" {
   default = false
 }
 
+variable "corrino_version" {
+  type = string
+  default = "1.0.0"
+}
+
+
 # -----------------------------------
 # Corrino User
 # -----------------------------------

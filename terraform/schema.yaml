@@ -89,6 +89,7 @@ variableGroups:
     variables:
     - app_name
     - deploy_id
+    - corrino_version
 #    - show_advanced
 #    - mushop_atp
     # - mushop_oss
@@ -388,6 +389,12 @@ variables:
 #    visible: true
 
   # Corrino
+
+  corrino_version:
+    type: string
+    title: "Corrino Version"
+    description: "This is the version of Corrino software that will be installed."
+    required: true
 
   corrino_ingress_host:
     type: string
