@@ -817,6 +817,7 @@ variables:
       and:
         - ingress_nginx_enabled
 
+
   fqdn_custom_domain:
     type: string
     title: "Custom domain name"
