@@ -808,10 +808,10 @@ variables:
     type: enum
     # enumerated values
     enum:
-    - corrino-oci.com
     - nip.io
+    - corrino-oci.com
     - custom
-    default: corrino-oci.com
+    default: nip.io
     required: true
     visible:
       and:
