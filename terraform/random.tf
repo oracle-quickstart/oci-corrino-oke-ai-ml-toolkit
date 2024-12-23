@@ -27,3 +27,9 @@ resource "random_string" "autonomous_database_admin_password" {
   min_special      = 3
   override_special = "{}#^*<>[]%~"
 }
+
+resource "random_string" "subdomain" {
+  length           = 6
+  special          = false
+  upper            = false
+}

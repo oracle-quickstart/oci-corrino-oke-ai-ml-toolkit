@@ -71,19 +71,38 @@ locals {
     pod_util_arm64_image = "pod-util-arm64"
   }
 
-  ingress = {
-    public_endpoint_base = var.corrino_ingress_host
+  domain = {
+    corrino_oci_mode = "corrino-oci.com"
+    corrino_oci_fqdn = format("%s.corrino-oci.com", random_string.subdomain.result)
+
+    nip_io_mode = "nip.io"
+    nip_io_fqdn = format("%s.nip.io", replace(local.network.external_ip, ".", "-"))
+
+    custom_mode = "custom"
+    custom_fqdn = var.fqdn_custom_domain
+  }
+
+  fqdn = {
+    name = var.fqdn_domain_mode_selector == local.domain.custom_mode ? local.domain.custom_fqdn : ( var.fqdn_domain_mode_selector == local.domain.nip_io_mode ? local.domain.nip_io_fqdn : local.domain.corrino_oci_fqdn )
+    is_nip_io_mode = var.fqdn_domain_mode_selector == local.domain.nip_io_mode ? true : false
+    is_corrino_com_mode = var.fqdn_domain_mode_selector == local.domain.corrino_oci_mode ? true : false
+    is_custom_mode = var.fqdn_domain_mode_selector == local.domain.custom_mode ? true : false
   }
 
   public_endpoint = {
-    api = join(".", ["api", local.ingress.public_endpoint_base])
-    api_origin_insecure = join(".", ["http://api", local.ingress.public_endpoint_base])
-    api_origin_secure = join(".", ["https://api", local.ingress.public_endpoint_base])
-    portal = join(".", ["portal", local.ingress.public_endpoint_base])
-    mlflow = join(".", ["mlflow", local.ingress.public_endpoint_base])
-    prometheus = join(".", ["prometheus", local.ingress.public_endpoint_base])
-    grafana = join(".", ["grafana", local.ingress.public_endpoint_base])
+    api = join(".", ["api", local.fqdn.name])
+    api_origin_insecure = join(".", ["http://api", local.fqdn.name])
+    api_origin_secure = join(".", ["https://api", local.fqdn.name])
+    portal = join(".", ["portal", local.fqdn.name])
+    mlflow = join(".", ["mlflow", local.fqdn.name])
+    prometheus = join(".", ["prometheus", local.fqdn.name])
+    grafana = join(".", ["grafana", local.fqdn.name])
   }
+
+  notification_recipients = [
+    "vishnu.kammari@oracle.com",
+    "carl.downs@oracle.com"
+  ]
 
   env_universal = [
     {

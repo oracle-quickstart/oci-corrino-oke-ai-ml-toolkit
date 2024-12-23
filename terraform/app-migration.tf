@@ -92,7 +92,7 @@ resource "kubernetes_job" "corrino_migration_job" {
     update = "10m"
   }
 
-  depends_on = [kubernetes_job.wallet_extractor_job]
+  depends_on = [kubernetes_job.wallet_extractor_job, kubernetes_config_map.corrino-configmap]
 
   #  count = var.mushop_mock_mode_all ? 0 : 1
   count = 1

@@ -19,7 +19,7 @@ resource "kubernetes_config_map" "corrino-configmap" {
     LOGGING_LEVEL                                = local.django.logging_level
     NAMESPACE_NAME                               = local.oci.namespace_name
     OKE_CLUSTER_ID                               = local.oci.oke_cluster_id
-    PUBLIC_ENDPOINT_BASE                         = local.ingress.public_endpoint_base
+    PUBLIC_ENDPOINT_BASE                         = local.fqdn.name
     RECIPE_BUCKET_NAME                           = local.app.recipe_bucket_name
     RECIPE_VALIDATION_ENABLED                    = local.app.recipe_validation_enabled
     RECIPE_VALIDATION_SHAPE_AVAILABILITY_ENABLED = local.app.recipe_validation_shape_availability_enabled
