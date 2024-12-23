@@ -89,6 +89,7 @@ variableGroups:
     variables:
     - app_name
     - deploy_id
+    - corrino_version
 #    - show_advanced
 #    - mushop_atp
     # - mushop_oss
@@ -201,7 +202,8 @@ variableGroups:
     variables:
     - ingress_nginx_enabled
     - ingress_hosts
-    - corrino_ingress_host
+    - fqdn_domain_mode_selector
+    - fqdn_custom_domain
     - cert_manager_enabled
     - ingress_tls
     - ingress_cluster_issuer
@@ -387,12 +389,17 @@ variables:
 #    description: "Shows advanced options, allowing enable customer-managed encryption keys, select your ssh key, select/unselect cluster utilities, do not create policies, and other advanced options"
 #    visible: true
 
-  # Corrino
+  # Corrino Version
 
-  corrino_ingress_host:
+  corrino_version:
     type: string
-    title: "Corrino FQDN"
+    title: "Corrino Version"
+    description: "This is the version of Corrino software that will be installed."
     required: true
+
+  # --------------------
+  # Corrino Users
+  # --------------------
 
   corrino_admin_username:
     type: string
@@ -412,11 +419,18 @@ variables:
     description: "Corrino admin password / nonce -- you will be required to change this at first usage"
     required: true
 
+  # --------------------
+  # Corrino OCI IAM
+  # --------------------
+
   policy_creation_enabled:
     type: boolean
     title: "Create OCI policy and dynamic group for control plane?"
     required: true
 
+  # --------------------
+  # ADB
+  # --------------------
 
   oadb_admin_secret_name:
     visible: false
@@ -429,6 +443,10 @@ variables:
 
   oadb_wallet_secret_name:
     visible: false
+
+  # --------------------
+  # Credentials
+  # --------------------
 
   private_key_path:
     visible: false
@@ -767,9 +785,13 @@ variables:
 #          - ingress_load_balancer_shape
 #          - "flexible"
 
+  # --------------------
+  # Corrino Ingress
+  # --------------------
+
   ingress_nginx_enabled:
     type: boolean
-    title: "Enable access public FQDN?"
+    title: "Enable public web access?"
     description: "Enabling this feature requires that a fully qualified domain name be mapped to the resulting load balancer public IP address."
 
   ingress_hosts:
@@ -779,6 +801,32 @@ variables:
 #      and:
 ##        - show_advanced
 #        - ingress_nginx_enabled
+
+  fqdn_domain_mode_selector:
+    title: "Domain options"
+    description: "Select which type of domain you want to use for this workspace.  The 'corrino-oci.com' domain is managed by our team.  The 'nip.io' will be insecure but works well for many use cases.  If you have a domain to use, select 'custom'."
+    type: enum
+    # enumerated values
+    enum:
+    - corrino-oci.com
+    - nip.io
+    - custom
+    default: corrino-oci.com
+    required: true
+    visible:
+      and:
+        - ingress_nginx_enabled
+
+  fqdn_custom_domain:
+    type: string
+    title: "Custom domain name"
+    required: true
+    visible:
+      and:
+        - ingress_nginx_enabled
+        - eq:
+          - ${fqdn_domain_mode_selector}
+          - custom
 
   cert_manager_enabled:
     type: boolean
@@ -1166,4 +1214,4 @@ outputs:
 #    visible: false
 
 #primaryOutputButton: mushop_url_button
-primaryOutputButton: corrino_api_url
+#primaryOutputButton: corrino_api_url

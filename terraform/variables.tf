@@ -56,6 +56,12 @@ variable "policy_creation_enabled" {
   default = false
 }
 
+variable "corrino_version" {
+  type = string
+  default = "1.0.0"
+}
+
+
 # -----------------------------------
 # Corrino User
 # -----------------------------------
@@ -79,9 +85,20 @@ variable "corrino_admin_email" {
 # Corrino FQDN
 # -----------------------------------
 
-variable "corrino_ingress_host" {
-    description = "FQDN (Fully Qualified Domain Name) can be a simple domain (example.com) or have an A-Record for a subdomain (*.foo.example.com).  You will need to create a domain registrar A-Record using the load balancer public IP that is provisioned."
+# This is populated from schema.yaml from an enumeration with one of three possible values:
+#    - nip.io
+#    - corrino-oci.com
+#    - custom
+
+variable "fqdn_domain_mode_selector" {
     type = string
+    default = "nip.io"
+}
+
+variable "fqdn_custom_domain" {
+    description = "Your custom FQDN can be a simple top-level domain or an A-Record for a top-level domain.  Either method requires that you modify the domain registrar records to send traffic to the load balancer public IP that is provisioned for you."
+    type = string
+    default = ""
 }
 
 # -----------------------------------
