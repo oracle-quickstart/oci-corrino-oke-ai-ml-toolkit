@@ -21,17 +21,16 @@ In this "Getting Started" guide, we will walk you through 3 steps:
 
 ### Step 1: Deploy Corrino 
 1. If you have Admin rights, create a compartment called `corrino`. Otherwise, have a tenancy admin do the following: (1) create a compartment named `corrino` and (2) apply the policies in the Policies section below inside the root compartment of your tenancy.
-2. Create an OKE cluster from OCI console in the compartment (select version v1.30.1; select “Managed” for node type; select "Public endpoint" for the Kubernetes API endpoint; do not change other default options).
+2. Create an OKE cluster from OCI console in the compartment. **Important:** Select “Managed” for node type; select "Public endpoint" for the Kubernetes API endpoint; select at least 32GB for "Amount of memory" for the VM.Standard.E3.Flex nodes; do not change other default options.
 3. Click on “Deploy to Oracle Cloud” in this page above, which will navigate you to the “Create Stack” page in OCI Console.
 4. Follow the on-screen instructions on the Create Stack screen. Additional notes:
+    - For "Workspace name" and "Deploy ID" enter short alphanumeric names less than 6 characters each
+    - For Corrino Version, enter "latest"
     - Select the OKE cluster that you just created
-    - Select “Create OCI policy and dynamic group for control plane?”
     - If you are a tenancy admin, select "Create OCI policy and dynamic group for control plane?”. If you are not the tenancy admin and your tenancy admin already applied the policies in the Policies section, do not select “Create OCI policy and dynamic group for control plane?”
-    - Important: For the FQDN, enter `<sub-domain>.corrino-oci.com`. Make sure the sub-domain is unique (e.g. your-first-last-name).
+    - For Domain Options, select `nip.io` for quick testing. For more advanced use cases, select "custom" and enter your custom domain name - reach out to us if you need help with updating the A records correctly.
 5. Select “Run apply” in the “Review” section and click on Create
-6. Monitor the deployment status under Resource Manager -> Stacks. After the Job status changes to `Succeeded`, go to the Application Information tab under Stack Details.
-7. Send the load balancer IP address and the sub-domain to the Corrino team (vishnu.kammari@oracle.com). The Corrino team will create an A-record in the domain registrar.
-9. After the Corrino team updates the A-records, go back to the Application Information tab under Stack Details and click on “Corrino API URL” button to access the Corrino API 
+6. Monitor the deployment status under Resource Manager -> Stacks. After the Job status changes to `Succeeded`, go to the Application Information tab under Stack Details. Click on “Corrino API URL” button to access the Corrino API 
 
 ### Step 2: Deploy a vLLM Inference recipe 
 1. Click on the `/deployment` endpoint in the API (api.<sub-domain>.corrino-oci.com)
