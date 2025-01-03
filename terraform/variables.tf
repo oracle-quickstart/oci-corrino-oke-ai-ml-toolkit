@@ -58,7 +58,7 @@ variable "policy_creation_enabled" {
 
 variable "corrino_version" {
   type = string
-  default = "1.0.0"
+  default = "latest"
 }
 
 
@@ -177,7 +177,7 @@ variable "autonomous_database_db_version" {
 }
 
 variable "autonomous_database_license_model" {
-  default = "BRING_YOUR_OWN_LICENSE" # LICENSE_INCLUDED || BRING_YOUR_OWN_LICENSE
+  default = "LICENSE_INCLUDED" # LICENSE_INCLUDED || BRING_YOUR_OWN_LICENSE
 
   validation {
     condition     = var.autonomous_database_license_model == "BRING_YOUR_OWN_LICENSE" || var.autonomous_database_license_model == "LICENSE_INCLUDED"
