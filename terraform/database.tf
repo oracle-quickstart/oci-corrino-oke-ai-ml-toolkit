@@ -208,8 +208,8 @@ resource "kubernetes_job" "wallet_extractor_job" {
 
   wait_for_completion        = true
   timeouts {
-    create = "10m"
-    update = "10m"
+    create = "20m"
+    update = "20m"
   }
 
 #  depends_on = [kubernetes_deployment.cluster_autoscaler_deployment]
