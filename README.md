@@ -21,11 +21,11 @@ In this "Getting Started" guide, we will walk you through 3 steps:
 
 ### Step 1: Deploy Corrino 
 1. If you have Admin rights, create a compartment called `corrino`. Otherwise, have a tenancy admin do the following: (1) create a compartment named `corrino` and (2) apply the policies in the Policies section below inside the root compartment of your tenancy.
-2. Create an OKE cluster from OCI console in the compartment. **Important:** Select “Managed” for node type; select "Public endpoint" for the Kubernetes API endpoint; select at least 32GB for "Amount of memory" for the VM.Standard.E3.Flex nodes; do not change other default options.
+2. Create an OKE cluster from OCI console in the compartment. **Important:** Select `Managed` for node type; select `Public endpoint` for the Kubernetes API endpoint; select at least `32GB` for "Amount of memory" for the VM.Standard.E3.Flex nodes; do not change other default options.
 3. Click on “Deploy to Oracle Cloud” in this page above, which will navigate you to the “Create Stack” page in OCI Console.
 4. Follow the on-screen instructions on the Create Stack screen. Additional notes:
     - For "Workspace name" and "Deploy ID" enter short alphanumeric names less than 6 characters each
-    - For Corrino Version, enter "latest"
+    - For Corrino Version, enter `latest`
     - Select the OKE cluster that you just created
     - If you are a tenancy admin, select "Create OCI policy and dynamic group for control plane?”. If you are not the tenancy admin and your tenancy admin already applied the policies in the Policies section, do not select “Create OCI policy and dynamic group for control plane?”
     - For Domain Options, select `nip.io` for quick testing. For more advanced use cases, select "custom" and enter your custom domain name - reach out to us if you need help with updating the A records correctly.
