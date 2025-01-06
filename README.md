@@ -66,6 +66,7 @@ Corrino API Documentation: Coming Soon
 Corrino Sample recipes: https://github.com/vishnukam3/oci-oke-ai-ml-sample-recipes 
 
 ## Policies 
+```
 Allow group 'Default'/'SecondUserGroup' to inspect all-resources in tenancy  
 
 Allow group 'Default'/'SecondUserGroup' to manage instance-family in compartment {compartment_name} 
@@ -118,18 +119,12 @@ Allow group 'Default'/'SecondUserGroup' to read metrics in compartment {compartm
 
 Allow group 'Default'/'SecondUserGroup' to manage autonomous-database-family in compartment {compartment_name} 
 
-Allow dynamic-group {dyn_group_data.name} to manage cluster-node-pools in compartment {compartment_name}
+Allow dynamic-group 'Default'/'SecondUserGroup' to read virtual-network-family in compartment {compartment_name}
 
-Allow dynamic-group {dyn_group_data.name} to manage instance-family in compartment {compartment_name}
+Allow dynamic-group 'Default'/'SecondUserGroup' to inspect compartments in compartment {compartment_name}
 
-Allow dynamic-group {dyn_group_data.name} to use subnets in compartment {compartment_name}
-
-Allow dynamic-group {dyn_group_data.name} to read virtual-network-family in compartment {compartment_name}
-
-Allow dynamic-group {dyn_group_data.name} to use vnics in compartment {compartment_name}
-
-Allow dynamic-group {dyn_group_data.name} to inspect compartments in compartment {compartment_name}
-
+Allow dynamic-group 'Default'/'SecondUserGroup' to manage cluster-node-pools in compartment {compartment_name}
+```
 
 ## Frequently asked questions 
 
