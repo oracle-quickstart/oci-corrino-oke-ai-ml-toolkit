@@ -810,7 +810,7 @@ variables:
 #        - ingress_nginx_enabled
 
   fqdn_domain_mode_selector:
-    title: "Domain options"
+    title: "Domain Options"
     description: "Select which type of domain you want to use for this workspace.  The 'nip.io' default generates a subdomain based on the public IP address associated with your Workspace's load balancer.  If you have a custom domain to use, select 'custom'.  Finally, the 'corrino-oci.com' option requires that you contact the Corrino team to create a DNS A-Record before it can be used."
     type: enum
     # enumerated values
