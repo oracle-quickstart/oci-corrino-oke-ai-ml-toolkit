@@ -33,3 +33,10 @@ resource "random_string" "subdomain" {
   special          = false
   upper            = false
 }
+
+
+resource "random_string" "registration_id" {
+  length           = 8
+  special          = false
+  upper            = false
+}

@@ -225,6 +225,11 @@ variableGroups:
     - keda_enabled
     visible: true
 
+  - title: "Data Sharing"
+    variables:
+    - share_data_with_corrino_team_enabled
+    visible: true
+
 
 
 #  - title: "Oracle Digital Assistant support"
@@ -1120,9 +1125,14 @@ outputs:
     title: "DB Admin Password"
     visible: true
 
+  grafana_admin_username:
+    type: string
+    title: "Grafana Username"
+    visible: true
+
   grafana_admin_password:
     type: string
-    title: "Grafana Admin Password"
+    title: "Grafana Password"
     visible: true
 
   deploy_id:

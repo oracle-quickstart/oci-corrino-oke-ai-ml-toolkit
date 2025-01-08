@@ -1,5 +1,7 @@
 locals {
 
+  ts = timestamp()
+
   app = {
     backend_service_name                         = "corrino-cp"
     backend_service_name_origin                  = "http://corrino-cp"
@@ -99,10 +101,22 @@ locals {
     grafana = join(".", ["grafana", local.fqdn.name])
   }
 
-  notification_recipients = [
-    "vishnu.kammari@oracle.com",
-    "carl.downs@oracle.com"
-  ]
+  registration = {
+    object_filename = format("corrino-registration-%s", random_string.registration_id.result)
+    object_filepath = format("%s/%s", abspath(path.root), random_string.registration_id.result)
+    object_content = join("\n", [
+      "Corrino Registration",
+      format("Timestamp        : %s", local.ts),
+      format("Software Version : %s", var.corrino_version),
+      format("Administrator    : %s", var.corrino_admin_email),
+      format("Region           : %s", local.oci.region_name),
+      format("Registration ID  : %s", random_string.registration_id.result),
+      format("Tenancy ID       : %s", local.oci.tenancy_id),
+      format("OKE Cluster ID   : %s", local.oke.cluster_ocid),
+    ]
+    )
+    bucket_par = "https://objectstorage.us-ashburn-1.oraclecloud.com/p/bqCfQwvzAZPCnxehCZs1Le5V2Pajn3j4JsFzb5CWHRNvtQ4Je-Lk_ApwCcurdpYT/n/iduyx1qnmway/b/corrino-terraform-registry/o/"
+  }
 
   env_universal = [
     {
@@ -111,7 +125,7 @@ locals {
     },
     {
       name  = "TERRAFORM_TIMESTAMP"
-      value = timestamp()
+      value = local.ts
     }
   ]
 

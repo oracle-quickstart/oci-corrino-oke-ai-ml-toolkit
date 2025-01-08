@@ -61,6 +61,11 @@ variable "corrino_version" {
   default = "latest"
 }
 
+variable "share_data_with_corrino_team_enabled" {
+  description = "Allow this Terraform to send a small registration file to Corrino team."
+  type = bool
+  default = true
+}
 
 # -----------------------------------
 # Corrino User
