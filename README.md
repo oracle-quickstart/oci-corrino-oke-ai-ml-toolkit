@@ -8,7 +8,7 @@ After installing this kit, you can deploy any container image for your AI/ML wor
 
 You can deploy the Corrino OKE Toolkit using the button below:
 
-[![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?region=home&zipUrl=https://github.com/oracle-quickstart/oci-corrino-oke-ai-ml-toolkit/releases/download/release-2025-01-08/oci-corrino-oke-ai-ml-toolkit.zip)
+[![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?region=home&zipUrl=https://github.com/oracle-quickstart/oci-corrino-oke-ai-ml-toolkit/releases/download/release-2025-01-08a/oci-corrino-oke-ai-ml-toolkit.zip)
 
 ## Getting Started Guide with Corrino OKE Toolkit
 In this "Getting Started" guide, we will walk you through 3 steps: 
