@@ -128,6 +128,10 @@ output "corrino_grafana_url" {
   depends_on = [module.oke-quickstart.helm_release_ingress_nginx]
 }
 
+output "grafana_admin_username" {
+  value = "admin"
+}
+
 output "grafana_admin_password" {
   value = module.oke-quickstart.grafana_admin_password
 }
