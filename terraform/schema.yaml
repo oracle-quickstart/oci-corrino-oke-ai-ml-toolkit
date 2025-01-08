@@ -225,7 +225,7 @@ variableGroups:
     - keda_enabled
     visible: true
 
-  - title: "Data Sharing"
+  - title: "Operational Insight Sharing"
     variables:
     - share_data_with_corrino_team_enabled
     visible: true
@@ -811,7 +811,7 @@ variables:
 
   fqdn_domain_mode_selector:
     title: "Domain options"
-    description: "Select which type of domain you want to use for this workspace.  The 'corrino-oci.com' domain is managed by our team.  The 'nip.io' will be insecure but works well for many use cases.  If you have a domain to use, select 'custom'."
+    description: "Select which type of domain you want to use for this workspace.  The 'nip.io' default generates a subdomain based on the public IP address associated with your Workspace's load balancer.  If you have a custom domain to use, select 'custom'.  Finally, the 'corrino-oci.com' option requires that you contact the Corrino team to create a DNS A-Record before it can be used."
     type: enum
     # enumerated values
     enum:
@@ -878,33 +878,41 @@ variables:
   # Cluster Utilities
   grafana_enabled:
     type: boolean
-    title: "Grafana"
+    title: "Install Grafana?"
     description: "Kubernetes Grafana is a solution that provides monitoring, visualization, and analytics for Kubernetes"
 
   prometheus_enabled:
     type: boolean
-    title: "Prometheus"
+    title: "Install Prometheus?"
     description: "Prometheus is an open-source monitoring and alerting system that's often used with Kubernetes to monitor containerized applications, APIs, and workloads"
 
   metrics_server_enabled:
     type: boolean
-    title: "Kubernetes Metrics Server"
+    title: "Install Kubernetes Metrics Server?"
     description: "The Metrics Server collects resource metrics, such as CPU and memory usage, and makes them available for users to query. It also delivers these metrics to the Kubernetes API server for use by other Kubernetes add-ons, such as the Horizontal Pod Autoscaler (HPA) and the Vertical Pod Autoscaler (VPA)"
 
   mlflow_enabled:
     type: boolean
-    title: "MLflow Server"
+    title: "Install MLflow Server?"
     description: "MLflow is a versatile, expandable, open-source platform for managing workflows and artifacts across the machine learning lifecycle. It has built-in integrations with many popular ML libraries, but can be used with any library, algorithm, or deployment tool."
 
   nvidia_dcgm_enabled:
     type: boolean
-    title: "NVIDIA DCGM Metrics Exporter"
+    title: "Install NVIDIA DCGM Metrics Exporter?"
     description: "DCGM-Exporter is an exporter for Prometheus to monitor the health and get metrics from GPUs. It leverages DCGM using Go bindings to collect GPU telemetry and exposes GPU metrics to Prometheus using an http endpoint ( /metrics ). DCGM-Exporter can be used either standalone or deployed as part of the NVIDIA GPU Operator"
 
   keda_enabled:
     type: boolean
-    title: "Kubernetes Event-driven Autoscaler (KEDA)"
+    title: "Install Kubernetes Event-driven Autoscaler (KEDA)?"
     description: "KEDA is a tool that allows users to scale Kubernetes workloads based on events or metrics.  It is an Event Driven Autoscaler. With KEDA, you can drive the scaling of any container in Kubernetes based on the number of events needing to be processed"
+
+  # Data Sharing
+
+  share_data_with_corrino_team_enabled:
+    type: boolean
+    title: "Allow your Corrino workspace to share operational insights with Oracle?"
+    description: "If enabled, your workspace will securely report limited types of operational insights to Oracle for the purpose of improving the overall experience.  Such reporting will never include any private / sensitive information."
+
 
 #  catalog_enabled:
 #    type: boolean
