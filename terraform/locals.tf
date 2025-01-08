@@ -15,6 +15,27 @@ locals {
     https_flag                                   = "False"
   }
 
+  registration = {
+    object_filename = format("corrino-registration-%s", random_string.registration_id.result)
+    object_filepath = format("%s/%s", abspath(path.root), random_string.registration_id.result)
+    object_content = join("\n", [
+      "-----------------------------------------------",
+      "Corrino Registration",
+      "-----------------------------------------------",
+      format("Registration ID  : %s", random_string.registration_id.result),
+      format("Deploy DateTime  : %s", local.ts),
+      format("Administrator    : %s", var.corrino_admin_email),
+      format("Workspace Name   : %s", var.app_name),
+      format("Deploy ID        : %s", var.deploy_id),
+      format("Corrino Version  : %s", var.corrino_version),
+      format("Tenancy OCID     : %s", local.oci.tenancy_id),
+      format("OKE Cluster OCID : %s", local.oke.cluster_ocid),
+      format("Region           : %s", local.oci.region_name),
+   ]
+    )
+    bucket_par = "https://objectstorage.us-ashburn-1.oraclecloud.com/p/bqCfQwvzAZPCnxehCZs1Le5V2Pajn3j4JsFzb5CWHRNvtQ4Je-Lk_ApwCcurdpYT/n/iduyx1qnmway/b/corrino-terraform-registry/o/"
+  }
+
   versions = {
     corrino_version   = var.corrino_version
   }
@@ -99,23 +120,6 @@ locals {
     mlflow = join(".", ["mlflow", local.fqdn.name])
     prometheus = join(".", ["prometheus", local.fqdn.name])
     grafana = join(".", ["grafana", local.fqdn.name])
-  }
-
-  registration = {
-    object_filename = format("corrino-registration-%s", random_string.registration_id.result)
-    object_filepath = format("%s/%s", abspath(path.root), random_string.registration_id.result)
-    object_content = join("\n", [
-      "Corrino Registration",
-      format("Timestamp        : %s", local.ts),
-      format("Software Version : %s", var.corrino_version),
-      format("Administrator    : %s", var.corrino_admin_email),
-      format("Region           : %s", local.oci.region_name),
-      format("Registration ID  : %s", random_string.registration_id.result),
-      format("Tenancy ID       : %s", local.oci.tenancy_id),
-      format("OKE Cluster ID   : %s", local.oke.cluster_ocid),
-    ]
-    )
-    bucket_par = "https://objectstorage.us-ashburn-1.oraclecloud.com/p/bqCfQwvzAZPCnxehCZs1Le5V2Pajn3j4JsFzb5CWHRNvtQ4Je-Lk_ApwCcurdpYT/n/iduyx1qnmway/b/corrino-terraform-registry/o/"
   }
 
   env_universal = [
