@@ -28,6 +28,7 @@ locals {
       format("Workspace Name   : %s", var.app_name),
       format("Deploy ID        : %s", var.deploy_id),
       format("Corrino Version  : %s", var.corrino_version),
+      format("FQDN             : %s", local.fqdn.name),
       format("Tenancy OCID     : %s", local.oci.tenancy_id),
       format("OKE Cluster OCID : %s", local.oke.cluster_ocid),
       format("Region           : %s", local.oci.region_name),
