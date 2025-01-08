@@ -376,8 +376,9 @@ variables:
   app_name:
     type: string
     title: "Workspace name"
-    description: "This is the name that will be assigned for your workspace"
+    description: "This is the name that will be assigned for your workspace.  Please provide name that is between 1 and 6 alphanumeric characters in length."
     required: true
+    pattern: "^([A-Za-z0-9]){1,6}$"
 #    visible:
 #      and:
 #        - create_new_oke_cluster
@@ -385,7 +386,8 @@ variables:
   deploy_id:
     type: string
     title: "Deploy ID"
-    description: "The deployment ID is combined with the workspace for naming of objects it creates"
+    description: "The deployment ID is combined with the workspace name to create a memorable composite name.  Please provide an ID that is between 1 and 6 alphanumeric characters in length."
+    pattern: "^([A-Za-z0-9]){1,6}$"
     required: true
 
 #  show_advanced:
