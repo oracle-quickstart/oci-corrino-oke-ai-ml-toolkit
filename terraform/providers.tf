@@ -1,4 +1,4 @@
-# Copyright (c) 2023, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2025, Oracle and/or its affiliates. All rights reserved.
 # Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
 #
 
@@ -21,13 +21,8 @@ provider "oci" {
   private_key_path = var.private_key_path
 }
 
-# INTERPOLATION EFFORT
-# INTERPOLATION EFFORT
-
-# New configuration to avoid Terraform Kubernetes provider interpolation. https://registry.terraform.io/providers/hashicorp/kubernetes/2.2.0/docs#stacking-with-managed-kubernetes-cluster-resources
-# Currently need to uncheck to refresh (--refresh=false) when destroying or else the terraform destroy will fail
-
 # https://docs.cloud.oracle.com/en-us/iaas/Content/ContEng/Tasks/contengdownloadkubeconfigfile.htm#notes
+
 provider "kubernetes" {
   host                   = local.cluster_endpoint
   cluster_ca_certificate = local.cluster_ca_certificate
@@ -39,22 +34,8 @@ provider "kubernetes" {
   }
 }
 
-# INTERPOLATION EFFORT
-# INTERPOLATION EFFORT
-
-#provider "kubernetes" {
-##  config_path = "${path.module}/generated/kubeconfig"
-##  config_path = "~/.kube/config"
-##  config_path = local_file.oke_kubeconfig.file.destination
-#  config_path = local_file.oke_kubeconfig
-##  config_path = data.oke_kubeconfig
-##  depends_on = [local_file.oke_kubeconfig]
-#}
-
-# INTERPOLATION EFFORT
-# INTERPOLATION EFFORT
-
 # https://docs.cloud.oracle.com/en-us/iaas/Content/ContEng/Tasks/contengdownloadkubeconfigfile.htm#notes
+
 provider "helm" {
   kubernetes {
     host                   = local.cluster_endpoint
@@ -68,14 +49,6 @@ provider "helm" {
   }
 }
 
-#locals {
-#  cluster_endpoint       = yamldecode(data.oci_containerengine_cluster_kube_config.kube_conf.content)["clusters"][0]["cluster"]["server"]
-#  cluster_ca_certificate = base64decode(yamldecode(data.oci_containerengine_cluster_kube_config.kube_conf.content)["clusters"][0]["cluster"]["certificate-authority-data"])
-#  cluster_id             = yamldecode(data.oci_containerengine_cluster_kube_config.kube_conf.content)["users"][0]["user"]["exec"]["args"][4]
-#  cluster_region         = yamldecode(data.oci_containerengine_cluster_kube_config.kube_conf.content)["users"][0]["user"]["exec"]["args"][6]
-#  external_private_endpoint = false
-#}
-
 locals {
   cluster_endpoint       = yamldecode(data.oci_containerengine_cluster_kube_config.oke_special.content)["clusters"][0]["cluster"]["server"]
   cluster_ca_certificate = base64decode(yamldecode(data.oci_containerengine_cluster_kube_config.oke_special.content)["clusters"][0]["cluster"]["certificate-authority-data"])
@@ -84,22 +57,12 @@ locals {
   external_private_endpoint = false
 }
 
-#locals {
-#  cluster_endpoint          = yamldecode(module.corrino.kubeconfig)["clusters"][0]["cluster"]["server"]
-#  external_private_endpoint = false
-#  # cluster_endpoint = (var.cluster_endpoint_visibility == "Private") ? (
-#  #   "https://${module.oke.orm_private_endpoint_oke_api_ip_address}:6443") : (
-#  # yamldecode(module.oke.kubeconfig)["clusters"][0]["cluster"]["server"])
-#  # external_private_endpoint = (var.cluster_endpoint_visibility == "Private") ? true : false
-#  cluster_ca_certificate = base64decode(yamldecode(module.corrino.kubeconfig)["clusters"][0]["cluster"]["certificate-authority-data"])
-#  cluster_id             = yamldecode(module.corrino.kubeconfig)["users"][0]["user"]["exec"]["args"][4]
-#  cluster_region         = yamldecode(module.corrino.kubeconfig)["users"][0]["user"]["exec"]["args"][6]
-#}
-
 # Gets home and current regions
+
 data "oci_identity_tenancy" "tenant_details" {
   tenancy_id = var.tenancy_ocid
 }
+
 data "oci_identity_regions" "home_region" {
   filter {
     name   = "key"
@@ -108,6 +71,7 @@ data "oci_identity_regions" "home_region" {
 
   count = var.home_region != "" ? 0 : 1
 }
+
 locals {
   home_region = var.home_region != "" ? var.home_region : lookup(data.oci_identity_regions.home_region.0.regions.0, "name")
 }

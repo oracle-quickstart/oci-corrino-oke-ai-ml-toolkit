@@ -1,9 +1,15 @@
+# Copyright (c) 2025, Oracle and/or its affiliates. All rights reserved.
+# Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
+#
+
 # Get compartment name for policy
+
 data "oci_identity_compartment" "oci_compartment" {
     id = var.compartment_ocid
 }
 
 # Define the dynamic group
+
 resource "oci_identity_dynamic_group" "dyn_group" {
   provider       = oci.home_region 
   name           = "${var.app_name}-instance-dg"
@@ -14,6 +20,7 @@ resource "oci_identity_dynamic_group" "dyn_group" {
 }
 
 # Define the IAM policy
+
 resource "oci_identity_policy" "oke_instances_tenancy_policy" {
   provider       = oci.home_region
   name           = "${var.app_name}-dg-inst-policy"

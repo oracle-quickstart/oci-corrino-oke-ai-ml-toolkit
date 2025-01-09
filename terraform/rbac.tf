@@ -1,3 +1,7 @@
+# Copyright (c) 2025, Oracle and/or its affiliates. All rights reserved.
+# Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
+#
+
 resource "kubernetes_cluster_role" "corrino_cluster_role" {
   metadata {
     name = "corrino-rbac"

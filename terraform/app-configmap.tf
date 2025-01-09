@@ -1,8 +1,11 @@
+# Copyright (c) 2025, Oracle and/or its affiliates. All rights reserved.
+# Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
+#
+
 resource "kubernetes_config_map" "corrino-configmap" {
   metadata {
     name = "corrino-configmap"
   }
-
 
   data = {
     APP_IMAGE_URI                                = local.app.backend_image_uri
