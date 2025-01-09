@@ -1,3 +1,7 @@
+# Copyright (c) 2025, Oracle and/or its affiliates. All rights reserved.
+# Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
+#
+
 resource "kubernetes_job" "corrino_migration_job" {
   metadata {
     name      = "corrino-migration-job"
@@ -93,7 +97,5 @@ resource "kubernetes_job" "corrino_migration_job" {
   }
 
   depends_on = [kubernetes_job.wallet_extractor_job, kubernetes_config_map.corrino-configmap]
-
-  #  count = var.mushop_mock_mode_all ? 0 : 1
   count = 1
 }

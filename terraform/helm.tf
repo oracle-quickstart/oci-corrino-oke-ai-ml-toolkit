@@ -1,11 +1,6 @@
-
-#    REPO_NAME="community-charts"
-#    CHART_CANONICAL_NAME="mlflow"
-#    CHART_URL='https://community-charts.github.io/helm-charts'
-#    RELEASE_NAME="mlflow"
-#    NAMESPACE="default"
-#    COMPONENT="mlflow"
-
+# Copyright (c) 2025, Oracle and/or its affiliates. All rights reserved.
+# Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
+#
 
 resource "helm_release" "mlflow" {
   name       = "mlflow"
@@ -16,13 +11,6 @@ resource "helm_release" "mlflow" {
 
   count = var.mlflow_enabled ? 1 : 0
 }
-
-#    REPO_NAME="nvidia"
-#    CHART_CANONICAL_NAME="gpu-operator"
-#    CHART_URL="https://helm.ngc.nvidia.com/nvidia"
-#    NAMESPACE="gpu-operator"
-#    RELEASE_NAME="nvidia-dcgm"
-#    COMPONENT="nvidia_dcgm_er"
 
 resource "helm_release" "nvidia-dcgm" {
   name       = "nvidia-dcgm"

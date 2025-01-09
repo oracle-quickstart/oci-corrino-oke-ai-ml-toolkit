@@ -1,4 +1,4 @@
-# Copyright (c) 2020, 2021 Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2025, Oracle and/or its affiliates. All rights reserved.
 # Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
 #
 
@@ -7,6 +7,7 @@
 ##**************************************************************************
 
 ### creates an ATP database
+
 resource "oci_database_autonomous_database" "autonomous_database" {
   admin_password           = random_string.autonomous_database_admin_password.result
   compartment_id           = var.compartment_ocid
@@ -39,7 +40,6 @@ resource "oci_database_autonomous_database_wallet" "autonomous_database_wallet" 
 resource "kubernetes_secret" "oadb-admin" {
   metadata {
     name      = var.oadb_admin_secret_name
-#    namespace = kubernetes_namespace.mushop_namespace.id
   }
   data = {
     oadb_admin_pw = random_string.autonomous_database_admin_password.result
@@ -47,13 +47,11 @@ resource "kubernetes_secret" "oadb-admin" {
   type = "Opaque"
 
   count = 1
-#  depends_on = [oci_database_autonomous_database.autonomous_database]
 }
 
 resource "kubernetes_secret" "oadb-connection" {
   metadata {
     name      = var.oadb_connection_secret_name
-#    namespace = kubernetes_namespace.mushop_namespace.id
   }
   data = {
     oadb_wallet_pw = random_string.autonomous_database_wallet_password.result
@@ -62,15 +60,13 @@ resource "kubernetes_secret" "oadb-connection" {
   type = "Opaque"
 
   count = 1
-#  depends_on = [oci_database_autonomous_database.autonomous_database]
-
 }
 
-### OADB Wallet extraction <>
+### OADB Wallet extraction
+
 resource "kubernetes_secret" "oadb_wallet_zip" {
   metadata {
     name      = "oadb-wallet-zip"
-#    namespace = kubernetes_namespace.mushop_namespace.id
   }
   data = {
     wallet = oci_database_autonomous_database_wallet.autonomous_database_wallet[0].content
@@ -78,8 +74,6 @@ resource "kubernetes_secret" "oadb_wallet_zip" {
   type = "Opaque"
 
   count = 1
-#  depends_on = [oci_database_autonomous_database.autonomous_database,oci_database_autonomous_database_wallet.autonomous_database_wallet]
-
 }
 
 resource "kubernetes_cluster_role" "secret_creator" {
@@ -92,7 +86,6 @@ resource "kubernetes_cluster_role" "secret_creator" {
     verbs      = ["create","delete"]
   }
 
-#  count = var.mushop_mock_mode_all ? 0 : 1
   count = 1
 }
 
@@ -108,44 +101,37 @@ resource "kubernetes_cluster_role_binding" "wallet_extractor_crb" {
   subject {
     kind      = "ServiceAccount"
     name      = kubernetes_service_account.wallet_extractor_sa[0].metadata.0.name
-#    namespace = kubernetes_namespace.mushop_namespace.id
   }
 
-#  count = var.mushop_mock_mode_all ? 0 : 1
   count = 1
 }
 
 resource "kubernetes_service_account" "wallet_extractor_sa" {
   metadata {
     name      = "wallet-extractor-sa"
-#    namespace = kubernetes_namespace.mushop_namespace.id
   }
   secret {
     name = "wallet-extractor-sa-token"
   }
 
-#  count = var.mushop_mock_mode_all ? 0 : 1
   count = 1
 }
 
 resource "kubernetes_secret" "wallet_extractor_sa" {
   metadata {
     name      = "wallet-extractor-sa-token"
-#    namespace = kubernetes_namespace.mushop_namespace.id
     annotations = {
       "kubernetes.io/service-account.name" = kubernetes_service_account.wallet_extractor_sa.0.metadata.0.name
     }
   }
   type = "kubernetes.io/service-account-token"
 
-#  count = var.mushop_mock_mode_all ? 0 : 1
   count = 1
 }
 
 resource "kubernetes_job" "wallet_extractor_job" {
   metadata {
     name      = "wallet-extractor-job"
-#    namespace = kubernetes_namespace.mushop_namespace.id
   }
   spec {
     template {
@@ -212,9 +198,6 @@ resource "kubernetes_job" "wallet_extractor_job" {
     update = "20m"
   }
 
-#  depends_on = [kubernetes_deployment.cluster_autoscaler_deployment]
   depends_on = [oci_database_autonomous_database_wallet.autonomous_database_wallet]
-
-#  count = var.mushop_mock_mode_all ? 0 : 1
   count = 1
 }
