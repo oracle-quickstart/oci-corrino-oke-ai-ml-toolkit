@@ -4,7 +4,7 @@
 
 module "oke-quickstart" {
 #  source = "github.com/oracle-quickstart/terraform-oci-corrino?ref=0.9.0"
-  source = "./modules/oci"
+  source = "./modules/corrino"
 
   providers = {
     oci             = oci
