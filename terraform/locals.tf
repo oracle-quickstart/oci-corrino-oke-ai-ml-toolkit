@@ -1,3 +1,7 @@
+# Copyright (c) 2025, Oracle and/or its affiliates. All rights reserved.
+# Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
+#
+
 locals {
 
   ts = timestamp()
@@ -308,22 +312,4 @@ locals {
   ]
 
 }
-
-#   kubectl get secret --namespace cluster-tools grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
-#  grafana_admin_password  = var.grafana_enabled ? data.kubernetes_secret.grafana_password.0.data.admin-password : "Grafana_Not_Deployed"
-
-#locals {
-#  external_ip = var.ingress_nginx_enabled ? kubernetes_ingress_v1.corrino_cp_ingress.0.status.0.load_balancer.0.ingress.0.ip : "#Ingress_Not_Deployed"
-#  corrino_portal_ip = var.ingress_nginx_enabled ? kubernetes_ingress_v1.corrino_portal_ingress.0.status.0.load_balancer.0.ingress.0.ip : "#Ingress_Not_Deployed"
-#  grafana_ip = var.ingress_nginx_enabled ? kubernetes_ingress_v1.grafana_ingress.0.status.0.load_balancer.0.ingress.0.ip : "#Ingress_Not_Deployed"
-#  prometheus_ip = var.ingress_nginx_enabled ? kubernetes_ingress_v1.prometheus_ingress.0.status.0.load_balancer.0.ingress.0.ip : "#Ingress_Not_Deployed"
-#  mlflow_ip = var.ingress_nginx_enabled ? kubernetes_ingress_v1.mlflow_ingress.0.status.0.load_balancer.0.ingress.0.ip : "#Ingress_Not_Deployed"
-#  mushop_ingress_ip       = var.ingress_nginx_enabled ? data.kubernetes_service.mushop_ingress.0.status.0.load_balancer.0.ingress.0.ip : "#Ingress_Not_Deployed"
-#  mushop_ingress_ip_hex   = var.ingress_nginx_enabled ? join("", formatlist("%02x", split(".", data.kubernetes_service.mushop_ingress.0.status.0.load_balancer.0.ingress.0.ip))) : "#Ingress_Not_Deployed"
-#  mushop_ingress_hostname = var.ingress_nginx_enabled ? (data.kubernetes_service.mushop_ingress.0.status.0.load_balancer.0.ingress.0.hostname == "" ? local.mushop_ingress_ip : data.kubernetes_service.mushop_ingress.0.status.0.load_balancer.0.ingress.0.hostname) : "#Ingress_Not_Deployed"
-#  mushop_url_protocol     = var.ingress_tls ? "https" : "http"
-#  grafana_admin_password  = var.grafana_enabled ? data.kubernetes_secret.mushop_utils_grafana.0.data.admin-password : "Grafana_Not_Deployed"
-#}
-
-
 

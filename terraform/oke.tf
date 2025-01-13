@@ -1,10 +1,10 @@
-# Copyright (c) 2023 Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2025, Oracle and/or its affiliates. All rights reserved.
 # Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
 #
 
 module "oke-quickstart" {
 #  source = "github.com/oracle-quickstart/terraform-oci-corrino?ref=0.9.0"
-  source = "./modules/corrino"
+  source = "./modules/oci"
 
   providers = {
     oci             = oci
