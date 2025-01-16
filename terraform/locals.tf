@@ -77,6 +77,7 @@ locals {
     loopback = "127.0.0.1"
     loopback_origin = "http://127.0.0.1"
     external_ip = var.ingress_nginx_enabled ? data.kubernetes_service.ingress_nginx_controller_service.0.status.0.load_balancer.0.ingress.0.ip : "#Ingress_Not_Deployed"
+    oke_node_subnet_id = var.existent_oke_nodes_subnet_ocid
   }
 
   registry = {
@@ -251,6 +252,11 @@ locals {
       name            = "OKE_CLUSTER_ID"
       config_map_name = "corrino-configmap"
       config_map_key  = "OKE_CLUSTER_ID"
+    },
+    {
+      name = "OKE_NODE_SUBNET_ID"
+      config_map_name = "corrino-configmap"
+      config_map_key  = "OKE_NODE_SUBNET_ID"
     },
     {
       name            = "PUBLIC_ENDPOINT_BASE"
