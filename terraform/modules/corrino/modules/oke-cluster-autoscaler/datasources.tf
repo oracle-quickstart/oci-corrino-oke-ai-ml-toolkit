@@ -3,6 +3,9 @@
 # 
 
 # Gets supported Kubernetes versions for node pools
-data "oci_containerengine_node_pool_option" "node_pool" {
-  node_pool_option_id = "all"
-}
+# data "oci_containerengine_node_pool_option" "node_pool" {
+#   node_pool_option_id = "all"
+# }
+# data "oci_containerengine_node_pool_option" "node_pool" {
+#   node_pool_option_id = var.existent_oke_cluster_id
+# }

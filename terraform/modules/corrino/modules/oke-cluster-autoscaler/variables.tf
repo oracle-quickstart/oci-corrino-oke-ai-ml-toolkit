@@ -59,6 +59,6 @@ variable "oke_node_pools" {
 variable "region" {}
 
 # Get OKE options
-locals {
-  node_pool_k8s_latest_version = reverse(sort(data.oci_containerengine_node_pool_option.node_pool.kubernetes_versions))[0]
-}
+# locals {
+#   node_pool_k8s_latest_version = reverse(sort(data.oci_containerengine_node_pool_option.node_pool.kubernetes_versions))[0]
+# }

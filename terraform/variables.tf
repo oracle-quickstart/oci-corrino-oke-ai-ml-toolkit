@@ -38,6 +38,10 @@ variable "home_region" {
   default = ""
 }
 
+variable "os_namespace_name" {
+  default = ""
+}
+
 # -----------------------------------
 # Corrino App
 # -----------------------------------
@@ -64,19 +68,19 @@ variable "deploy_id" {
 
 variable "policy_creation_enabled" {
   description = "Create policies to enable apps to view and manage compute resources. If selected and user does not have permissions to create policies in root tenancy, build will fail."
-  type = bool
-  default = false
+  type        = bool
+  default     = false
 }
 
 variable "corrino_version" {
-  type = string
+  type    = string
   default = "latest"
 }
 
 variable "share_data_with_corrino_team_enabled" {
   description = "Allow this Terraform to send a small registration file to Corrino team."
-  type = bool
-  default = true
+  type        = bool
+  default     = true
 }
 
 # -----------------------------------
@@ -84,18 +88,18 @@ variable "share_data_with_corrino_team_enabled" {
 # -----------------------------------
 
 variable "corrino_admin_username" {
-    description = "The user name used to login to Corrino"
-    type = string
+  description = "The user name used to login to Corrino"
+  type        = string
 }
 
 variable "corrino_admin_nonce" {
-    description = "The password used to login to Corrino"
-    type = string
+  description = "The password used to login to Corrino"
+  type        = string
 }
 
 variable "corrino_admin_email" {
-    description = "The email address used to identify the Corrino user"
-    type = string
+  description = "The email address used to identify the Corrino user"
+  type        = string
 }
 
 # -----------------------------------
@@ -108,14 +112,14 @@ variable "corrino_admin_email" {
 #    - custom
 
 variable "fqdn_domain_mode_selector" {
-    type = string
-    default = "nip.io"
+  type    = string
+  default = "nip.io"
 }
 
 variable "fqdn_custom_domain" {
-    description = "Your custom FQDN can be a simple top-level domain or an A-Record for a top-level domain.  Either method requires that you modify the domain registrar records to send traffic to the load balancer public IP that is provisioned for you."
-    type = string
-    default = ""
+  description = "Your custom FQDN can be a simple top-level domain or an A-Record for a top-level domain.  Either method requires that you modify the domain registrar records to send traffic to the load balancer public IP that is provisioned for you."
+  type        = string
+  default     = ""
 }
 
 # -----------------------------------
@@ -123,35 +127,35 @@ variable "fqdn_custom_domain" {
 # -----------------------------------
 
 variable "metrics_server_enabled" {
-  type = bool
+  type    = bool
   default = true
 }
 variable "ingress_nginx_enabled" {
-  type = bool
+  type    = bool
   default = true
 }
 variable "cert_manager_enabled" {
-  type = bool
+  type    = bool
   default = true
 }
 variable "prometheus_enabled" {
-  type = bool
+  type    = bool
   default = true
 }
 variable "grafana_enabled" {
-  type = bool
+  type    = bool
   default = true
 }
 variable "mlflow_enabled" {
-  type = bool
+  type    = bool
   default = true
 }
 variable "nvidia_dcgm_enabled" {
-  type = bool
+  type    = bool
   default = true
 }
 variable "keda_enabled" {
-  type = bool
+  type    = bool
   default = true
 }
 

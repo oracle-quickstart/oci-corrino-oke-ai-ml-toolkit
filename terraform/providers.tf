@@ -77,10 +77,10 @@ provider "helm" {
 #}
 
 locals {
-  cluster_endpoint       = yamldecode(data.oci_containerengine_cluster_kube_config.oke_special.content)["clusters"][0]["cluster"]["server"]
-  cluster_ca_certificate = base64decode(yamldecode(data.oci_containerengine_cluster_kube_config.oke_special.content)["clusters"][0]["cluster"]["certificate-authority-data"])
-  cluster_id             = yamldecode(data.oci_containerengine_cluster_kube_config.oke_special.content)["users"][0]["user"]["exec"]["args"][4]
-  cluster_region         = yamldecode(data.oci_containerengine_cluster_kube_config.oke_special.content)["users"][0]["user"]["exec"]["args"][6]
+  cluster_endpoint          = yamldecode(data.oci_containerengine_cluster_kube_config.oke_special.content)["clusters"][0]["cluster"]["server"]
+  cluster_ca_certificate    = base64decode(yamldecode(data.oci_containerengine_cluster_kube_config.oke_special.content)["clusters"][0]["cluster"]["certificate-authority-data"])
+  cluster_id                = yamldecode(data.oci_containerengine_cluster_kube_config.oke_special.content)["users"][0]["user"]["exec"]["args"][4]
+  cluster_region            = yamldecode(data.oci_containerengine_cluster_kube_config.oke_special.content)["users"][0]["user"]["exec"]["args"][6]
   external_private_endpoint = false
 }
 
@@ -97,17 +97,18 @@ locals {
 #}
 
 # Gets home and current regions
-data "oci_identity_tenancy" "tenant_details" {
-  tenancy_id = var.tenancy_ocid
-}
-data "oci_identity_regions" "home_region" {
-  filter {
-    name   = "key"
-    values = [data.oci_identity_tenancy.tenant_details.home_region_key]
-  }
+# data "oci_identity_tenancy" "tenant_details" {
+#   tenancy_id = var.tenancy_ocid
+# }
+# data "oci_identity_regions" "home_region" {
+#   filter {
+#     name   = "key"
+#     values = [data.oci_identity_tenancy.tenant_details.home_region_key]
+#   }
 
-  count = var.home_region != "" ? 0 : 1
-}
+#   count = var.home_region != "" ? 0 : 1
+# }
 locals {
-  home_region = var.home_region != "" ? var.home_region : lookup(data.oci_identity_regions.home_region.0.regions.0, "name")
+  #home_region = var.home_region != "" ? var.home_region : lookup(data.oci_identity_regions.home_region.0.regions.0, "name")
+  home_region = var.home_region
 }
