@@ -8,24 +8,11 @@ We identified 3 areas of friction when onboarding on to OCI bare metal and VM in
 2.	**Challenges making software stack decisions**: Data scientists and ML engineers today face difficulties selecting the appropriate software stack for their GPU workloads, which delays onboarding and monetization of OCI compute resources. ML Engineers need to select the right software packages and regularly update those packages to avoid compatibility issues. For example, when the OS automatically updates without updating the GPU drivers, packages like PyTorch may fail to communicate with CUDA drivers. The difficulty in selecting suitable models and optimization frameworks, such as deciding between TensorFlow and PyTorch for training or which quantization techniques to use for optimizing model size, further complicates the onboarding process.
 3.	**Observability and monitoring**: MLOps, infrastructure management and monitoring add another layer of complexity. Enterprises need to identify and deploy models on Kubernetes clusters with auto-scaling in production. After deploying the models, they need to monitor metrics like GPU usage, API calls, and throughput. Installation and management of tools like Prometheus, MLFlow, and Grafana for monitoring require Kubernetes expertise. Frequent technical issues related to Kubernetes deployment and management result in downtime, affecting productivity and time-to-market.
 
-### Solution
+### What is Corrino and how does it help?
 Corrino targets to deliver a no-code workload deployment workflow for the most popular Gen AI workloads by making hardware recommendations, OCI compute platform decisions, and software stack decisions for the customer.
 1. **Validated hardware recommmendations for running common GenAI workloads**: First, Corrino provides pre-packaged recipes for running AI workloads with specific hardware recommendations. For example, a recipe for running cost-optimized inference could recommend Ampere A1 CPUs instead of H100 GPUs. These validated recommendations reduce the need for hardware experimentation and performance benchmarking, allowing enterprises to focus on their core business objectives rather than navigating complex hardware setups.
 2. **Opinionated and pre-packaged software stack for one-click deployment of GenAI workloads to your GPUs**: To tackle challenges around the software stack, Corrino recipes come with a default, opinionated software stack tailored to the specific use case. For example, a recipe for running RAG would come pre-packaged with essential frameworks (e.g., LangChain), instruction-tuned models, embedding models, and vector DB connections. Once deployed, the user is provided API endpoints to run interface. This streamlining not only accelerates time-to-value but also minimizes compatibility issues and ongoing maintenance. Users can also customize certain attributes of recipes (e.g. changing node counts for inference). Users who need more control can use a custom template with basic pre-packaged software, enabling them to install their own frameworks and software.
 3. **Out-of-the-box observability and easy auto-scaling for mission-critical workloads**: To address the third issue of MLOps and infrastructure management, Corrino automates these tasks based on user preferences. For example, Corrino allows users to select their preferred instance type and applies auto-scaling settings per best practices, which can be further customized. Also, necessary add-ons like Prometheus, Grafana, KEDA, and MLFlow are automatically installed by Corrino. Users can access these tools directly from the OCI console, simplifying the complex process of infrastructure management and monitoring.
-
-### What is in this Repo
-The Corrino OKE Toolkit is a comprehensive collection of Terraform scripts which provisions the following resources:
-1. An ATP database instance
-2. Grafana and Prometheus for infrastructure monitoring
-3. MLFlow for tracking experiment-level metrics
-4. KEDA for dynamic auto-scaling based on AI/ML workload metrics rather than infrastructure metrics
-5. Corrino’s front-end and back-end containers deployed to an OKE cluster of your choice
-
-This combination provides a scalable, monitored environment optimized for easy deployment and management of AI/ML workloads. After installing this kit, you will be able to:
-1. Access Corrino's portal and API
-2. Deploy and undeploy an inference or training recipe using Corrino's portal or API
-3. Deploy any container image for your AI/ML workloads by simply pointing to the container image
 
 ### What are Recipes?
 Recipes are not just terraform templates. Recipes provide the complete application stack with opinionated hardware recommendations, which have been validated by OCI and provide consistent, repeatable, and quick deployments of AI workloads with observability baked in.
@@ -46,6 +33,19 @@ When deploying recipes, you can configure:
 5. Fine-tuning hyperparameters (e.g. learning rate, number of epochs)
 6. And more! Read more about recipe configuration and see sample recipe configurations [here](https://github.com/vishnukam3/oci-oke-ai-ml-sample-recipes/tree/main).
 
+### What is in this repo?
+The Corrino OKE Toolkit is a comprehensive collection of Terraform scripts which provisions the following resources:
+1. An ATP database instance
+2. Grafana and Prometheus for infrastructure monitoring
+3. MLFlow for tracking experiment-level metrics
+4. KEDA for dynamic auto-scaling based on AI/ML workload metrics rather than infrastructure metrics
+5. Corrino’s front-end and back-end containers deployed to an OKE cluster of your choice
+
+This combination provides a scalable, monitored environment optimized for easy deployment and management of AI/ML workloads. After installing this kit, you will be able to:
+1. Access Corrino's portal and API
+2. Deploy and undeploy an inference or training recipe using Corrino's portal or API
+3. Deploy any container image for your AI/ML workloads by simply pointing to the container image
+
 ## Getting Started
 In this "Getting Started" guide, we will walk you through 3 steps: 
 1. Installing Corrino in your tenancy and accessing Corrino's UI/API
@@ -54,6 +54,7 @@ In this "Getting Started" guide, we will walk you through 3 steps:
 
 ### Pre-requisites
 1. You must have an OKE cluster in your tenancy with the following configuration ([intructions for creating a new OKE cluster](https://docs.oracle.com/en-us/iaas/Content/ContEng/Tasks/create-cluster.htm))
+
 | Configuration Field | Value
 |-----------|------
 | Compartment | Same as the compartment to which you are installing Corrino
@@ -71,7 +72,9 @@ In this "Getting Started" guide, we will walk you through 3 steps:
 
 ### Step 1: Install and Access Corrino 
 1. Click on the “Deploy to Oracle Cloud” button below:
+
 [![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?region=home&zipUrl=https://github.com/oracle-quickstart/oci-corrino-oke-ai-ml-toolkit/releases/download/release-2025-01-16/oci-corrino-oke-ai-ml-toolkit.zip)
+
 2. Follow the on-screen instructions on the Create Stack screen
 3. Select “Run apply” in the “Review” section and click on Create
 4. Monitor the deployment status by going to Resource Manager -> Stacks in OCI Console.
@@ -109,6 +112,7 @@ Undeploy the recipe to free up the GPU again by going to the `<your-corrino-api-
 
 ### Additional Resources
 Corrino API Documentation: Coming Soon 
+
 Corrino Sample recipes: https://github.com/vishnukam3/oci-oke-ai-ml-sample-recipes 
 
 ## Policies 
