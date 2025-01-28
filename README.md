@@ -1,3 +1,4 @@
+
 # Corrino OKE Toolkit for AI/ML Workloads
 
 ## About Corrino
@@ -134,6 +135,22 @@ Corrino API Documentation: Coming Soon
 
 Corrino Sample recipes: https://github.com/vishnukam3/oci-oke-ai-ml-sample-recipes
 
+
+## Ways to Access Corrino
+Once Corrino has been deployed into your tenancy via Resource Manager, you can work with Corrino two ways:
+
+**Option #1: API Access:**
+ 1. Inside the OCI Console > Resource Manager, select the stack you created for Corrino
+ 2. Go to "Variables" on the left-hand side under Resources section and copy the values for "corrino_admin_username" and "corrino_admin_nonce"
+ 3. Go to the "Application Information" tab under Stack Details
+ 4. Copy the "Corrino API URL" into your browser
+ 5. Upon first access, you must login - providing the "corrino_admin_username" for username and "corrino_admin_nonce" for password
+ 6. Now, you can view and access all API endpoints for your instance of Corrino
+
+
+**Option #2: Corrino UI Portal (In Progress):**
+For now, we recommend working with Corrino via the API server. An updated UI experience is being developed currently. 
+
 ## IAM Policies
 
 Many Corrino users choose to give full admin access to Corrino when using it for the first time or developing a POC, and making the permissions more granular overtime. We provide you with two different variations of IAM Policies for you to choose from - depending on your situation.
@@ -264,4 +281,4 @@ Follow these steps to completely remove all provisioned resources:
 
 ## Questions
 
-If you have an issue or a question, please contact Vishnu Kammari at vishnu.kammari@oracle.com.
+If you have an issue or a question, please contact Vishnu Kammari at vishnu.kammari@oracle.com or Grant Neuman at grant.neuman@oracle.com.
