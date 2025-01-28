@@ -18,7 +18,8 @@ variable "private_key_path" {
   default = ""
 }
 variable "home_region" {
-  default = ""
+  description = "The home region of your tenancy (in the format such as us-ashburn-1 or eu-frankfurt-1, etc.)"
+  default     = ""
 }
 
 

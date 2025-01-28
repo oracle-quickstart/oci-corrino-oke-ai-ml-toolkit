@@ -3,6 +3,10 @@
 # 
 
 # OKE Variables
+variable "existent_oke_cluster_id" {
+  default     = ""
+  description = "Using existent OKE Cluster. Only the application and services will be provisioned. If select cluster autoscaler feature, you need to get the node pool id and enter when required"
+}
 variable "oke_cluster_ocid" {
   description = "OKE cluster OCID"
   type        = string

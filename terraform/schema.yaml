@@ -84,6 +84,10 @@ variableGroups:
     - region
     visible: false
 
+  - title: "Tenancy Level Details"
+    variables:
+    - home_region
+    - os_namespace_name
 
   - title: "Corrino Workspace"
     variables:
@@ -462,7 +466,16 @@ variables:
     visible: false
 
   home_region:
-    visible: false
+    type: oci:identity:region:name
+    title: "Home Region"
+    description: "The home region of the tenancy"
+    required: true
+
+  os_namespace_name:
+    type: string
+    title: "Object Storage Namespace for Tenancy"
+    visible: true
+    description: "You can leave blank if your user has full admin access to tenancy"
 
   user_ocid:
     visible: false

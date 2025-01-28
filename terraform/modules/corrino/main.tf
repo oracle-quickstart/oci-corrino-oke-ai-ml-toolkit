@@ -108,6 +108,7 @@ module "oke_node_pools" {
   oke_cluster_ocid             = module.oke.oke_cluster_ocid
   oke_cluster_compartment_ocid = local.oke_compartment_ocid
   create_new_node_pool         = var.create_new_oke_cluster
+  existent_oke_cluster_id      = var.existent_oke_cluster_id
 
   # OKE Worker Nodes (Compute)
   node_pool_name                            = each.value.node_pool_name

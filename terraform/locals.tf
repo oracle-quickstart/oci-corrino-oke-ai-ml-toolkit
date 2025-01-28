@@ -3,10 +3,10 @@ locals {
   ts = timestamp()
 
   app = {
-    backend_service_name                         = "corrino-cp"
-    backend_service_name_origin                  = "http://corrino-cp"
-    backend_service_name_ingress                 = "corrino-cp-ingress"
-#    backend_image_uri_base                       = join(":", [local.ocir.base_uri, local.ocir.backend_image])
+    backend_service_name         = "corrino-cp"
+    backend_service_name_origin  = "http://corrino-cp"
+    backend_service_name_ingress = "corrino-cp-ingress"
+    #    backend_image_uri_base                       = join(":", [local.ocir.base_uri, local.ocir.backend_image])
     backend_image_uri                            = format("${local.ocir.base_uri}:${local.ocir.backend_image}-${local.versions.corrino_version}")
     frontend_image_uri                           = join(":", [local.ocir.base_uri, local.ocir.frontend_image])
     recipe_bucket_name                           = "corrino-recipes"
@@ -32,22 +32,22 @@ locals {
       format("Tenancy OCID     : %s", local.oci.tenancy_id),
       format("OKE Cluster OCID : %s", local.oke.cluster_ocid),
       format("Region           : %s", local.oci.region_name),
-   ]
+      ]
     )
     bucket_par = "https://objectstorage.us-ashburn-1.oraclecloud.com/p/bqCfQwvzAZPCnxehCZs1Le5V2Pajn3j4JsFzb5CWHRNvtQ4Je-Lk_ApwCcurdpYT/n/iduyx1qnmway/b/corrino-terraform-registry/o/"
   }
 
   versions = {
-    corrino_version   = var.corrino_version
+    corrino_version = var.corrino_version
   }
 
   oke = {
-    deploy_id = var.deploy_id
+    deploy_id    = var.deploy_id
     cluster_ocid = var.existent_oke_cluster_id
   }
 
   db = {
-    app_name_for_db     = regex("[[:alnum:]]{1,10}", var.app_name)
+    app_name_for_db = regex("[[:alnum:]]{1,10}", var.app_name)
   }
 
   addon = {
@@ -64,25 +64,25 @@ locals {
 
   oci = {
     tenancy_id        = var.tenancy_ocid
-    tenancy_namespace = data.oci_objectstorage_namespace.ns.namespace
-    namespace_name    = data.oci_objectstorage_namespace.ns.namespace
+    tenancy_namespace = (data.oci_objectstorage_namespace.ns.namespace == null) ? var.os_namespace_name : data.oci_objectstorage_namespace.ns.namespace
+    namespace_name    = (data.oci_objectstorage_namespace.ns.namespace == null) ? var.os_namespace_name : data.oci_objectstorage_namespace.ns.namespace
     compartment_id    = var.compartment_ocid
     oke_cluster_id    = local.oke.cluster_ocid
     region_name       = var.region
   }
 
   network = {
-    localhost = "localhost"
-    localhost_origin = "http://localhost"
-    loopback = "127.0.0.1"
-    loopback_origin = "http://127.0.0.1"
-    external_ip = var.ingress_nginx_enabled ? data.kubernetes_service.ingress_nginx_controller_service.0.status.0.load_balancer.0.ingress.0.ip : "#Ingress_Not_Deployed"
+    localhost          = "localhost"
+    localhost_origin   = "http://localhost"
+    loopback           = "127.0.0.1"
+    loopback_origin    = "http://127.0.0.1"
+    external_ip        = var.ingress_nginx_enabled ? data.kubernetes_service.ingress_nginx_controller_service.0.status.0.load_balancer.0.ingress.0.ip : "#Ingress_Not_Deployed"
     oke_node_subnet_id = var.existent_oke_nodes_subnet_ocid
   }
 
   registry = {
-    subdomain = "iad.ocir.io"
-    name      = "corrino-devops-repository"
+    subdomain                = "iad.ocir.io"
+    name                     = "corrino-devops-repository"
     source_tenancy_namespace = "iduyx1qnmway"
   }
 
@@ -108,20 +108,20 @@ locals {
   }
 
   fqdn = {
-    name = var.fqdn_domain_mode_selector == local.domain.custom_mode ? local.domain.custom_fqdn : ( var.fqdn_domain_mode_selector == local.domain.nip_io_mode ? local.domain.nip_io_fqdn : local.domain.corrino_oci_fqdn )
-    is_nip_io_mode = var.fqdn_domain_mode_selector == local.domain.nip_io_mode ? true : false
+    name                = var.fqdn_domain_mode_selector == local.domain.custom_mode ? local.domain.custom_fqdn : (var.fqdn_domain_mode_selector == local.domain.nip_io_mode ? local.domain.nip_io_fqdn : local.domain.corrino_oci_fqdn)
+    is_nip_io_mode      = var.fqdn_domain_mode_selector == local.domain.nip_io_mode ? true : false
     is_corrino_com_mode = var.fqdn_domain_mode_selector == local.domain.corrino_oci_mode ? true : false
-    is_custom_mode = var.fqdn_domain_mode_selector == local.domain.custom_mode ? true : false
+    is_custom_mode      = var.fqdn_domain_mode_selector == local.domain.custom_mode ? true : false
   }
 
   public_endpoint = {
-    api = join(".", ["api", local.fqdn.name])
+    api                 = join(".", ["api", local.fqdn.name])
     api_origin_insecure = join(".", ["http://api", local.fqdn.name])
-    api_origin_secure = join(".", ["https://api", local.fqdn.name])
-    portal = join(".", ["portal", local.fqdn.name])
-    mlflow = join(".", ["mlflow", local.fqdn.name])
-    prometheus = join(".", ["prometheus", local.fqdn.name])
-    grafana = join(".", ["grafana", local.fqdn.name])
+    api_origin_secure   = join(".", ["https://api", local.fqdn.name])
+    portal              = join(".", ["portal", local.fqdn.name])
+    mlflow              = join(".", ["mlflow", local.fqdn.name])
+    prometheus          = join(".", ["prometheus", local.fqdn.name])
+    grafana             = join(".", ["grafana", local.fqdn.name])
   }
 
   env_universal = [
@@ -159,8 +159,8 @@ locals {
 
   env_adb_access = [
     {
-      name   = "ADB_USER"
-      value  = var.oadb_admin_user_name
+      name  = "ADB_USER"
+      value = var.oadb_admin_user_name
     },
     {
       name  = "TNS_ADMIN"
@@ -254,7 +254,7 @@ locals {
       config_map_key  = "OKE_CLUSTER_ID"
     },
     {
-      name = "OKE_NODE_SUBNET_ID"
+      name            = "OKE_NODE_SUBNET_ID"
       config_map_name = "corrino-configmap"
       config_map_key  = "OKE_NODE_SUBNET_ID"
     },

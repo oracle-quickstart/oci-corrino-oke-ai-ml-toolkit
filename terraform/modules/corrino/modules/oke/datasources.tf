@@ -11,7 +11,7 @@ data "oci_containerengine_clusters" "oke" {
 
 # Gets a list of Availability Domains
 data "oci_identity_availability_domains" "ADs" {
-  compartment_id = var.tenancy_ocid
+  compartment_id = local.oke_compartment_ocid
 }
 
 # Gets kubeconfig
