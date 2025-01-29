@@ -1,4 +1,3 @@
-
 # Corrino OKE Toolkit for AI/ML Workloads
 
 ## About Corrino
@@ -135,21 +134,30 @@ Corrino API Documentation: Coming Soon
 
 Corrino Sample recipes: https://github.com/vishnukam3/oci-oke-ai-ml-sample-recipes
 
+## Features
+
+| Feature              | Description                                                                                                                                                                                                                                                                                               | Instructions                              |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
+| Customizing Recipes  | Existing recipes provided by the Corrino team can be customized to fit your specific AI workload needs                                                                                                                                                                                                    | [Documentation](docs/customizing_recipes) |
+| Shared Node Pool     | By default, infrastructure is provisioned and terminated with each Corrino recipe deployment. For workloads requiring longer-lived resources (e.g., Bare Metal machines), you can use shared node pools to deploy multiple recipes on shared infrastructure or keep resources running after undeployment. | [Documentation](docs/customizing_recipes) |
+| File Storage Service | Use OCI's File Storage Service to store and supply the model weights for Corrino recipe deployments.                                                                                                                                                                                                      | [Documentation](docs/customizing_recipes) |
+| Autoscaling          | Adjust the number of nodes in your deployment based on infrastructure and/or application metrics to prevent resource over utilization and under utilization.                                                                                                                                              | [Documentation](docs/customizing_recipes) |
 
 ## Ways to Access Corrino
+
 Once Corrino has been deployed into your tenancy via Resource Manager, you can work with Corrino two ways:
 
 **Option #1: API Access:**
- 1. Inside the OCI Console > Resource Manager, select the stack you created for Corrino
- 2. Go to "Variables" on the left-hand side under Resources section and copy the values for "corrino_admin_username" and "corrino_admin_nonce"
- 3. Go to the "Application Information" tab under Stack Details
- 4. Copy the "Corrino API URL" into your browser
- 5. Upon first access, you must login - providing the "corrino_admin_username" for username and "corrino_admin_nonce" for password
- 6. Now, you can view and access all API endpoints for your instance of Corrino
 
+1.  Inside the OCI Console > Resource Manager, select the stack you created for Corrino
+2.  Go to "Variables" on the left-hand side under Resources section and copy the values for "corrino_admin_username" and "corrino_admin_nonce"
+3.  Go to the "Application Information" tab under Stack Details
+4.  Copy the "Corrino API URL" into your browser
+5.  Upon first access, you must login - providing the "corrino_admin_username" for username and "corrino_admin_nonce" for password
+6.  Now, you can view and access all API endpoints for your instance of Corrino
 
 **Option #2: Corrino UI Portal (In Progress):**
-For now, we recommend working with Corrino via the API server. An updated UI experience is being developed currently. 
+For now, we recommend working with Corrino via the API server. An updated UI experience is being developed currently.
 
 ## IAM Policies
 
