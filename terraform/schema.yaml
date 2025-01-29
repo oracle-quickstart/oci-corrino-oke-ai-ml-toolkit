@@ -84,16 +84,25 @@ variableGroups:
     - region
     visible: false
 
+
+  - title: "Prerequisites"
+    variables:
+    - is_oke_cluster_setup
+    - oke_cluster_active_state
+    - oke_node_pool_active_state
+    - policies_created
+    - is_admin_user
+
   - title: "Tenancy Level Details"
     variables:
     - home_region
     - os_namespace_name
 
-  - title: "Corrino Workspace"
-    variables:
-    - app_name
-    - deploy_id
-    - corrino_version
+  # - title: "Corrino Workspace"
+  #   variables:
+  #   - app_name
+  #   - deploy_id
+  #   - corrino_version
 #    - show_advanced
 #    - mushop_atp
     # - mushop_oss
@@ -302,6 +311,50 @@ variableGroups:
 # ------------------------------------------------
 
 variables:
+  is_oke_cluster_setup:
+    type: enum
+    enum:
+      - YES 
+      - NO
+    title: Have you created your OKE Cluster to deploy Corrino onto?
+    description: "An OKE Cluster must be created before moving past this step."
+    required: true
+
+  oke_cluster_active_state:
+    type: enum
+    enum:
+      - YES 
+      - NO
+    title: Is your OKE Cluster (to deploy Corrino onto) in Active state?
+    description: "The OKE Cluster must be in Active state before deploying Corrino."
+    required: true
+
+  oke_node_pool_active_state:
+    type: enum
+    enum:
+      - YES 
+      - NO
+    title: Is the node pool in your OKE Cluster (to deploy Corrino onto) in a Active state?
+    description: "The OKE Cluster must be in a Active state before deploying Corrino."
+    required: true
+
+  policies_created:
+    type: enum
+    enum:
+      - YES 
+      - NO
+    title: Have you enabled the required policies in the root tenancy for Corrino?
+    description: "Visit https://github.com/oracle-quickstart/oci-corrino-oke-ai-ml-toolkit/tree/main/docs/iam_policies for more information on required IAM policies"
+    required: true
+
+  is_admin_user:
+    type: enum
+    enum:
+      - YES 
+      - NO
+    title: Are you an administrator for this tenancy?
+    description: "If your user is in the Administrators group, you are considered an admin for this tenancy."
+    required: true
 
   compartment_ocid:
     type: oci:identity:compartment:id
@@ -382,6 +435,8 @@ variables:
     title: "Workspace name"
     description: "This is the name that will be assigned for your workspace.  Please provide name that is between 1 and 6 alphanumeric characters in length."
     required: true
+    visible: false
+    default: "work"
     pattern: "^([A-Za-z0-9]){1,6}$"
 #    visible:
 #      and:
@@ -391,7 +446,9 @@ variables:
     type: string
     title: "Deploy ID"
     description: "The deployment ID is combined with the workspace name to create a memorable composite name.  Please provide an ID that is between 1 and 6 alphanumeric characters in length."
+    default: "deploy"
     pattern: "^([A-Za-z0-9]){1,6}$"
+    visible: false
     required: true
 
 #  show_advanced:
@@ -407,6 +464,7 @@ variables:
     title: "Corrino Version"
     description: "This is the version of Corrino software that will be installed."
     required: true
+    default: "latest"
 
   # --------------------
   # Corrino Users
@@ -426,7 +484,7 @@ variables:
 
   corrino_admin_nonce:
     type: string
-    title: "Corrino admin password / nonce"
+    title: "Corrino admin password"
     description: "Corrino admin password / nonce -- you will be required to change this at first usage"
     required: true
 
@@ -438,7 +496,18 @@ variables:
     type: boolean
     title: "Create OCI policy and dynamic group for control plane?"
     required: true
-
+    default: false
+    visible:
+      and:
+        - eq:
+          - ${is_admin_user}
+          - YES
+        - and:
+          - eq:
+            - ${policies_created}
+            - NO
+    
+    
   # --------------------
   # ADB
   # --------------------
@@ -559,12 +628,12 @@ variables:
 #    minimum: 1
 #    maximum: 1000
 #    required: true
-#    visible:
-#      and:
-#        - and:
-#          - create_new_oke_cluster
-#        - not:
-#          - cluster_autoscaler_enabled
+  #  visible:
+  #    and:
+  #      - and:
+  #        - create_new_oke_cluster
+  #      - not:
+  #        - cluster_autoscaler_enabled
 
 #  cluster_autoscaler_min_nodes:
 #    type: integer
