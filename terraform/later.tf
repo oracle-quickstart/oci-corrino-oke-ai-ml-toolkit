@@ -48,7 +48,7 @@
 #### OCI Service User
 #resource "oci_identity_user" "oci_service_user" {
 #  compartment_id = var.tenancy_ocid
-#  description    = "${var.app_name} Service User for deployment ${random_string.deploy_id.result}"
+#  description    = "${local.app_name} Service User for deployment ${random_string.deploy_id.result}"
 #  name           = "${local.app_name_normalized}-service-user-${random_string.deploy_id.result}"
 #
 #  provider = oci.home_region
@@ -57,7 +57,7 @@
 #}
 #resource "oci_identity_group" "oci_service_user" {
 #  compartment_id = var.tenancy_ocid
-#  description    = "${var.app_name} Service User Group for deployment ${random_string.deploy_id.result}"
+#  description    = "${local.app_name} Service User Group for deployment ${random_string.deploy_id.result}"
 #  name           = "${local.app_name_normalized}-service-user-group-${random_string.deploy_id.result}"
 #
 #  provider = oci.home_region
@@ -112,7 +112,7 @@
 
 #resource "oci_functions_application" "app_function" {
 #  compartment_id = local.oke_compartment_ocid
-#  display_name   = "${var.app_name} Application (${random_string.deploy_id.result})"
+#  display_name   = "${local.app_name} Application (${random_string.deploy_id.result})"
 #  subnet_ids     = [oci_core_subnet.apigw_fn_subnet.0.id, ]
 #
 #  config     = {}
@@ -162,7 +162,7 @@
 #  compartment_id = local.oke_compartment_ocid
 #  endpoint_type  = "PUBLIC"
 #  subnet_id      = oci_core_subnet.apigw_fn_subnet.0.id
-#  display_name   = "${var.app_name} API Gateway (${random_string.deploy_id.result})"
+#  display_name   = "${local.app_name} API Gateway (${random_string.deploy_id.result})"
 #
 #  response_cache_details {
 #    type = "NONE"

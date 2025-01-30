@@ -2,6 +2,10 @@ locals {
 
   ts = timestamp()
 
+  app_name = random_string.generated_workspace_name.result
+
+  deploy_id = random_string.generated_deployment_name.result
+
   app = {
     backend_service_name         = "corrino-cp"
     backend_service_name_origin  = "http://corrino-cp"
@@ -25,8 +29,8 @@ locals {
       format("Registration ID  : %s", random_string.registration_id.result),
       format("Deploy DateTime  : %s", local.ts),
       format("Administrator    : %s", var.corrino_admin_email),
-      format("Workspace Name   : %s", var.app_name),
-      format("Deploy ID        : %s", var.deploy_id),
+      format("Workspace Name   : %s", local.app_name),
+      format("Deploy ID        : %s", local.deploy_id),
       format("Corrino Version  : %s", var.corrino_version),
       format("FQDN             : %s", local.fqdn.name),
       format("Tenancy OCID     : %s", local.oci.tenancy_id),
@@ -42,12 +46,12 @@ locals {
   }
 
   oke = {
-    deploy_id    = var.deploy_id
+    deploy_id    = local.deploy_id
     cluster_ocid = var.existent_oke_cluster_id
   }
 
   db = {
-    app_name_for_db = regex("[[:alnum:]]{1,10}", var.app_name)
+    app_name_for_db = regex("[[:alnum:]]{1,10}", local.app_name)
   }
 
   addon = {

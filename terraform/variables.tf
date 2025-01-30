@@ -46,25 +46,25 @@ variable "os_namespace_name" {
 # Corrino App
 # -----------------------------------
 
-variable "app_name" {
-  type = string
+# variable "app_name" {
+#   type    = string
+#   default = "work"
+#   validation {
+#     condition     = can(regex("^([A-Za-z0-9]){1,6}$", var.app_name))
+#     error_message = "Please provide a Workspace Name (aka app_name) that is between 1 and 6 alphanumeric characters in length."
+#   }
+# 
+# }
 
-  validation {
-    condition     = can(regex("^([A-Za-z0-9]){1,6}$", var.app_name))
-    error_message = "Please provide a Workspace Name (aka app_name) that is between 1 and 6 alphanumeric characters in length."
-  }
+# variable "deploy_id" {
+#   type    = string
+#   default = "deploy"
+#   validation {
+#     condition     = can(regex("^([A-Za-z0-9]){1,6}$", var.deploy_id))
+#     error_message = "Please provide a Deploy ID that is between 1 and 6 alphanumeric characters in length."
+#   }
 
-}
-
-variable "deploy_id" {
-  type = string
-
-  validation {
-    condition     = can(regex("^([A-Za-z0-9]){1,6}$", var.deploy_id))
-    error_message = "Please provide a Deploy ID that is between 1 and 6 alphanumeric characters in length."
-  }
-
-}
+# }
 
 variable "policy_creation_enabled" {
   description = "Create policies to enable apps to view and manage compute resources. If selected and user does not have permissions to create policies in root tenancy, build will fail."

@@ -1,3 +1,17 @@
+resource "random_string" "generated_workspace_name" {
+  length    = 6
+  special   = false
+  min_upper = 3
+  min_lower = 3
+}
+
+resource "random_string" "generated_deployment_name" {
+  length    = 6
+  special   = false
+  min_upper = 3
+  min_lower = 3
+}
+
 resource "random_string" "corrino_django_secret" {
   length           = 32
   special          = true
@@ -29,14 +43,14 @@ resource "random_string" "autonomous_database_admin_password" {
 }
 
 resource "random_string" "subdomain" {
-  length           = 6
-  special          = false
-  upper            = false
+  length  = 6
+  special = false
+  upper   = false
 }
 
 
 resource "random_string" "registration_id" {
-  length           = 8
-  special          = false
-  upper            = false
+  length  = 8
+  special = false
+  upper   = false
 }
