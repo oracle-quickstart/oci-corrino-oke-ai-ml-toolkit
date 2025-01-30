@@ -94,7 +94,7 @@ More fine-grained policies for Corrino can be used if necessary and are describe
 
 1. Click on the “Deploy to Oracle Cloud” button below:
 
-[![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?region=home&zipUrl=https://github.com/oracle-quickstart/oci-corrino-oke-ai-ml-toolkit/releases/download/release-2025-01-30b/release-2025-01-30b.zip)
+[![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?region=home&zipUrl=https://github.com/oracle-quickstart/oci-corrino-oke-ai-ml-toolkit/releases/download/release-2025-01-30c/release-2025-01-30c.zip)
 
 2. Follow the on-screen instructions on the Create Stack screen
 3. Select “Run apply” in the “Review” section and click on Create
