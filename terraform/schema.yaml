@@ -465,6 +465,7 @@ variables:
     description: "This is the version of Corrino software that will be installed."
     required: true
     default: "latest"
+    visible: false
 
   # --------------------
   # Corrino Users
