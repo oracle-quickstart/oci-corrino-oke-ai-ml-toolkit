@@ -64,7 +64,13 @@ In this "Getting Started" guide, we will walk you through 3 steps:
 2. Deploying and monitoring a Corrino recipe
 3. Undeploying a recipe
 
-### Pre-requisites
+### Step 1: Set up policies in tenancy
+1. If you are not an admin of your tenancy, you will have to contact the administrator of your tenancy to put a few policies in the root compartment as described here: [policies](docs/iam_policies/README.md)
+2. If you are an admin, you can continue to step 2 as the stack in OCI Resource Manager will deploy the policies in the root compartment on your behalf.
+
+More fine-grained policies for Corrino can be used if necessary and are described here: [policies](docs/iam_policies/README.md)
+
+### Step 2: Create OKE cluster
 
 1. You must have an OKE cluster in your tenancy with the following configuration ([intructions for creating a new OKE cluster](https://docs.oracle.com/en-us/iaas/Content/ContEng/Tasks/create-cluster.htm))
 
@@ -84,7 +90,7 @@ In this "Getting Started" guide, we will walk you through 3 steps:
 2. Ensure GPUs are available in your region (this guide deploys an example recipe to a VM.GPU.A10.2 but you could deploy the recipes to other A10, A100, or H100 shapes as well with a simple recipe configuration change)
 3. Create a compartment called `corrino` (instructions [here](https://docs.oracle.com/en-us/iaas/Content/Identity/compartments/To_create_a_compartment.htm)). If you do not have Admin rights, have a tenancy admin do the following: (1) create a compartment named `corrino` and (2) apply the policies in the "IAM Policies" section below inside the root compartment of your tenancy
 
-### Step 1: Install and Access Corrino
+### Step 3: Install and Access Corrino
 
 1. Click on the “Deploy to Oracle Cloud” button below:
 
@@ -95,9 +101,9 @@ In this "Getting Started" guide, we will walk you through 3 steps:
 4. Monitor the deployment status by going to Resource Manager -> Stacks in OCI Console.
 5. After the Job status changes to `Succeeded`, go to the Application Information tab under Stack Details in the OCI Console. Click on “Corrino API URL” button to access the Corrino API. Click on "Corrino Portal URL" to access the Corrino Portal.
 
-### Step 2: Deploy a vLLM Inference recipe
+### Step 4: Deploy a vLLM Inference recipe
 
-1. Go to `<your-corrino-api-url>/deployment` from a web browser (you can find the Corrino API URL in the Application Information tab under Stack Details. See Step 1(5) above.)
+1. Go to `<your-corrino-api-url>/deployment` from a web browser (you can find the Corrino API URL in the Application Information tab under Stack Details. See Step 3(5) above.)
 2. Copy and paste this [sample inference recipe](https://github.com/vishnukam3/oci-oke-ai-ml-sample-recipes/blob/main/vllm_inference_sample_recipe.json) in the “Content:” text area and click “POST”
    **Important**: If you'd like to configure the recipe (e.g. the model you are deploying, to which shape, etc.) before deploying it, you can read the [recipe configuration documenation](https://github.com/vishnukam3/oci-oke-ai-ml-sample-recipes).
 3. Check the deployment status by going to `<your-corrino-api-url>/deployment` in your web browser. Note down the `deployment ID`. Once the status changes to `monitoring`, you can proceed to the next step
@@ -118,7 +124,7 @@ In this "Getting Started" guide, we will walk you through 3 steps:
    ```
 6. **Monitor the GPU node using Grafana**: Go to `<your-corrino-api-url>/workspaces` in your web browser. Go to the URL under the `add_ons.grafana.public_endpoint` field in the response JSON. You will find your Grafana username and password under OCI Console -> Select the correct region and compartment -> Resource Manager -> Stacks -> Open Corrino Installation Stack -> Application Information.
 
-### Step 3: Undeploy the recipe
+### Step 5: Undeploy the recipe
 
 Undeploy the recipe to free up the GPU again by going to the `<your-corrino-api-url>/deployment_digests/<deployment_id>` in your web browswer and sending the following POST request:
 
