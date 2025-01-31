@@ -27,6 +27,7 @@
 | recipe_container_env                         | string  | No       | Values of the recipe container init arguments. See the Recipe Arguments section below for details. Example: `[{"key": "tensor_parallel_size","value": "2"},{"key": "model_name","value": "NousResearch/Meta-Llama-3.1-8B-Instruct"},{"key": "Model_Path","value": "/models/NousResearch/Meta-Llama-3.1-8B-Instruct"}]`                                                    |
 | skip_capacity_validation                     | boolean | No       | Determines whether validation checks on shape capacity are performed before initiating deployment. If your deployment is failing validation due to capacity errors but you believe this not to be true, you should set `skip_capacity_validation` to be `true` in the recipe JSON to bypass all checks for Shape capacity.                                                |
 
+For autoscaling parameters, visit [autoscaling](../auto_scaling/README.md#basic-configurations).
 ### Recipe Container Arguments
 
 #### LLM Inference using NVIDIA shapes and vLLM

@@ -1,8 +1,8 @@
 {
   "recipe_id": "llm_inference_nvidia",
   "recipe_mode": "service",
-  "deployment_name": "pod_auto_w_probes",
-  "recipe_image_uri": "iad.ocir.io/iduyx1qnmway/corrino-devops-repository:vllmv0.6.2",
+  "deployment_name": "autoscale_vllm_example",
+  "recipe_image_uri": "iad.ocir.io/iduyx1qnmway/corrino-devops-repository:vllmv0.6.5",
   "recipe_node_shape": "VM.GPU.A10.2",
   "input_object_storage": [
     {
