@@ -159,7 +159,7 @@ python3 token_benchmark_ray.py \
   --llm-api openai
 ```
 
-3. Advanced users can check the kubernetes cluster locally by watching `kubectl get pods` to see both node and pod autoscaling. Otherwise, go to the OKE cluster in the console, click node pools, and after a few minutes you'll see a new node pool appear. This new node pool creation typically appears between 8-10% on the llmperf completion bar you see in the terminal when launching the requests (based on the example recipe provided).
+3. Advanced users can check the kubernetes cluster locally by watching `kubectl get pods` to see both node and pod autoscaling. Otherwise, go to the OKE cluster in the console, click node pools, go to the recipe specific node pool, and after a few minutes you'll see a new node appear in the pool. This new node creation typically appears between 8-10% on the llmperf completion bar you see in the terminal when launching the requests (based on the example recipe provided).
 
 ## Advanced Configuration
 In addition to the basic configuration which should be sufficient for most users, additional parameters are tunable. The modification of these parameters has been tested, but each will impact scaling in a different way and should be used cautiously. All of these are part of `recipe_pod_autoscaling_params`:
