@@ -4,7 +4,7 @@ Corrino manages [Horizontal Pod Autoscaling](https://kubernetes.io/docs/tasks/ru
 
 ## How it works:
 Corrino uses Prometheus + vLLM metrics as the target to autoscale pods + nodes.
-Prometheus scrapes vLLM for its metrics, and a KEDA ScaledObject stores a query and threshold value to decide when to scale. KEDA runs this query based on a time interval, and if the threshold is passed, the HPA will trigger a scale up. If, after some time, the number returns below the threshold, the HPA will trigger a scale down.
+Prometheus scrapes vLLM for its metrics, and a KEDA ScaledObject stores a query and threshold value to decide when to scale in conjunction with the [OCI Cluster Autoscaler Add-on](https://docs.oracle.com/en-us/iaas/Content/ContEng/Tasks/contengusingclusterautoscaler_topic-Working_with_Cluster_Autoscaler_as_Cluster_Add-on.htm). KEDA runs this query based on a time interval, and if the threshold is passed, the HPA will trigger a scale up. If, after some time, the number returns below the threshold, the HPA will trigger a scale down.
 
 Smoothing factors have been added to both KEDA and HPA so that they are both responsive, but do not trigger immediate scaling based on an intermittent agressive spike in traffic.
 
@@ -46,6 +46,10 @@ Define the min and max replicas a recipe can scale to, considering how many of y
 4 replicas of this could fit on a single H100:
 ```json
 {
+    "recipe_node_shape": "BM.GPU.H100.8",
+    "recipe_replica_count": 1,
+    "recipe_node_pool_size": 1,
+    "recipe_nvidia_gpu_count": 2,
     "recipe_pod_autoscaling_params": {
         "min_replicas": 1,
         "max_replicas": 4
@@ -57,6 +61,10 @@ Define the min and max replicas a recipe can scale to, considering how many of y
 2 replicas of this could fit on a single VM.GPU.A10.2:
 ```json
 {
+    "recipe_node_shape": "VM.GPU.A10.2",
+    "recipe_replica_count": 1,
+    "recipe_node_pool_size": 1,
+    "recipe_nvidia_gpu_count": 1,
     "recipe_pod_autoscaling_params": {
         "min_replicas": 1,
         "max_replicas": 2
@@ -73,6 +81,10 @@ Define the min and max replicas a recipe can scale to, considering how many max 
 4 replicas on first node, then 4 replicas on second node if scaling required:
 ```json
 {
+    "recipe_node_shape": "BM.GPU.H100.8",
+    "recipe_replica_count": 1,
+    "recipe_node_pool_size": 1,
+    "recipe_nvidia_gpu_count": 2,
     "recipe_node_autoscaling_params": {
         "min_nodes": 1,
         "max_nodes": 2
@@ -88,6 +100,10 @@ Define the min and max replicas a recipe can scale to, considering how many max 
 2 replicas on the first node, up to 4 total nodes for a total of 8 replicas:
 ```json
 {
+    "recipe_node_shape": "VM.GPU.A10.2",
+    "recipe_replica_count": 1,
+    "recipe_node_pool_size": 1,
+    "recipe_nvidia_gpu_count": 1,
     "recipe_node_autoscaling_params": {
         "min_nodes": 1,
         "max_nodes": 4
