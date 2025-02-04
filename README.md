@@ -65,6 +65,7 @@ In this "Getting Started" guide, we will walk you through 3 steps:
 3. Undeploying a recipe
 
 ### Step 1: Set up policies in tenancy
+
 1. If you are not an admin of your tenancy, you will have to contact the administrator of your tenancy to put a few policies in the root compartment as described here: [policies](docs/iam_policies/README.md)
 2. If you are an admin, you can continue to step 2 as the stack in OCI Resource Manager will deploy the policies in the root compartment on your behalf.
 
@@ -136,9 +137,9 @@ Undeploy the recipe to free up the GPU again by going to the `<your-corrino-api-
 
 ### Additional Resources
 
-Corrino API Documentation: Coming Soon
+Corrino API Documentation: [Documentation](docs/api_documentation/README.md)
 
-Corrino Sample recipes: https://github.com/vishnukam3/oci-oke-ai-ml-sample-recipes
+Corrino Sample Recipes: [Sample Recipes](docs/sample_recipes/README.md)
 
 ## Features
 
