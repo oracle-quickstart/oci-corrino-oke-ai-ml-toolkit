@@ -6,7 +6,7 @@ Corrino team will release new versions of it's control-plane and frontend images
 
 ### Steps:
 
-1.  In OCI Console > Resource Manager > Stacks (choose the one that was used to deploy Corrino originally)
+1.  In OCI Console > Resource Manager > Stacks
 2.  Choose the stack that was used to deploy Corrino originally
 3.  Make sure you have chosen the correct stack by clicking on "Variables" in the lower left corner underneath the "Resources" section. Verify the variables correspond to the Corrino instance you are wanting to update.
 4.  Verify that the API URL matches underneath the "Application Information" tab.
