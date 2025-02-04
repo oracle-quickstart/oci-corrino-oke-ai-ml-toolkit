@@ -1,0 +1,162 @@
+{
+  "recipe_id": "lora_finetune_nvidia",
+  "deployment_name": "dk_with_checkpoint",
+  "recipe_mode": "job",
+  "recipe_node_shape": "VM.GPU.A10.2",
+  "recipe_image_uri": "iad.ocir.io/iduyx1qnmway/corrino-devops-repository:finetune_lora_dev",
+  "recipe_nvidia_gpu_count": 2,
+  "recipe_ephemeral_storage_size": 300,
+  "recipe_replica_count": 1,
+  "recipe_node_pool_size": 1,
+  "recipe_node_boot_volume_size_in_gbs": 500,
+  "recipe_shared_memory_volume_size_limit_in_mb": 100,
+  "recipe_container_env": [
+    {
+        "key": "Mlflow_Endpoint",
+        "value": "http://mlflow.default.svc.cluster.local:5000"
+    },
+    {
+        "key": "Mlflow_Exp_Name",
+        "value": "corrino_nvidia_recipe"
+    },
+    {
+        "key": "Mlflow_Run_Name",
+        "value": "Meta-Llama-3.1-8B-local-quotes-checkpoint"
+    },
+    {
+        "key": "Hf_Token",
+        "value": "None"
+    },
+    {
+        "key": "Download_Dataset_From_Hf",
+        "value": "true"
+    },
+    {
+        "key": "Dataset_Name",
+        "value": "Abirate/english_quotes"
+    },
+    {
+      "key": "Dataset_Sub_Name",
+      "value": "None"
+    },
+    {
+        "key": "Dataset_Column_To_Use",
+        "value": "quote"
+    },
+    {
+        "key": "Dataset_Path",
+        "value": "/workspace/datasets"
+    },
+    {
+        "key": "Download_Model_From_Hf",
+        "value": "false"
+    },
+    {
+        "key": "Model_Name",
+        "value": "NousResearch/Meta-Llama-3.1-8B"
+    },
+    {
+        "key": "Model_Path",
+        "value": "/models/NousResearch/Meta-Llama-3.1-8B"
+    },
+    {
+        "key": "Max_Model_Length",
+        "value": "4096"
+    },
+    {
+        "key": "Resume_From_Checkpoint",
+        "value": "true"
+    },
+    {
+        "key": "Checkpoint_Path",
+        "value": "/checkpoint/Bucket-Llama-3.1-8B-english_quotes/checkpoint-1400"
+    },
+    {
+      "key": "Lora_R",
+      "value": "8"
+    },
+    {
+      "key": "Lora_Alpha",
+      "value": "16"
+    },
+    {
+      "key": "Lora_Dropout",
+      "value": "0.1"
+    },
+    {
+        "key": "Lora_Target_Modules",
+        "value": "q_proj,up_proj,o_proj,k_proj,down_proj,gate_proj,v_proj"
+    },
+    {
+      "key": "Bias",
+      "value": "none"
+    },
+    {
+      "key": "Task_Type",
+      "value": "CAUSAL_LM"
+    },
+    {
+      "key": "Per_Device_Train_Batch_Size",
+      "value": "1"
+    },
+    {
+      "key": "Gradient_Accumulation_Steps",
+      "value": "1"
+    },
+    {
+      "key": "Warmup_Steps",
+      "value": "2"
+    },
+    {
+      "key": "Save_Steps",
+      "value": "100"
+    },
+    {
+      "key": "Learning_Rate",
+      "value": "0.0002"
+    },
+    {
+      "key": "Fp16",
+      "value": "true"
+    },
+    {
+      "key": "Logging_Steps",
+      "value": "1"
+    },
+    {
+        "key": "Output_Dir",
+        "value": "/tunedmodels/Bucket-Llama-3.1-8B-english_quotes"
+    },
+    {
+      "key": "Optim",
+      "value": "paged_adamw_8bit"
+    },
+    {
+      "key": "Number_of_Training_Epochs",
+      "value": "2"
+    },
+    {
+      "key": "Require_Persistent_Output_Dir",
+      "value": "true"
+    }
+  ],
+  "input_object_storage": [
+    {
+      "bucket_name": "corrino_hf_oss_models",
+      "mount_location": "/models",
+      "volume_size_in_gbs": 500
+    },
+    {
+      "bucket_name": "corrino_tuned_hf_oss_models",
+      "mount_location": "/checkpoint",
+      "volume_size_in_gbs": 500
+    }
+  ],
+  "output_object_storage": [
+    {
+      "bucket_name": "corrino_tuned_hf_oss_models",
+      "mount_location": "/tunedmodels",
+      "volume_size_in_gbs": 500
+    }
+  ]
+}
