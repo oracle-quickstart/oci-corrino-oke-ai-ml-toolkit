@@ -1,0 +1,140 @@
+
+{
+  "recipe_id": "mlcommons_lora_finetune_nvidia",
+  "deployment_name": "MLCommons Finetune LORA/PEFT",
+  "recipe_mode": "job",
+  "recipe_node_shape": "BM.GPU.A100.8",
+  "recipe_use_shared_node_pool": false,
+  "recipe_nvidia_gpu_count": 8,
+  "recipe_ephemeral_storage_size": 50,
+  "recipe_replica_count": 1,
+  "recipe_node_pool_size": 1,
+  "recipe_node_boot_volume_size_in_gbs": 200,
+  "recipe_shared_memory_volume_size_limit_in_mb": 100,
+  "input_object_storage": [
+    {
+      "bucket_name": "corrino_mlcommons_llama2_70b_qkv",
+      "mount_location": "/models",
+      "volume_size_in_gbs": 500
+    },
+    {
+      "bucket_name": "corrino_ml_commons_scrolls_dataset",
+      "mount_location": "/dataset",
+      "volume_size_in_gbs": 100
+    }
+  ],
+  "output_object_storage": [
+    {
+      "bucket_name": "corrino_ml_commons_output",
+      "mount_location": "/mlcommons_output",
+      "volume_size_in_gbs": 200
+    }
+  ],
+  "recipe_image_uri": "iad.ocir.io/iduyx1qnmway/corrino-devops-repository:corrino-recipe-mlcommons",
+  "recipe_container_env": [
+    {
+      "key": "model_name",
+      "value": "regisss/llama2-70b-fused-qkv-mlperf"
+    },
+    {
+      "key": "Model_Path",
+      "value": "/models"
+    },
+    {
+      "key": "Dataset_Path",
+      "value": "/dataset"
+    },
+    {
+      "key": "Lora_R",
+      "value": "16"
+    },
+    {
+      "key": "Lora_Alpha",
+      "value": "32"
+    },
+    {
+      "key": "Lora_Dropout",
+      "value": "0.1"
+    },
+    {
+      "key": "Max_Seq_Len",
+      "value": "8192"
+    },
+    {
+      "key": "bf16",
+      "value": "true"
+    },
+    {
+      "key": "Logging_Steps",
+      "value": "24"
+    },
+    {
+      "key": "Eval_Steps",
+      "value": "48"
+    },
+    {
+      "key": "Per_Device_Train_Batch_Size",
+      "value": "1"
+    },
+    {
+      "key": "Gradient_Accumulation_Steps",
+      "value": "1"
+    },
+    {
+      "key": "Lr_Scheduler_Type",
+      "value": "cosine"
+    },
+    {
+      "key": "Learning_Rate",
+      "value": "0.0004"
+    },
+    {
+      "key": "Weight_Decay",
+      "value": "0.0001"
+    },
+    {
+      "key": "Warmup_Ratio",
+      "value": "0"
+    },
+    {
+      "key": "Max_Grad_Norm",
+      "value": "0.3"
+    },
+    {
+      "key": "Use_Gradient_Checkpointing",
+      "value": "true"
+    },
+    {
+      "key": "Target_Eval_Loss",
+      "value": "0.925"
+    },
+    {
+      "key": "Use_Peft_Lora",
+      "value": "true"
+    },
+    {
+      "key": "Max_Steps",
+      "value": "1024"
+    },
+    {
+      "key": "Use_Flash_Attn",
+      "value": "true"
+    },
+    {
+      "key": "Seed",
+      "value": "1234"
+    },
+    {
+      "key": "Lora_Target_Modules",
+      "value": "qkv_proj,o_proj"
+    },
+    {
+      "key": "Mlflow_Exp_Name",
+      "value": "corrino_nvidia_recipe"
+    },
+    {
+      "key": "Output_Dir",
+      "value": "/mlcommons_output"
+    }
+  ]
+}

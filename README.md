@@ -137,9 +137,9 @@ Undeploy the recipe to free up the GPU again by going to the `<your-corrino-api-
 
 ### Additional Resources
 
-Corrino API Documentation: Coming Soon
+Corrino API Documentation: [Documentation](docs/api_documentation/README.md)
 
-Corrino Sample recipes: https://github.com/vishnukam3/oci-oke-ai-ml-sample-recipes
+Corrino Sample Recipes: [Sample Recipes](docs/sample_recipes/README.md)
 
 Known Issues & Solutions: [Ongoing List Here](docs/known_issues/README.md)
 
