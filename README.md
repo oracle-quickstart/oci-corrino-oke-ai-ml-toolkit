@@ -127,7 +127,7 @@ More fine-grained policies for Corrino can be used if necessary and are describe
 
 ### Step 5: Undeploy the recipe
 
-Undeploy the recipe to free up the GPU again by going to the `<your-corrino-api-url>/deployment_digests/<deployment_id>` in your web browswer and sending the following POST request:
+Undeploy the recipe to free up the GPU again by going to the `<your-corrino-api-url>/undeploy/<deployment_id>` in your web browswer and sending the following POST request:
 
 ```json
 {
