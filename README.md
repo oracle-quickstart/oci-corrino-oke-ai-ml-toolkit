@@ -155,19 +155,7 @@ Known Issues & Solutions: [Ongoing List Here](docs/known_issues/README.md)
 
 ## Ways to Access Corrino
 
-Once Corrino has been deployed into your tenancy via Resource Manager, you can work with Corrino two ways:
-
-**Option #1: API Access:**
-
-1.  Inside the OCI Console > Resource Manager, select the stack you created for Corrino
-2.  Go to "Variables" on the left-hand side under Resources section and copy the values for "corrino_admin_username" and "corrino_admin_nonce"
-3.  Go to the "Application Information" tab under Stack Details
-4.  Copy the "Corrino API URL" into your browser
-5.  Upon first access, you must login - providing the "corrino_admin_username" for username and "corrino_admin_nonce" for password
-6.  Now, you can view and access all API endpoints for your instance of Corrino
-
-**Option #2: Corrino UI Portal (In Progress):**
-For now, we recommend working with Corrino via the API server. An updated UI experience is being developed currently.
+[Click Here](docs/api_documentation/accessing_corrino/README.md)
 
 ## IAM Policies
 
