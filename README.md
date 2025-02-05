@@ -141,6 +141,8 @@ Corrino API Documentation: Coming Soon
 
 Corrino Sample recipes: https://github.com/vishnukam3/oci-oke-ai-ml-sample-recipes
 
+Known Issues & Solutions: [Ongoing List Here](docs/known_issues/README.md)
+
 ## Features
 
 | Feature              | Description                                                                                                                                                                                                                                                                                               | Instructions                                        |
