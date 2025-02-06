@@ -18,6 +18,26 @@ version: "20190304"
 source:
   type: quickstart
 
+outputGroups:
+  - title: "Corrino API"
+    outputs:
+      - corrino_api_url
+      - corrino_admin_username_output
+      - corrino_admin_nonce_output
+
+  - title: "Grafana Information"
+    outputs:
+      - corrino_grafana_url
+      - grafana_admin_username
+      - grafana_admin_password
+
+  - title: "Other Information"
+    outputs:
+      - corrino_mlflow_url
+      - corrino_prometheus_url
+      - external_ip
+    
+
 #outputGroups:
 #  - title: Mushop endpoints (Corrino)
 #    outputs:
@@ -430,26 +450,23 @@ variables:
   #
   # ---------------------------------
 
-  app_name:
-    type: string
-    title: "Workspace name"
-    description: "This is the name that will be assigned for your workspace.  Please provide name that is between 1 and 6 alphanumeric characters in length."
-    required: true
-    visible: false
-    default: "work"
-    pattern: "^([A-Za-z0-9]){1,6}$"
-#    visible:
-#      and:
-#        - create_new_oke_cluster
+  # app_name:
+  #   type: string
+  #   title: "Workspace name"
+  #   description: "This is the name that will be assigned for your workspace.  Please provide name that is between 1 and 6 alphanumeric characters in length."
+  #   default: "work"
+  #   pattern: "^([A-Za-z0-9]){1,6}$"
+  #   required: true
+  #   visible: false
 
-  deploy_id:
-    type: string
-    title: "Deploy ID"
-    description: "The deployment ID is combined with the workspace name to create a memorable composite name.  Please provide an ID that is between 1 and 6 alphanumeric characters in length."
-    default: "deploy"
-    pattern: "^([A-Za-z0-9]){1,6}$"
-    visible: false
-    required: true
+  # deploy_id:
+  #   type: string
+  #   title: "Deploy ID"
+  #   description: "The deployment ID is combined with the workspace name to create a memorable composite name.  Please provide an ID that is between 1 and 6 alphanumeric characters in length."
+  #   default: "deploy"
+  #   pattern: "^([A-Za-z0-9]){1,6}$"
+  #   visible: false
+  #   required: true
 
 #  show_advanced:
 #    type: boolean
@@ -1187,20 +1204,33 @@ outputs:
 #    displayText: Ingress Nginx LoadBalancer External IP Address
 #    visible: true
 #
+
+  corrino_admin_username_output:
+    title: "Admin Username"
+    visible: true
+  
+  corrino_admin_nonce_output:
+    title: "Admin Password"
+    visible: true
+
   corrino_grafana_url:
+    title: "Grafana URL"
     visible: true
 
   corrino_prometheus_url:
+    title: "Prometheus URL"
     visible: true
 
   corrino_mlflow_url:
+    title: "MLFlow URL"
     visible: true
 
   corrino_api_url:
+    title: "API URL"
     visible: true
 
   corrino_portal_url:
-    visible: true
+    visible: false
 #
 #  domain_name:
 #    type: link
@@ -1216,7 +1246,7 @@ outputs:
   autonomous_database_password:
     type: string
     title: "DB Admin Password"
-    visible: true
+    visible: false
 
   grafana_admin_username:
     type: string
@@ -1231,6 +1261,11 @@ outputs:
   deploy_id:
     type: string
     title: "Deploy Id"
+    visible: false
+
+  app_name:
+    type: string
+    title: "App Name"
     visible: false
 
   deployed_to_region:
@@ -1274,7 +1309,7 @@ outputs:
     visible: false
 
   corrino_version:
-    visible: true
+    visible: false
 
   cluster_region:
     visible: false

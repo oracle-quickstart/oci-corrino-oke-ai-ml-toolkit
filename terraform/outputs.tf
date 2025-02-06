@@ -106,6 +106,16 @@ output "corrino_version" {
   value = local.versions.corrino_version
 }
 
+output "corrino_admin_username_output" {
+  #  value = file("${path.module}/VERSION")
+  value = var.corrino_admin_username
+}
+
+output "corrino_admin_nonce_output" {
+  #  value = file("${path.module}/VERSION")
+  value = var.corrino_admin_nonce
+}
+
 # ----------------------------------------
 # Public endpoints
 # ----------------------------------------
