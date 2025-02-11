@@ -38,7 +38,7 @@ When deploying recipes, you can configure:
 3. GPU Node Count
 4. Auto-scaling settings (min replicas, max replicas, scaling criteria incl. application metrics like inference latency)
 5. Fine-tuning hyperparameters (e.g. learning rate, number of epochs)
-6. And more! Read more about recipe configuration and see sample recipe configurations [here](https://github.com/vishnukam3/oci-oke-ai-ml-sample-recipes/tree/main).
+6. And more! Read more about recipe configuration [here](docs/api_documentation/README.md) and see sample recipe configurations [here](docs/sample_recipes/README.md).
 
 ### What is in this repo?
 
@@ -105,8 +105,8 @@ More fine-grained policies for Corrino can be used if necessary and are describe
 ### Step 4: Deploy a vLLM Inference recipe
 
 1. Go to `<your-corrino-api-url>/deployment` from a web browser (you can find the Corrino API URL in the Application Information tab under Stack Details. See Step 3(5) above.)
-2. Copy and paste this [sample inference recipe](https://github.com/vishnukam3/oci-oke-ai-ml-sample-recipes/blob/main/vllm_inference_sample_recipe.json) in the “Content:” text area and click “POST”
-   **Important**: If you'd like to configure the recipe (e.g. the model you are deploying, to which shape, etc.) before deploying it, you can read the [recipe configuration documenation](https://github.com/vishnukam3/oci-oke-ai-ml-sample-recipes).
+2. Copy and paste this [sample inference recipe](docs/sample_recipes/vllm_inference_sample_recipe.json) in the “Content:” text area and click “POST”
+   **Important**: If you'd like to configure the recipe (e.g. the model you are deploying, to which shape, etc.) before deploying it, you can read the [recipe configuration documenation](docs/api_documentation/README.md).
 3. Check the deployment status by going to `<your-corrino-api-url>/deployment` in your web browser. Note down the `deployment ID`. Once the status changes to `monitoring`, you can proceed to the next step
 4. Go to the `<your-corrino-api-url>/deployment_digests/<deployment_id>` in your web browser to find the endpoint URL (`digest.data.assigned_service_endpoint` field in the API response)
 5. Test the recipe deployment by using the inference endpoint on Postman!
@@ -178,19 +178,22 @@ Corrino’s installation Terraform deploys the following:
 For inference benchmarking, we recommend deploying a vLLM recipe with Corrino and then using LLMPerf to run benchmarking using the endpoint. Reach out to us if you are interested in more details.
 
 **What is the full list of recipes available?**
-Currently, we have an inference recipe, a fine-tuning recipe, and an MLCommons fine-tuning benchmarking recipe with a Llama-2-70B model that are complete. We have several others in the works (e.g. a RAG recipe) that we have built POCs for. If you are interested in additional recipes, please contact us.
+All recipes available are available [here](docs/sample_recipes/README.md). Recipes are customizable to fit your needs, view [recipe configuration info](docs/api_documentation/README.md) for more information on recipe configuration. If you are interested in additional recipes, please contact us.
 
 **How can I view the deployment logs to see if something is wrong?**
 You can use kubectl to view the pod logs.
 
 **Can you set up auto-scaling?**
-Yes. If you are interested in this, please reach out to us.
+Yes. Documentation and steps are [here](docs/auto_scaling/README.md)
 
 **Which GPUs can I deploy this to?**
 Any Nvidia GPUs that are available in your region.
 
 **What if you already have another cluster?**
 You can deploy Corrino to the existing cluster as well. However, we have not yet done extensive testing to confirm if Corrino would be stable on a cluster that already has other workloads running.
+
+**How can I launch more than one recipe onto a node?**
+You can accomplish this by using shared node pools. Documentation is [here](docs/shared_node_pools/README.md)
 
 ### Cleanup
 
