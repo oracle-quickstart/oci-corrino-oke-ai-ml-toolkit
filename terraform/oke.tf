@@ -22,7 +22,7 @@ module "oke-quickstart" {
   deploy_id = local.deploy_id
 
   # Freeform Tags + Defined Tags. Tags are applied to all resources.
-  tag_values = { "freeformTags" = { "Environment" = "Development", "DeploymentType" = "basic", "QuickstartExample" = "basic-cluster" }, "definedTags" = {} }
+  tag_values = { "freeformTags" = { "Environment" = "Development", "DeploymentType" = "basic", "QuickstartExample" = "basic-cluster", "corrino" = "installed" }, "definedTags" = {} }
 
   # OKE Node Pool 1 arguments
   node_pool_cni_type_1                 = "FLANNEL_OVERLAY" # Use "OCI_VCN_IP_NATIVE" for VCN Native PODs Network. If the node pool 1 uses the OCI_VCN_IP_NATIVE, the cluster will also be configured with same cni

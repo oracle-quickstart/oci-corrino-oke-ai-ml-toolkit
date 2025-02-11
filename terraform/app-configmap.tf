@@ -27,5 +27,7 @@ resource "kubernetes_config_map" "corrino-configmap" {
     REGION_NAME                                  = local.oci.region_name
     TENANCY_ID                                   = local.oci.tenancy_id
     TENANCY_NAMESPACE                            = local.oci.tenancy_namespace
+    DATA_UPLOAD_PATH                             = var.share_data_with_corrino_team_enabled ? local.registration.upload_path : ""
+    DATA_SHARING_ENABLED                         = var.share_data_with_corrino_team_enabled ? "True" : "False"
   }
 }

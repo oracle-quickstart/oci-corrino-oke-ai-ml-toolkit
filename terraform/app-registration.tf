@@ -13,7 +13,7 @@ resource "null_resource" "registration" {
     }
     provisioner "local-exec" {
         command = <<-EOT
-        curl -X PUT --data-binary '@${local.registration.object_filepath}' ${local.registration.bucket_par}${local.registration.object_filename}
+        curl -X PUT --data-binary '@${local.registration.object_filepath}' ${local.registration.upload_path}${local.registration.object_filename}
 	    EOT
     }
   count = var.share_data_with_corrino_team_enabled ? 1 : 0

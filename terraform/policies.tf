@@ -10,6 +10,7 @@ resource "oci_identity_dynamic_group" "dyn_group" {
   description    = "Dynamic group for OKE instances across the tenancy"
   compartment_id = var.tenancy_ocid
   matching_rule  = "ALL {instance.compartment.id = '${var.compartment_ocid}'}"
+  freeform_tags = local.corrino_tags
   count          = var.policy_creation_enabled ? 1 : 0
 }
 
@@ -24,6 +25,7 @@ resource "oci_identity_policy" "oke_instances_tenancy_policy" {
     "Allow dynamic-group 'Default'/'${oci_identity_dynamic_group.dyn_group[0].name}' to manage all-resources in compartment ${data.oci_identity_compartment.oci_compartment.name}",
     "Allow dynamic-group 'Default'/'${oci_identity_dynamic_group.dyn_group[0].name}' to use all-resources in tenancy",
   ]
+  freeform_tags = local.corrino_tags
   count      = var.policy_creation_enabled ? 1 : 0
   depends_on = [oci_identity_dynamic_group.dyn_group]
 }
