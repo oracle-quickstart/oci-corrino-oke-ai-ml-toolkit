@@ -20,25 +20,27 @@ locals {
   }
 
   registration = {
-    object_filename = format("corrino-registration-%s", random_string.registration_id.result)
-    object_filepath = format("%s/%s", abspath(path.root), random_string.registration_id.result)
-    object_content = join("\n", [
-      "-----------------------------------------------",
-      "Corrino Registration",
-      "-----------------------------------------------",
-      format("Registration ID  : %s", random_string.registration_id.result),
-      format("Deploy DateTime  : %s", local.ts),
-      format("Administrator    : %s", var.corrino_admin_email),
-      format("Workspace Name   : %s", local.app_name),
-      format("Deploy ID        : %s", local.deploy_id),
-      format("Corrino Version  : %s", var.corrino_version),
-      format("FQDN             : %s", local.fqdn.name),
-      format("Tenancy OCID     : %s", local.oci.tenancy_id),
-      format("OKE Cluster OCID : %s", local.oke.cluster_ocid),
-      format("Region           : %s", local.oci.region_name),
-      ]
-    )
-    bucket_par = "https://objectstorage.us-ashburn-1.oraclecloud.com/p/bqCfQwvzAZPCnxehCZs1Le5V2Pajn3j4JsFzb5CWHRNvtQ4Je-Lk_ApwCcurdpYT/n/iduyx1qnmway/b/corrino-terraform-registry/o/"
+    #object_filename = format("corrino-registration-%s", random_string.registration_id.result)
+    object_filename = "corrino_registration.json"
+    object_filepath = format("%s/%s", abspath(path.root), random_uuid.registration_id.result)
+    object_content = jsonencode({
+      "Registration ID"    = random_uuid.registration_id.result
+      "Deploy DateTime"    = local.ts
+      "Administrator"      = var.corrino_admin_email
+      "Workspace Name"     = local.app_name
+      "Deploy ID"          = local.deploy_id
+      "Corrino Version"    = var.corrino_version
+      "FQDN"               = local.fqdn.name
+      "Tenancy OCID"       = local.oci.tenancy_id
+      "OKE Cluster OCID"   = local.oke.cluster_ocid
+      "Region"             = local.oci.region_name
+    })
+    upload_path = "https://objectstorage.us-ashburn-1.oraclecloud.com/p/bqCfQwvzAZPCnxehCZs1Le5V2Pajn3j4JsFzb5CWHRNvtQ4Je-Lk_ApwCcurdpYT/n/iduyx1qnmway/b/corrino-terraform-registry/o/${random_uuid.registration_id.result}/"
+  }
+
+  corrino_tags = {
+    "corrino_installed" = timestamp()
+    "corrino_uuid"      = random_uuid.registration_id.result
   }
 
   versions = {
