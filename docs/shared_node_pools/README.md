@@ -16,23 +16,23 @@ You can create a shared node pool with a selector or without a selector. A selec
 
 ```
 {
-	"deployment_name": "MI300X shared pool",
+	"deployment_name": "BM.GPU4.8 shared pool",
 	"recipe_mode": "shared_node_pool",
 	"shared_node_pool_size": 1,
-	"shared_node_pool_shape": "BM.GPU.MI300X.8",
+	"shared_node_pool_shape": "BM.GPU4.8",
 	"shared_node_pool_boot_volume_size_in_gbs": 500,
 	"shared_node_pool_selector": "selector_1"
 }
 ```
 
 2. Wait for the shared node pool to be deployed (can check `deployment_logs` for status)
-3. Deploy any recipe that you want to be deployed on the BM.GPU.MI300x "selector_1" shared node pool (this would be the payload to the `/deployment` POST API):
+3. Deploy any recipe that you want to be deployed on the BM.GPU4.8 "selector_1" shared node pool (this would be the payload to the `/deployment` POST API):
 
 ```
 {
 	"recipe_id": "example",
 	"recipe_mode": "service",
-	"deployment_name": "echo2 seattle",
+	"deployment_name": "echo1 selector_1",
 	"recipe_use_shared_node_pool": true,
 	"recipe_shared_node_pool_selector": "selector_1",
 	"recipe_image_uri": "hashicorp/http-echo",
@@ -40,7 +40,7 @@ You can create a shared node pool with a selector or without a selector. A selec
 	"-text=corrino"
 	],
 	"recipe_container_port": "5678",
-	"recipe_node_shape": "BM.GPU.MI300X.8",
+	"recipe_node_shape": "BM.GPU4.8",
 	"recipe_replica_count": 2
 }
 ```
@@ -48,10 +48,10 @@ You can create a shared node pool with a selector or without a selector. A selec
 Note that the parameters:
 
 - `recipe_use_shared_node_pool` ensures that we are using a shared node pool for this recipe (and not launching new infrastructure
-- `recipe_shared_node_pool_selector` ensures that we are deploying this recipe onto the MI300x shared node pool we deployed in Step 1
+- `recipe_shared_node_pool_selector` ensures that we are deploying this recipe onto the BM.GPU4.8 shared node pool we deployed in Step 1
 - `recipe_node_shape` needs to match the shape of the shared node pool we launched in step 1 (regardless of including the selector or not)
 
-\*\* If no shared node pool of shape BM.GPU.MI300X.8 with selector `selector_1` exisited, the recipe would wait to be deployed until that shared node pool was created
+\*\* If no shared node pool of shape BM.GPU4.8 with selector `selector_1` exisited, the recipe would wait to be deployed until that shared node pool was created
 
 ### Without Selector
 
@@ -59,29 +59,29 @@ Note that the parameters:
 
 ```
 {
-	"deployment_name": "MI300X shared pool",
+	"deployment_name": "BM.GPU4.8 shared pool2",
 	"recipe_mode": "shared_node_pool",
 	"shared_node_pool_size": 1,
-	"shared_node_pool_shape": "BM.GPU.MI300X.8",
+	"shared_node_pool_shape": "BM.GPU4.8",
 	"shared_node_pool_boot_volume_size_in_gbs": 500,
 }
 ```
 
 2. Wait for the shared node pool to be deployed (can check `deployment_logs` for status)
-3. Deploy any recipe that you want to be deployed on the BM.GPU.MI300x "selector_1" shared node pool (this would be the payload to the `/deployment` POST API):
+3. Deploy any recipe that you want to be deployed on the BM.GPU4.8 "selector_1" shared node pool (this would be the payload to the `/deployment` POST API):
 
 ```
 {
 	"recipe_id": "example",
 	"recipe_mode": "service",
-	"deployment_name": "echo2 seattle",
+	"deployment_name": "echo2 selector_1",
 	"recipe_use_shared_node_pool": true,
 	"recipe_image_uri": "hashicorp/http-echo",
 	"recipe_container_command_args": [
 	"-text=corrino"
 	],
 	"recipe_container_port": "5678",
-	"recipe_node_shape": "BM.GPU.MI300X.8",
+	"recipe_node_shape": "BM.GPU4.8",
 	"recipe_replica_count": 2
 }
 ```
@@ -91,8 +91,8 @@ Note that the parameters:
 - `recipe_use_shared_node_pool` ensures that we are using a shared node pool for this recipe (and not launching new infrastructure
 - `recipe_node_shape` needs to match the shape of the shared node pool we launched in step 1 (regardless of including the selector or not)
 
-**This recipe will be deployed onto any BM.GPU.MI300X.8 shared node pool since no selector was included in the recipe**
-**For example, if you had two BM.GPU.MI300X.8 shared node pools, then it will randomly select one for deployment**
+**This recipe will be deployed onto any BM.GPU4.8 shared node pool since no selector was included in the recipe**
+**For example, if you had two BM.GPU4.8 shared node pools, then it will randomly select one for deployment**
 
 ## Considerations
 

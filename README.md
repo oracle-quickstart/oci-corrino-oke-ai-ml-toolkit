@@ -187,7 +187,7 @@ You can use kubectl to view the pod logs.
 Yes. Documentation and steps are [here](docs/auto_scaling/README.md)
 
 **Which GPUs can I deploy this to?**
-Any GPUs that are available in your region.
+Any Nvidia GPUs that are available in your region.
 
 **What if you already have another cluster?**
 You can deploy Corrino to the existing cluster as well. However, we have not yet done extensive testing to confirm if Corrino would be stable on a cluster that already has other workloads running.
