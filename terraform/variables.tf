@@ -158,6 +158,10 @@ variable "keda_enabled" {
   type    = bool
   default = true
 }
+variable "kuberay_enabled" {
+  type    = bool
+  default = true
+}
 
 # -----------------------------------
 # Autonomous Database
