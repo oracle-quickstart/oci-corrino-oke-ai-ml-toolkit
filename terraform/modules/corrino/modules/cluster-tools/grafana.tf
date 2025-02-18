@@ -86,6 +86,10 @@ dashboards:
       gnetId: 13594
       revision: 1
       datasource: Oracle Cloud Infrastructure Metrics
+    nvidia-dcgm:
+      gnetId: 12239
+      revision: 2
+      datasource: Prometheus
 dashboardProviders:
    dashboardproviders.yaml:
      apiVersion: 1

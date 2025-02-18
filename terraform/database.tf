@@ -21,6 +21,7 @@ resource "oci_database_autonomous_database" "autonomous_database" {
   is_free_tier             = var.autonomous_database_is_free_tier
 
   count = 1
+  freeform_tags = local.corrino_tags
 }
 
 
