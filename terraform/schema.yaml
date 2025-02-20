@@ -258,6 +258,11 @@ variableGroups:
     - keda_enabled
     visible: true
 
+  - title: "Multi-Node Inferencing"
+    variables:
+    - kuberay_enabled
+    visible: true
+
   - title: "Operational Insight Sharing"
     variables:
     - share_data_with_corrino_team_enabled
@@ -1005,6 +1010,11 @@ variables:
     type: boolean
     title: "Install Kubernetes Event-driven Autoscaler (KEDA)?"
     description: "KEDA is a tool that allows users to scale Kubernetes workloads based on events or metrics.  It is an Event Driven Autoscaler. With KEDA, you can drive the scaling of any container in Kubernetes based on the number of events needing to be processed"
+
+  kuberay_enabled:
+    type: boolean
+    title: "Install KubeRay?"
+    description: "Kuberay is an open-source Kubernetes operator that simplifies the deployment and management of Ray application on Kubernetes. Ray is a framework for scaling AI workloads which allows Corrino to do multi-node inferencing recipes."
 
   # Data Sharing
 

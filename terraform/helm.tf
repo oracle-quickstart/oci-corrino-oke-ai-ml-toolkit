@@ -25,23 +25,34 @@ resource "helm_release" "mlflow" {
 #    COMPONENT="nvidia_dcgm_er"
 
 resource "helm_release" "nvidia-dcgm" {
-  name       = "nvidia-dcgm"
-  repository = "https://helm.ngc.nvidia.com/nvidia"
-  chart      = "gpu-operator"
-  namespace  = "gpu-operator"
+  name             = "nvidia-dcgm"
+  repository       = "https://helm.ngc.nvidia.com/nvidia"
+  chart            = "gpu-operator"
+  namespace        = "gpu-operator"
   create_namespace = true
-  wait       = false
+  wait             = false
 
   count = var.nvidia_dcgm_enabled ? 1 : 0
 }
 
 resource "helm_release" "keda" {
-  name       = "keda"
-  repository = "https://kedacore.github.io/charts"
-  chart      = "keda"
-  namespace  = "keda"
+  name             = "keda"
+  repository       = "https://kedacore.github.io/charts"
+  chart            = "keda"
+  namespace        = "keda"
   create_namespace = true
-  wait       = false
+  wait             = false
 
   count = var.keda_enabled ? 1 : 0
+}
+
+resource "helm_release" "kuberay" {
+  name             = "kuberay"
+  repository       = "https://ray-project.github.io/kuberay-helm/"
+  chart            = "kuberay-operator"
+  namespace        = "kuberay"
+  create_namespace = true
+  wait             = false
+
+  count = var.kuberay_enabled ? 1 : 0
 }
