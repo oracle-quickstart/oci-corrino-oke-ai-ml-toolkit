@@ -32,7 +32,21 @@ resource "helm_release" "nvidia-dcgm" {
   create_namespace = true
   wait             = false
 
-  count = var.nvidia_dcgm_enabled ? 1 : 0
+  # Create the release if either DCGM or MIG is enabled.
+  count = (var.nvidia_dcgm_enabled || var.nvidia_mig_enabled) ? 1 : 0
+
+  set {
+    name  = "dcgm.enabled"
+    value = var.nvidia_dcgm_enabled ? "true" : "false"
+  }
+
+  dynamic "set" {
+    for_each = var.nvidia_mig_enabled ? [1] : []
+    content {
+      name  = "mig.strategy"
+      value = "mixed"
+    }
+  }
 }
 
 resource "helm_release" "keda" {

@@ -258,6 +258,11 @@ variableGroups:
     - keda_enabled
     visible: true
 
+  - title: "Compute Efficiency"
+    variables:
+    - nvidia_mig_enabled
+    visible: true
+
   - title: "Multi-Node Inferencing"
     variables:
     - kuberay_enabled
@@ -1016,6 +1021,10 @@ variables:
     title: "Install KubeRay?"
     description: "Kuberay is an open-source Kubernetes operator that simplifies the deployment and management of Ray application on Kubernetes. Ray is a framework for scaling AI workloads which allows Corrino to do multi-node inferencing recipes."
 
+  nvidia_mig_enabled:
+    type: boolean
+    title: "Install NVIDIA Multi-Instance GPU Operator"
+    description: "Multi-Instance GPU (MIG) is an operator which allows partitioning or sharding of Compute Resources for H100 GPUs. As an example, a single H100 could be split into 4 slices with 20GB memory each, and 1/4 the compute resources. This is great for using an H100 for small model inference, or small workloads which don't require a full H100."
   # Data Sharing
 
   share_data_with_corrino_team_enabled:

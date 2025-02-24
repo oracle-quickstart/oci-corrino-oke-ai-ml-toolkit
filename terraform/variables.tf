@@ -154,6 +154,10 @@ variable "nvidia_dcgm_enabled" {
   type    = bool
   default = true
 }
+variable "nvidia_mig_enabled" {
+  type    = bool
+  default = true
+}
 variable "keda_enabled" {
   type    = bool
   default = true
