@@ -1,0 +1,6 @@
+{
+    "recipe_mode": "update",
+    "deployment_name": "all-1g10gb",
+    "recipe_node_name": "10.0.10.138",
+    "shared_node_pool_mig_config": "all-1g.10gb"
+}

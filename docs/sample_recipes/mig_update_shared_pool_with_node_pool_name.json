@@ -1,0 +1,6 @@
+{
+    "recipe_mode": "update",
+    "deployment_name": "all-2g-20gb",
+    "recipe_node_pool_name": "h100migpool",
+    "shared_node_pool_mig_config": "all-2g.20gb"
+}
