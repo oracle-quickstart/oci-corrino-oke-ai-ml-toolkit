@@ -68,6 +68,12 @@ The following parameters are required:
 
 - [OPTIONAL] `rayclient_server_port`: Ray client server port for external connections (default is 10001)
 
+- [OPTIONAL] `head_image_uri`: Container image for the head node of the ray cluster (default is `vllm/vllm-openai:v0.7.2`)
+
+- [OPTIONAL] `worker_image_uri`: Container image for the worker nodes of the ray cluster (default is `vllm/vllm-openai:v0.7.2`)
+
+- [OPTIONAL] `rayjob_image_uri`: Container image for the K8s Job that is applied after the head and worker nodes are in ready state (in the future, we will change this to be a RayJob CRD but are using K8s Job for now) (default is `vllm/vllm-openai:v0.7.2`)
+
 ## Requirements
 
 - **Kuberay Operator Installed** = Make sure that the kuberay operator is installed (this is installed via the Resource Manager if the Kuberay option is selected - default is selected). Any Corrino installation before 2/24/25 will need to be reinstalled via the latest quickstarts release in order to ensure Kuberay is installed in your Corrino instance.
