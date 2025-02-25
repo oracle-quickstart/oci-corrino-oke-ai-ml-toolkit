@@ -78,6 +78,8 @@ The following parameters are required:
 
 - Only job supported right now using Ray cluster and OCI Blueprints is vLLM Distributed Inference. This will change in the future.
 
+- All nodes in the multi-node inferencing recipe's node pool will be allocated to Ray (subject to change). You cannot assign just a portion; the entire node pool is reserved for the Ray cluster.
+
 ## Interacting with Ray Cluster
 
 Once the multi-node inference recipe has been successfully deployed, you will have access to the following URLs:
