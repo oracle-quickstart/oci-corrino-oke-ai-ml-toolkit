@@ -1,4 +1,4 @@
-# OCI AI Blueprints – Custom Blueprints 
+# Custom Blueprints 
 
 ## What are Custom Blueprints? 
 Customer Blueprints are community-contributed blueprints that meet your / your customers’ specific needs. Examples include: "RAG blueprint with 23ai integration" or an "Agentic Blueprint". You can also contribute pre-filled samples for existing blueprints. For example, you could add a pre-filled sample called "Inference of Llama-3-70B model on A100 with vLLM" to the "Inference with vLLM" blueprint. The custom blueprints that you contribute can be accessed by anyone using Corrino.
