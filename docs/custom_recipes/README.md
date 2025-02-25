@@ -5,12 +5,12 @@ Customer Blueprints are community-contributed blueprints that meet your / your c
 
 ## Publishing Custom Blueprints: Step-by-Step Guide
 1. Upload your custom blueprint's container image to a container registry. Make the container image public.
-2. Review blueprint schema documentation (see below).
-3. Create the custom-blueprint.json in a way that aligns with the schema. Ideally the JSON has 2-3 pre-filled samples to simplify user onboarding.
+2. Create and test a pre-filled sample deployment (see Example Pre-Filled Sample below) on Corrino with your container image. See the Blueprint Schema below (pre_filled_samples field) for guidance on the fields you can pass to deploy your container image to Corrino. Validate the you are able to deploy the container image to Corrino without any issues.
+3. Create the custom-blueprint.json in a way that aligns with the Blueprint Schema (see Blueprint Schema section below). Ideally the JSON has 2-3 pre-filled samples to simplify user onboarding.
 4. Use a validator to test the JSON schema (e.g. https://www.jsonschemavalidator.net/).
-6. Test the pre-filled samples on your own instance of Corrino.
-7. Send the custom-blueprint.json file to Corrino team.
-8. Submit changes to this GitHub repo with the new blueprint information. Submit changes via a pull request. All modifications will be reviewed by the Corrino team before being merged.
+5. Test the pre-filled samples on your own instance of Corrino.
+6. Send the custom-blueprint.json file to Corrino team.
+7. Submit changes to this GitHub repo with the new blueprint information. Submit changes via a pull request. All modifications will be reviewed by the Corrino team before being merged.
 
 ## Maintaining Custom Blueprints 
 - Update custom blueprints to align with the latest version of the blueprint schema
@@ -133,8 +133,8 @@ Version 1.0
                     "recipe_node_autoscaling_params": {
                       "type": "object",
                       "properties": {
-                        "min_nodes": { "type": "integer" },
-                        "max_nodes": { "type": "integer" }
+                        "min_nodes": { "type": "integer", "description": "Minimum number of nodes in node pool" },
+                        "max_nodes": { "type": "integer", "description": "Maximum node pool size to scale to"  }
                       },
                       "additionalProperties": false,
                       "examples": [
@@ -147,21 +147,22 @@ Version 1.0
                     "recipe_pod_autoscaling_params": {
                       "type": "object",
                       "properties": {
-                        "min_replicas": { "type": "integer" },
-                        "max_replicas": { "type": "integer" },
-                        "scaling_metric": { "type": "string" },
-                        "collect_metrics_timespan": { "type": "string" },
-                        "scaling_threshold": { "type": "number" },
-                        "scaling_cooldown": { "type": "integer" },
-                        "polling_interval": { "type": "integer" },
-                        "stabilization_window_down": { "type": "integer" },
-                        "scaling_period_down": { "type": "integer" },
-                        "stabilization_window_up": { "type": "integer" },
-                        "scaling_period_up": { "type": "integer" },
-                        "query": { "type": "string" },
+                        "min_replicas": { "type": "integer", "description": "Minimum number of replicas to start with"  },
+                        "max_replicas": { "type": "integer", "description": "Minimum number of replicas to start with"  },
+                        "scaling_metric": { "type": "string", "description": "..."   },
+                        "collect_metrics_timespan": { "type": "string", "description": "Minimum number of replicas to start with"   },
+                        "scaling_threshold": { "type": "number", "description": "Threshold value to trigger scaling. If tuning, this will be most impactful on scaling. Moving it up will make scaling less aggressive, moving it down will make scaling more aggressive"   },
+                        "scaling_cooldown": { "type": "integer", "description": "Min time to wait after scaling up before scaling back down (s)"   },
+                        "polling_interval": { "type": "integer", "description": "How often to query scaling metric (s)"   },
+                        "stabilization_window_down": { "type": "integer", "description": "Time period over which to stabilize metrics before scaling a pod down (s)"   },
+                        "scaling_period_down": { "type": "integer", "description": "Min time after scaling a pod down before it can scale another pod down"   },
+                        "stabilization_window_up": { "type": "integer", "description": "Time period over which to stabilize metrics before scaling a pod up (s)"   },
+                        "scaling_period_up": { "type": "integer", "description": "Min time after scaling a pod up before another pod can be added"   },
+                        "query": { "type": "string", "description": "If desired, a valid prometheus query to be used in conjunction with threshold to trigger scaling. Will completely change scaling behavior"   },
                         "scaler_type": {
                           "type": "string",
-                          "enum": ["prometheus"]
+                          "enum": ["prometheus"],
+                            "description": "..."  
                         },
                         "server_address": { "type": "string" }
                       },
@@ -197,7 +198,8 @@ Version 1.0
                         "success_threshold": { "type": "integer" },
                         "timeout_seconds": { "type": "number" }
                       },
-                      "additionalProperties": false
+                      "additionalProperties": false,
+                        "description": "If desired, a valid prometheus query to be used in conjunction with threshold to trigger scaling. Will completely change scaling behavior"
                     },
                     "recipe_startup_probe_params": {
                       "type": "object",
@@ -211,7 +213,8 @@ Version 1.0
                         "success_threshold": { "type": "integer" },
                         "timeout_seconds": { "type": "number" }
                       },
-                      "additionalProperties": false
+                      "additionalProperties": false,
+                        "description": "If desired, a valid prometheus query to be used in conjunction with threshold to trigger scaling. Will completely change scaling behavior"
                     },
                     "recipe_container_port": {
                       "type": "string",
@@ -387,5 +390,50 @@ Version 1.0
             "description": "Pre-filled samples of blueprints."
         }
     }
+}
+```
+## Example Pre-Filled Sample
+``` json
+{
+    "recipe_id": "llm_inference_nvidia",
+    "recipe_mode": "service",
+    "deployment_name": "vLLM Inference Deployment",
+    "recipe_image_uri": "iad.ocir.io/iduyx1qnmway/corrino-devops-repository:vllmv0.6.2",
+    "recipe_node_shape": "VM.GPU.A10.2",
+    "input_object_storage": [
+        {
+            "par": "https://objectstorage.us-ashburn-1.oraclecloud.com/p/IFknABDAjiiF5LATogUbRCcVQ9KL6aFUC1j-P5NSeUcaB2lntXLaR935rxa-E-u1/n/iduyx1qnmway/b/corrino_hf_oss_models/o/",
+            "mount_location": "/models",
+            "volume_size_in_gbs": 500,
+            "include": ["NousResearch/Meta-Llama-3.1-8B-Instruct"]
+        }
+    ],    
+    "recipe_container_env": [
+        {
+            "key": "tensor_parallel_size",
+            "value": "2"
+        },
+        {
+            "key": "model_name",
+            "value": "NousResearch/Meta-Llama-3.1-8B-Instruct"
+        },
+        {
+            "key": "Model_Path",
+            "value": "/models/NousResearch/Meta-Llama-3.1-8B-Instruct"
+        }
+    ],
+    "recipe_replica_count": 1,
+    "recipe_container_port": "8000",
+    "recipe_nvidia_gpu_count": 2,
+    "recipe_node_pool_size": 1,
+    "recipe_node_boot_volume_size_in_gbs": 200,
+    "recipe_container_command_args": [
+        "--model",
+        "$(Model_Path)",
+        "--tensor-parallel-size",
+        "$(tensor_parallel_size)"
+    ],
+    "recipe_ephemeral_storage_size": 100,
+    "recipe_shared_memory_volume_size_limit_in_mb": 200
 }
 ```
