@@ -33,15 +33,10 @@ resource "helm_release" "nvidia-dcgm" {
   wait             = false
 
   # Create the release if either DCGM or MIG is enabled.
-  count = (var.nvidia_dcgm_enabled || var.nvidia_mig_enabled) ? 1 : 0
-
-  set {
-    name  = "dcgm.enabled"
-    value = var.nvidia_dcgm_enabled ? "true" : "false"
-  }
+  count = var.nvidia_dcgm_enabled ? 1 : 0
 
   dynamic "set" {
-    for_each = var.nvidia_mig_enabled ? [1] : []
+    for_each = var.nvidia_dcgm_enabled ? [1] : []
     content {
       name  = "mig.strategy"
       value = "mixed"
