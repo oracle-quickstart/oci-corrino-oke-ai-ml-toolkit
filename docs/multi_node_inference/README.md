@@ -4,11 +4,31 @@
 
 ## What is it?
 
-Multi-node inference refers to distributing the workload of running inference for LLM models across multiple nodes, each equipped with one or more GPUs. This approach combines tensor parallelism—splitting the model across multiple GPUs within a node—and pipeline parallelism—spreading the workload across several nodes—to efficiently utilize available hardware resources.
+**Inference:**  
+Inference is the process of running data through a trained machine learning model to generate an output—similar to calling a function with some input data and receiving a computed result. For instance, when you feed text (such as a question) into a large language model, the model processes that input and returns a text-based answer.
+
+**Inference Serving:**  
+Inference serving is about deploying these trained models as APIs or services. This setup allows for efficient processing of predictions, whether on demand (real-time) or in batches, much like how a web service handles requests and responses.
+
+**Multi-Node Inference:**  
+Multi-node inference scales up this process by distributing the workload across several computing nodes, each typically equipped with one or more GPUs. This is particularly useful for handling large models that require substantial computational power. It combines two key parallelization techniques:
+
+- **Tensor Parallelism:** Within a single node, the model’s complex numerical operations (e.g., matrix multiplications) are divided among multiple GPUs. Think of it as breaking a large calculation into smaller pieces that can be processed simultaneously by different GPUs.
+- **Pipeline Parallelism:** The inference process is divided into sequential stages, with each node responsible for one stage. This is similar to an assembly line, where each node completes a specific part of the overall task before passing it along.
+
+Together, these methods ensure that multi-node inference efficiently utilizes available hardware resources, reducing processing time and improving throughput for both real-time and batch predictions.
 
 ## When to use it?
 
-Use multi-node inference whenever you are trying to use a very large model that will not fit into a single node and the GPUs on that one node. Example would be _Meta Llama 3.1 405B_ or _DeepSeek-V3_ which is too large to fit onto a single node (and the GPUs within that one node). You must distribute the model weights across the GPUs of each node (tensor parallelism) and the GPUs in other nodes (pipeline parallelism) in order to run LLM inference with such large models.
+Use multi-node inference whenever you are trying to use a very large model that will not fit into all available GPU memory on a single node. As an example, Llama-3.3-70B-Instruct requires roughly 150G of GPU memory when serving. If you were serving this on BM.GPU.A10.4, the 4 A10 GPUs have a combined 100G of GPU memory, so the model is too large to fit onto this one node. You must distribute the model weights across the GPUs of each node (tensor parallelism) and the GPUs in other nodes (pipeline parallelism) in order to run LLM inference with such large models.
+
+## How to determine shape and GPU requirements for a given model?
+
+1. Find the number of parameters in your model (usually in the name of the model such as Llama-3.3-70B-Instruct would have 70 billion parameters)
+2. Determine the precision of the model (FP32 vs FP16 vs FP8) - you can find this in the config.json of the model if on hugging face (look for the torch_dtype); a good assumption is that the model was trained on FP32 and is served on FP16 so FP16 is what you would use for your model precision
+3. Use formula here: https://ksingh7.medium.com/calculate-how-much-gpu-memory-you-need-to-serve-any-llm-67301a844f21 or https://www.substratus.ai/blog/calculating-gpu-memory-for-llm to determine the amount of GPU memory needed
+4. Determine which shapes you have access to and how much GPU memory each instance of that shape has: https://docs.oracle.com/en-us/iaas/Content/Compute/References/computeshapes.htm (ex: VM.GPU2.1 has 16 GB of GPU memory per instance). Note that as of right now, you must use the same shape across the entire node pool when using multi-node inference. Mix and match of shape types is not supported within the node pool used for the multi-node inference recipe.
+5. Divide the total GPU memory size needed (from Step #3) by the amount of GPU memory per instance of the shape you chose in Step #4. Round up to the nearest whole number. This will be the total number of nodes you will need in your node pool for the given shape and model.
 
 ## How to use it?
 
@@ -28,17 +48,17 @@ The following parameters are required:
 
 - `recipe_container_port` -> the port to access the inference endpoint
 
-- `deployment_name`
+- `deployment_name` -> name of this deployment
 
-- `recipe_node_shape`
+- `recipe_node_shape` -> OCI name of the Compute shape chosen (use exact names as found here: https://docs.oracle.com/en-us/iaas/Content/Compute/References/computeshapes.htm)
 
 - `input_object_storage` (plus the parameters required inside this object)
 
 - `recipe_node_pool_size` -> the number of physical nodes to launch (will be equal to `num_worker_nodes` plus 1 for the head node)
 
-- `recipe_node_boot_volume_size_in_gbs`
+- `recipe_node_boot_volume_size_in_gbs` -> size of boot volume for each node launched in the node pool (make sure it is at least 1.5x the size of your model)
 
-- `recipe_ephemeral_storage_size`
+- `recipe_ephemeral_storage_size` -> size of the attached block volume that will be used to store the model for reference by each node (make sure it is at least 1.5x the size of your model)
 
 - `recipe_nvidia_gpu_count` -> the number of GPUs per node (since head and worker nodes are identical, it is the number of GPUs in the shape you have specified. Ex: VM.GPU.A10.2 would have 2 GPUs)
 
