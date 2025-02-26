@@ -114,7 +114,7 @@ Once the multi-node inference recipe has been successfully deployed, you will ha
    **To find the URL for the API Inference Endpoint:** Go to `workspace` API endpoint and the URL will be under "recipes" object. The object will be labeled `<deployment_name>-raycluster-dashboard`. The format for the URL is `<deployment_name>.<assigned_service_endpoint>.com`
    **Example URL:** `https://dashboard.rayclustervmtest10.132-226-50-64.nip.io`
 
-2. **API Inference Endpoint:** This is the API endpoint you will use to do inferencing across the multiple nodes. It follow the [OpenAI API spec](https://platform.openai.com/docs/api-reference/introduction)
+2. **API Inference Endpoint:** This is the API endpoint you will use to do inferencing across the multiple nodes. It follows the [OpenAI API spec](https://platform.openai.com/docs/api-reference/introduction)
    **To find the URL for the API Inference Endpoint:** Go to `workspace` API endpoint and the URL will be under "recipes" object. The object will be labeled `<deployment_name>-raycluster-app`. The format for the URL is `<deployment_name>.<assigned_service_endpoint>.com`
    **Example curl command:** `curl --request GET --location 'rayclustervmtest10.132-226-50-64.nip.io/v1/models'`
 
