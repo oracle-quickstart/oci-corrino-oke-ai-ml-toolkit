@@ -1,6 +1,6 @@
 # Multi-Node Inference
 
-[Jump to Quickstart](#QuickStart_Guide)
+[Jump to Quickstart](#Quickstart_Guide:_Multi-Node_Inference)
 
 ## What is it?
 
@@ -91,11 +91,11 @@ The following parameters are required:
 Once the multi-node inference recipe has been successfully deployed, you will have access to the following URLs:
 
 1. **Ray Dashboard:** Ray provides a web-based dashboard for monitoring and debugging Ray applications. The visual representation of the system state, allows users to track the performance of applications and troubleshoot issues.
-   **To find the URL for the API Inference Endpoint:** Go to `workspace` API endpoint and the URL will be under "recipes" object. The format for the URL is `<deployment_name>.<assigned_service_endpoint>.com`
+   **To find the URL for the API Inference Endpoint:** Go to `workspace` API endpoint and the URL will be under "recipes" object. The object will be labeled `<deployment_name>-raycluster-dashboard`. The format for the URL is `<deployment_name>.<assigned_service_endpoint>.com`
    **Example URL:** `https://dashboard.rayclustervmtest10.132-226-50-64.nip.io`
 
 2. **API Inference Endpoint:** This is the API endpoint you will use to do inferencing across the multiple nodes. It follow the [OpenAI API spec](https://platform.openai.com/docs/api-reference/introduction)
-   **To find the URL for the API Inference Endpoint:** Go to `workspace` API endpoint and the URL will be under "recipes" object. The format for the URL is `dashboard.<deployment_name>.<assigned_service_endpoint>.com`
+   **To find the URL for the API Inference Endpoint:** Go to `workspace` API endpoint and the URL will be under "recipes" object. The object will be labeled `<deployment_name>-raycluster-app`. The format for the URL is `<deployment_name>.<assigned_service_endpoint>.com`
    **Example curl command:** `curl --request GET --location 'rayclustervmtest10.132-226-50-64.nip.io/v1/models'`
 
 # Quickstart Guide: Multi-Node Inference
