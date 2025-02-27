@@ -23,3 +23,9 @@ Pod info: nvidia-dcgm-node-feature-discovery-worker always gets stuck in contain
 Warning  FailedCreatePodSandBox  12s   kubelet            Failed to create pod sandbox: rpc error: code = Unknown desc = failed to create pod network sandbox k8s_gpu-operator-1738967226-node-feature-discovery-worker-dzwht_gpu-operator_06605d81-8dc8-48db-a9a9-b393e8bcd068_0
 ```
 Where the nvidia-dcgm-node-feature-discovery-worker pod infinitely gets stuck in a "ContainerCreating" / "CrashLoopBackoff" cycle.
+
+
+## Issues Connecting to APIs via Postman or Curl
+
+Make sure to append a slash ('/') to the end of the URL such as `https://api.<domain_endpoint>/deployment/` instead of `https://api.<domain_endpoint>/deployment`. 
+This is especially important for all POST requests.
