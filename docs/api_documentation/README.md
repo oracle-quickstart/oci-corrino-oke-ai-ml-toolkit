@@ -29,6 +29,8 @@
 | skip_capacity_validation                     | boolean | No       | Determines whether validation checks on shape capacity are performed before initiating deployment. If your deployment is failing validation due to capacity errors but you believe this not to be true, you should set `skip_capacity_validation` to be `true` in the recipe JSON to bypass all checks for Shape capacity.                                                |
 
 For autoscaling parameters, visit [autoscaling](../auto_scaling/README.md#basic-configurations).
+
+For MIG parameters, visit [MIG shared pool configurations](../mig_multi_instance_gpu/README.md#mig-recipe-configuration), [update MIG configuration](../mig_multi_instance_gpu/README.md#update-mig-configuration), and [MIG recipe configuration](../mig_multi_instance_gpu/README.md#use-mig-resource-in-recipe).
 ### Recipe Container Arguments
 
 #### LLM Inference using NVIDIA shapes and vLLM

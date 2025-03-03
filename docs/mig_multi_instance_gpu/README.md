@@ -1,6 +1,6 @@
 # Multi-Instance GPU (MIG)
 
-[Jump to Quickstart]()
+[Jump to Quickstart](#quickstart)
 
 ## What is it?
 
@@ -59,17 +59,17 @@ There are two ways to apply a mig configuration to a node pool.
 1. During shared_node_pool deployment
 2. As an update to an existing shared node pool
 
-### Mig Configuration
-**shared_node_pool**:
+### Mig Recipe Configuration
+#### shared_node_pool:
 
 Apart from the existing requirements for a shared node pool found [here](../shared_node_pools/README.md), the following are additional requirements / options for MIG:
 
 - `"shared_node_pool_mig_config"` - the mig congfiguration to apply to each node in the node pool. Possible values are in the [Mig Configurations](#mig-configurations). This will apply the node to each node in the pool, but if you want to update a specific node that can be done via the `update` mode described in the next section.
 - `"recipe_max_pods_per_node"`: [OPTIONAL: DEFAULT = 90] - by default, since MIG can slice up to 56 times for a full BM.GPU.H100.8, the default 31 pods by OKE is insufficient. As part of shared_node_pool deployment for MIG, this value is increased to 90 to fit all slice configurations + some buffer room. The maximum value is proportedly 110. It is not recommended to change this value, as it can not be modified after deployment of a pool. In order to change it, a node must be removed from the pool and re-added with the new value.
 
-A sample recipe can be found [in sample recipes](../sample_recipes/...).
+A sample recipe for the mig enabled shared pool can be found [in sample recipes](../sample_recipes/mig_enabled_shared_node_pool.json).
 
-**update mig configuration**:
+#### update mig configuration:
 Alternatively, you can update the MIG configuration of an existing node pool as a separate deployment. This is useful if you want to update the MIG configuration of a specific node, or if you want to change the MIG configuration of a pool. Updates to mig configuration typically take 1-2 minutes but can take up to 5 if applying MIG to a previously unmigged node.
 
 Importantly, when applying the MIG configuration update, nothing should be running on the node being updated. This is because MIG is making changes at the hardware level which will affect running applications. Alternatively, the MIG configuration may fail if the node is currently running a workload.
@@ -82,23 +82,20 @@ In future iterations, we will add support to temporarily pause work and reschedu
 - `"recipe_node_name"` - One of `"recipe_node_name"` or `"recipe_node_pool_name"` must be provided - this is the private IP address of the node. This will only apply the passed mig configuration to the specified node, rather than the whole pool. This option currently only supports a single node at a time.
 - `"recipe_node_pool_name"` - One of `"recipe_node_name"` or `"recipe_node_pool_name"` must be provided - this is the name of the node pool. This will apply the passed mig configuration to the whole pool, rather than a specific node.
 
-A sample recipe can be found [in sample recipes](../sample_recipes/...).
+A sample recipe to update using **node name**: [mig_update_shared_pool_with_node_name.json](../sample_recipes/mig_update_node_with_node_name.json).
 
+A sample recipe to update using **node pool name**: [mig_update_shared_pool_with_node_pool_name.json](../sample_recipes/mig_update_shared_pool_with_node_pool_name.json).
 
-**recipe_deployment**:
-
-- `"node_pool_name"` - the name of the node pool to update
-- `"shared_node_pool_mig_config"` - Same `shared_node_pool` section.
-- `"node_name"` - [OPTIONAL] the name of the node to update. Can be found in the console or with `kubectl get nodes` - this is the private IP address of the node. If this is not applied, the entire pool configuration will be updated.
-
-A sample recipe can be found [in sample recipes](../sample_recipes/...).
 
 ### Use MIG Resource in Recipe
-**Resource requests**:
 
-There is one way to request MIG resources during deployment of a recipe. It is only valid to request a MIG resource if the node has been pre-configured with that MIG configuration prior to recipe deployment. If a recipe requests a MIG resource that has not been configured on any node, the recipe will fail validation. The list of available MIG resource requests:
+#### Resource requests:
+
+There is one way to request MIG resources during deployment of a recipe. It is only valid to request a MIG resource if the node has been pre-configured with that MIG configuration prior to recipe deployment. If a recipe requests a MIG resource that has not been configured on any node, the recipe will fail validation. The parameter:
 
 - `"mig_resource_request"` - the type of MIG resource the recipe should run on.
+
+The list of available MIG resource requests:
 
 |Resource|Description|
 |:---:|:---:|
@@ -113,8 +110,24 @@ There is one way to request MIG resources during deployment of a recipe. It is o
 
 If you would like to run the same recipe across many slices (which may be the case with LLM inference), increase the number of replicas in `recipe_replica_count`.
 
-A sample recipe with multiple replicas can be found [in sample recipes](../sample_recipes/...).
+A sample recipe with multiple replicas can be found here: [mig_inference_multiple_replicas.json](../sample_recipes/mig_inference_multiple_replicas.json).
 
-A sample recipe with a single replica can be found [in sample recipes](../sample_recipes/...).
+A sample recipe with a single replica can be found here: [mig_inference_single_replica.json](../sample_recipes/mig_inference_single_replica.json).
 
+## Quickstart
 
+The following is a quickstart with the example flow of using MIG for recipe deployment.
+
+1. Approximate your model's resource requirements using the framework in the [How to choose MIG](#how-to-choose-mig-configuration-for-a-given-model) section.
+2. Launch your H100 shared pool with the correct [MIG config](#mig-configurations) based on (1).
+3. Launch your recipe onto that MIG configuration with [Use MIG in a recipe](#use-mig-resource-in-recipe).
+4. Evaluate usage. If more memory is needed, select a larger slice from the MIG configurations. If less memory / performance is needed and you can run more workloads, select a smaller slice, and [update MIG configuration](#update-mig-configuration).
+5. Rerun your workflow and re-evaluate.
+6. Repeat steps 3-5 until optimal setup is determined.
+
+Executing the recipes below would be an exact representation of the above.
+
+1. Launch shared pool: [shared_mig_pool.json](../sample_recipes/mig_enabled_shared_node_pool.json)
+2. Launch MIG inference when pool is active: [mig_inference.json](../sample_recipes/mig_inference_single_replica.json)
+3. Evaluate performance and determine update is needed to reduce memory from 20gb slice to 10gb slice: [update_mig.json](../sample_recipes/mig_update_node_with_node_name.json)
+4. Launch recipe again, this time selecting 1g.10gb resource: [mig_inference.json](../sample_recipes/mig_inference_single_replica_10gb.json)
