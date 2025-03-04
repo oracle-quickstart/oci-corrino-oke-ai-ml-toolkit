@@ -1,5 +1,27 @@
 # Corrino OKE Toolkit for AI/ML Workloads
 
+## Table of Contents
+
+1. [About Corrino](#about-corrino)
+    - [Problem](#problem)
+    - [What is Corrino and how does it help?](#what-is-corrino-and-how-does-it-help)
+    - [What are Recipes?](#what-are-recipes)
+    - [Recipe Configuration Options](#recipe-configuration-options)
+    - [What is in this repo?](#what-is-in-this-repo)
+2. [Getting Started](#getting-started)
+    - [Step 1: Set up policies in tenancy](#step-1-set-up-policies-in-tenancy)
+    - [Step 2: Create OKE cluster](#step-2-create-oke-cluster)
+    - [Step 3: Install and Access Corrino](#step-3-install-and-access-corrino)
+    - [Step 4: Deploy a vLLM Inference recipe](#step-4-deploy-a-vllm-inference-recipe)
+    - [Step 5: Undeploy the recipe](#step-5-undeploy-the-recipe)
+    - [Additional Resources](#additional-resources)
+3. [Features](#features)
+4. [Ways to Access Corrino](#ways-to-access-corrino)
+5. [IAM Policies](#iam-policies)
+6. [Frequently asked questions](#frequently-asked-questions)
+    - [Cleanup](#cleanup)
+8. [Questions](#questions)
+
 ## About Corrino
 
 ### Problem
