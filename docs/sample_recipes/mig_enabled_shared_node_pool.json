@@ -1,0 +1,8 @@
+{ 
+  "deployment_name": "H100_pool_mig",
+  "recipe_mode": "shared_node_pool", 
+  "shared_node_pool_size": 1, 
+  "shared_node_pool_shape": "BM.GPU.H100.8", 
+  "shared_node_pool_boot_volume_size_in_gbs": 1000,
+  "shared_node_pool_mig_config": "all-1g.20gb"
+}

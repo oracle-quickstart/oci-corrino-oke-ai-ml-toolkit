@@ -1017,7 +1017,6 @@ variables:
     description: "Kuberay is an open-source Kubernetes operator that simplifies the deployment and management of Ray application on Kubernetes. Ray is a framework for scaling AI workloads which allows Corrino to do multi-node inferencing recipes."
 
   # Data Sharing
-
   share_data_with_corrino_team_enabled:
     type: boolean
     title: "Allow your Corrino workspace to share operational insights with Oracle?"
