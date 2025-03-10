@@ -13,6 +13,7 @@ locals {
     #    backend_image_uri_base                       = join(":", [local.ocir.base_uri, local.ocir.backend_image])
     backend_image_uri                            = format("${local.ocir.base_uri}:${local.ocir.backend_image}-${local.versions.corrino_version}")
     frontend_image_uri                           = join(":", [local.ocir.base_uri, local.ocir.frontend_image])
+    blueprint_portal_image_uri                   = join(":", [local.ocir.base_uri, local.ocir.blueprint_portal_image])
     recipe_bucket_name                           = "corrino-recipes"
     recipe_validation_enabled                    = "True"
     recipe_validation_shape_availability_enabled = "True"
@@ -24,16 +25,16 @@ locals {
     object_filename = "corrino_registration.json"
     object_filepath = format("%s/%s", abspath(path.root), random_uuid.registration_id.result)
     object_content = jsonencode({
-      "Registration ID"    = random_uuid.registration_id.result
-      "Deploy DateTime"    = local.ts
-      "Administrator"      = var.corrino_admin_email
-      "Workspace Name"     = local.app_name
-      "Deploy ID"          = local.deploy_id
-      "Corrino Version"    = var.corrino_version
-      "FQDN"               = local.fqdn.name
-      "Tenancy OCID"       = local.oci.tenancy_id
-      "OKE Cluster OCID"   = local.oke.cluster_ocid
-      "Region"             = local.oci.region_name
+      "Registration ID"  = random_uuid.registration_id.result
+      "Deploy DateTime"  = local.ts
+      "Administrator"    = var.corrino_admin_email
+      "Workspace Name"   = local.app_name
+      "Deploy ID"        = local.deploy_id
+      "Corrino Version"  = var.corrino_version
+      "FQDN"             = local.fqdn.name
+      "Tenancy OCID"     = local.oci.tenancy_id
+      "OKE Cluster OCID" = local.oke.cluster_ocid
+      "Region"           = local.oci.region_name
     })
     upload_path = "https://objectstorage.us-ashburn-1.oraclecloud.com/p/bqCfQwvzAZPCnxehCZs1Le5V2Pajn3j4JsFzb5CWHRNvtQ4Je-Lk_ApwCcurdpYT/n/iduyx1qnmway/b/corrino-terraform-registry/o/${random_uuid.registration_id.result}/"
   }
@@ -93,13 +94,14 @@ locals {
   }
 
   ocir = {
-    base_uri             = join("/", [local.registry.subdomain, local.registry.source_tenancy_namespace, local.registry.name])
-    backend_image        = "oci-corrino-cp"
-    frontend_image       = "corrino-portal"
-    cli_util_amd64_image = "oci-util-amd64"
-    cli_util_arm64_image = "oci-util-arm64"
-    pod_util_amd64_image = "pod-util-amd64"
-    pod_util_arm64_image = "pod-util-arm64"
+    base_uri               = join("/", [local.registry.subdomain, local.registry.source_tenancy_namespace, local.registry.name])
+    backend_image          = "oci-corrino-cp"
+    frontend_image         = "corrino-portal"
+    blueprint_portal_image = "oci-ai-blueprints-portal"
+    cli_util_amd64_image   = "oci-util-amd64"
+    cli_util_arm64_image   = "oci-util-arm64"
+    pod_util_amd64_image   = "pod-util-amd64"
+    pod_util_arm64_image   = "pod-util-arm64"
   }
 
   domain = {
@@ -125,6 +127,7 @@ locals {
     api_origin_insecure = join(".", ["http://api", local.fqdn.name])
     api_origin_secure   = join(".", ["https://api", local.fqdn.name])
     portal              = join(".", ["portal", local.fqdn.name])
+    blueprint_portal    = join(".", ["blueprints", local.fqdn.name])
     mlflow              = join(".", ["mlflow", local.fqdn.name])
     prometheus          = join(".", ["prometheus", local.fqdn.name])
     grafana             = join(".", ["grafana", local.fqdn.name])
@@ -298,6 +301,11 @@ locals {
       name            = "TENANCY_NAMESPACE"
       config_map_name = "corrino-configmap"
       config_map_key  = "TENANCY_NAMESPACE"
+    },
+    {
+      name            = "API_BASE_URL"
+      config_map_name = "corrino-configmap"
+      config_map_key  = "BACKEND_SERVICE_NAME"
     }
   ]
 

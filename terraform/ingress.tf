@@ -1,7 +1,7 @@
 resource "kubernetes_ingress_v1" "corrino_cp_ingress" {
   wait_for_load_balancer = true
   metadata {
-    name        = "corrino-cp-ingress"
+    name = "corrino-cp-ingress"
     annotations = {
       "cert-manager.io/cluster-issuer"             = "letsencrypt-prod"
       "nginx.ingress.kubernetes.io/rewrite-target" = "/"
@@ -36,7 +36,7 @@ resource "kubernetes_ingress_v1" "corrino_cp_ingress" {
 resource "kubernetes_ingress_v1" "corrino_portal_ingress" {
   wait_for_load_balancer = true
   metadata {
-    name        = "corrino-portal-ingress"
+    name = "corrino-portal-ingress"
     annotations = {
       "cert-manager.io/cluster-issuer"             = "letsencrypt-prod"
       "nginx.ingress.kubernetes.io/rewrite-target" = "/"
@@ -68,11 +68,46 @@ resource "kubernetes_ingress_v1" "corrino_portal_ingress" {
   depends_on = [module.oke-quickstart.helm_release_ingress_nginx]
 }
 
+resource "kubernetes_ingress_v1" "oci_ai_blueprints_portal_ingress" {
+  wait_for_load_balancer = true
+  metadata {
+    name = "oci-ai-blueprints-portal-ingress"
+    annotations = {
+      "cert-manager.io/cluster-issuer"             = "letsencrypt-prod"
+      "nginx.ingress.kubernetes.io/rewrite-target" = "/"
+    }
+  }
+  spec {
+    ingress_class_name = "nginx"
+    tls {
+      hosts       = [local.public_endpoint.blueprint_portal]
+      secret_name = "oci-ai-blueprints-portal-tls"
+    }
+    rule {
+      host = local.public_endpoint.blueprint_portal
+      http {
+        path {
+          path = "/"
+          backend {
+            service {
+              name = kubernetes_service.oci_ai_blueprints_portal_service.metadata.0.name
+              port {
+                number = 80
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  depends_on = [module.oke-quickstart.helm_release_ingress_nginx]
+}
+
 resource "kubernetes_ingress_v1" "grafana_ingress" {
   wait_for_load_balancer = true
   metadata {
-    name        = "grafana-ingress"
-    namespace   = "cluster-tools"
+    name      = "grafana-ingress"
+    namespace = "cluster-tools"
     annotations = {
       "cert-manager.io/cluster-issuer"             = "letsencrypt-prod"
       "nginx.ingress.kubernetes.io/rewrite-target" = "/"
@@ -107,8 +142,8 @@ resource "kubernetes_ingress_v1" "grafana_ingress" {
 resource "kubernetes_ingress_v1" "prometheus_ingress" {
   wait_for_load_balancer = true
   metadata {
-    name        = "prometheus-ingress"
-    namespace   = "cluster-tools"
+    name      = "prometheus-ingress"
+    namespace = "cluster-tools"
     annotations = {
       "cert-manager.io/cluster-issuer"             = "letsencrypt-prod"
       "nginx.ingress.kubernetes.io/rewrite-target" = "/"
@@ -143,8 +178,8 @@ resource "kubernetes_ingress_v1" "prometheus_ingress" {
 resource "kubernetes_ingress_v1" "mlflow_ingress" {
   wait_for_load_balancer = true
   metadata {
-    name        = "mlflow-ingress"
-    namespace   = "default"
+    name      = "mlflow-ingress"
+    namespace = "default"
     annotations = {
       "cert-manager.io/cluster-issuer"             = "letsencrypt-prod"
       "nginx.ingress.kubernetes.io/rewrite-target" = "/"
