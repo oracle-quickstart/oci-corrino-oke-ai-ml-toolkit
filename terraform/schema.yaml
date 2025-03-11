@@ -21,7 +21,7 @@ source:
 outputGroups:
   - title: "Corrino API"
     outputs:
-      - blueprint_portal_url
+      - blueprints_portal_url
       - corrino_api_url
       - corrino_admin_username_output
       - corrino_admin_nonce_output
@@ -1240,7 +1240,7 @@ outputs:
     title: "API URL"
     visible: true
 
-  blueprint_portal_url:
+  blueprints_portal_url:
     title: "Portal URL"
     visible: true
 
