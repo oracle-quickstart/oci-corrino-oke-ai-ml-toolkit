@@ -4,7 +4,7 @@ You have two options to store your model so that a recipe has access to it:
 
 ## Option 1: Object Storage
 
-Corrino will automatically create an ephemeral volume, mount it to the container and download the contents of your object storage bucket.
+OCI AI Blueprints will automatically create an ephemeral volume, mount it to the container and download the contents of your object storage bucket.
 
 ### How To
 
@@ -38,7 +38,7 @@ Include the `input_object_storage` JSON object in your deployment payload (`/dep
 Notes:
 
 - You will need to create a PAR for the model in your object storage bucket and pass it in as shown above
-- On the backend, Corrino creates an ephemeral volume and mounts it to the mount location directory inside the container
+- On the backend, OCI AI Blueprints creates an ephemeral volume and mounts it to the mount location directory inside the container
 - The mount location is the directory inside the container that the contents of the bucket will be dumped into
 - The application running inside the container will access the model from the `/models` directory (using the example above - but the directory can be renamed as you see fit)
 - The application running inside the container will access the model from the /models directory (again, using the example from above)

@@ -96,7 +96,7 @@ The following parameters are required:
 
 ## Requirements
 
-- **Kuberay Operator Installed** = Make sure that the kuberay operator is installed (this is installed via the Resource Manager if the Kuberay option is selected - default is selected). Any Corrino installation before 2/24/25 will need to be reinstalled via the latest quickstarts release in order to ensure Kuberay is installed in your Corrino instance.
+- **Kuberay Operator Installed** = Make sure that the kuberay operator is installed (this is installed via the Resource Manager if the Kuberay option is selected - default is selected). Any OCI AI Blueprints installation before 2/24/25 will need to be reinstalled via the latest quickstarts release in order to ensure Kuberay is installed in your OCI AI Blueprints instance.
 
 - **Same shape for worker and head nodes** = Cluster must be uniform in regards to node shape and size (same shape, number of GPUs, number of CPUs etc.) for the worker nodes and head nodes.
 
@@ -120,7 +120,7 @@ Once the multi-node inference recipe has been successfully deployed, you will ha
 
 # Quickstart Guide: Multi-Node Inference
 
-Follow these 6 simple steps to deploy your multi-node RayCluster using Corrino.
+Follow these 6 simple steps to deploy your multi-node RayCluster using OCI AI Blueprints.
 
 1. **Create Your Deployment Recipe**
    - Create a JSON configuration (recipe) that defines your RayCluster. Key parameters include:
@@ -133,7 +133,7 @@ Follow these 6 simple steps to deploy your multi-node RayCluster using Corrino.
    - Refer to the [sample recipe for parameter value examples](../sample_recipes/multinode_inference_VM_A10.json)
    - Refer to the [Required Recipe Parameters](#Required_Recipe_Parameters) section for full parameter details.
    - Ensure that the head and worker nodes are provisioned uniformly, as required by the cluster’s configuration.
-2. **Deploy the Recipe via Corrino**
+2. **Deploy the Recipe via OCI AI Blueprints**
    - Deploy the recipe json via the `deployment` POST API
 3. **Monitor Your Deployment**
    - Check deployment status using Corrino’s logs via the `deployment_logs` API endpoint

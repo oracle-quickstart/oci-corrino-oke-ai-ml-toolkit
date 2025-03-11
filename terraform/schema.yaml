@@ -6,8 +6,8 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
 #
 
-title: Corrino
-description: Corrino OKE Starter Kit for AI/ML Workloads
+title: OCI AI Blueprints
+description: OCI AI Blueprints - OKE Starter Kit for AI/ML Workloads
 informationalText: This OKE Starter Kit is a comprehensive collection of Terraform scripts designed to automate the creation and deployment of resources to easily run AI/ML workloads in OCI. This stack provisions resources such as an OKE cluster, an ATP database instance, and other essential components, which enable you to deploy AI/ML workloads with a simple UI or an API. The kit includes services such as Grafana and Prometheus for infrastructure monitoring, MLFlow for tracking experiment-level metrics, and KEDA for dynamic auto-scaling based on AI/ML workload metrics rather than infrastructure metrics.
 schemaVersion: 1.1.0
 version: "20190304"
@@ -19,7 +19,7 @@ source:
   type: quickstart
 
 outputGroups:
-  - title: "Corrino API"
+  - title: "OCI AI Blueprints API"
     outputs:
       - corrino_api_url
       - corrino_admin_username_output
