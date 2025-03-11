@@ -11,8 +11,8 @@ locals {
     backend_service_name_origin  = "http://corrino-cp"
     backend_service_name_ingress = "corrino-cp-ingress"
     #    backend_image_uri_base                       = join(":", [local.ocir.base_uri, local.ocir.backend_image])
-    backend_image_uri                            = format("${local.ocir.base_uri}:${local.ocir.backend_image}-${local.versions.corrino_version}")
-    frontend_image_uri                           = join(":", [local.ocir.base_uri, local.ocir.frontend_image])
+    backend_image_uri = format("${local.ocir.base_uri}:${local.ocir.backend_image}-${local.versions.corrino_version}")
+    #frontend_image_uri                           = join(":", [local.ocir.base_uri, local.ocir.frontend_image])
     blueprint_portal_image_uri                   = join(":", [local.ocir.base_uri, local.ocir.blueprint_portal_image])
     recipe_bucket_name                           = "corrino-recipes"
     recipe_validation_enabled                    = "True"
@@ -94,9 +94,9 @@ locals {
   }
 
   ocir = {
-    base_uri               = join("/", [local.registry.subdomain, local.registry.source_tenancy_namespace, local.registry.name])
-    backend_image          = "oci-corrino-cp"
-    frontend_image         = "corrino-portal"
+    base_uri      = join("/", [local.registry.subdomain, local.registry.source_tenancy_namespace, local.registry.name])
+    backend_image = "oci-corrino-cp"
+    #frontend_image         = "corrino-portal"
     blueprint_portal_image = "oci-ai-blueprints-portal"
     cli_util_amd64_image   = "oci-util-amd64"
     cli_util_arm64_image   = "oci-util-arm64"
@@ -126,11 +126,11 @@ locals {
     api                 = join(".", ["api", local.fqdn.name])
     api_origin_insecure = join(".", ["http://api", local.fqdn.name])
     api_origin_secure   = join(".", ["https://api", local.fqdn.name])
-    portal              = join(".", ["portal", local.fqdn.name])
-    blueprint_portal    = join(".", ["blueprints", local.fqdn.name])
-    mlflow              = join(".", ["mlflow", local.fqdn.name])
-    prometheus          = join(".", ["prometheus", local.fqdn.name])
-    grafana             = join(".", ["grafana", local.fqdn.name])
+    #portal              = join(".", ["portal", local.fqdn.name])
+    blueprint_portal = join(".", ["blueprints", local.fqdn.name])
+    mlflow           = join(".", ["mlflow", local.fqdn.name])
+    prometheus       = join(".", ["prometheus", local.fqdn.name])
+    grafana          = join(".", ["grafana", local.fqdn.name])
   }
 
   env_universal = [
