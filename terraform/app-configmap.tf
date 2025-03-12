@@ -30,5 +30,7 @@ resource "kubernetes_config_map" "corrino-configmap" {
     DATA_UPLOAD_PATH                             = var.share_data_with_corrino_team_enabled ? local.registration.upload_path : ""
     DEPLOYMENT_UUID                              = random_uuid.registration_id.result
     DATA_SHARING_ENABLED                         = var.share_data_with_corrino_team_enabled ? "True" : "False"
+    BLUEPRINTS_OBJECT_STORAGE_URL                = local.app.blueprints_object_storage_url
+    PORTAL_DEMO_FLAG                             = local.app.portal_demo_flag
   }
 }
