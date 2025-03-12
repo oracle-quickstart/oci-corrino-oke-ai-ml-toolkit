@@ -18,6 +18,8 @@ locals {
     recipe_validation_enabled                    = "True"
     recipe_validation_shape_availability_enabled = "True"
     https_flag                                   = "False"
+    portal_demo_flag                             = "False"
+    blueprints_object_storage_url                = "https://iduyx1qnmway.objectstorage.us-ashburn-1.oci.customer-oci.com/n/iduyx1qnmway/b/blueprints/o/blueprints.json"
   }
 
   registration = {
@@ -306,6 +308,16 @@ locals {
       name            = "API_BASE_URL"
       config_map_name = "corrino-configmap"
       config_map_key  = "BACKEND_SERVICE_NAME"
+    },
+    {
+      name            = "PORTAL_DEMO_FLAG"
+      config_map_name = "corrino-configmap"
+      config_map_key  = "PORTAL_DEMO_FLAG"
+    },
+    {
+      name            = "BLUEPRINTS_OBJECT_STORAGE_URL"
+      config_map_name = "corrino-configmap"
+      config_map_key  = "BLUEPRINTS_OBJECT_STORAGE_URL"
     }
   ]
 
