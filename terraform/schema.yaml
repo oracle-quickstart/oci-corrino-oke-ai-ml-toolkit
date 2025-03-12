@@ -128,13 +128,13 @@ variableGroups:
 #    - mushop_atp
     # - mushop_oss
 
-  - title: "Corrino Admin"
+  - title: "OCI AI Blueprints Admin"
     variables:
     - corrino_admin_username
     - corrino_admin_nonce
     - corrino_admin_email
 
-  - title: "Corrino IAM"
+  - title: "OCI AI Blueprints IAM"
     variables:
     - policy_creation_enabled
 
@@ -342,7 +342,7 @@ variables:
     enum:
       - YES 
       - NO
-    title: Have you created your OKE Cluster to deploy Corrino onto?
+    title: Have you created your OKE Cluster to deploy OCI AI Blueprints onto?
     description: "An OKE Cluster must be created before moving past this step."
     required: true
 
@@ -351,8 +351,8 @@ variables:
     enum:
       - YES 
       - NO
-    title: Is your OKE Cluster (to deploy Corrino onto) in Active state?
-    description: "The OKE Cluster must be in Active state before deploying Corrino."
+    title: Is your OKE Cluster (to deploy OCI AI Blueprints onto) in Active state?
+    description: "The OKE Cluster must be in Active state before deploying OCI AI Blueprints."
     required: true
 
   oke_node_pool_active_state:
@@ -360,8 +360,8 @@ variables:
     enum:
       - YES 
       - NO
-    title: Is the node pool in your OKE Cluster (to deploy Corrino onto) in a Active state?
-    description: "The OKE Cluster must be in a Active state before deploying Corrino."
+    title: Is the node pool in your OKE Cluster (to deploy OCI AI Blueprints onto) in a Active state?
+    description: "The OKE Cluster must be in a Active state before deploying OCI AI Blueprints."
     required: true
 
   policies_created:
@@ -369,8 +369,8 @@ variables:
     enum:
       - YES 
       - NO
-    title: Have you enabled the required policies in the root tenancy for Corrino?
-    description: "Visit https://github.com/oracle-quickstart/oci-corrino-oke-ai-ml-toolkit/tree/main/docs/iam_policies for more information on required IAM policies"
+    title: Have you enabled the required policies in the root tenancy for OCI AI Blueprints?
+    description: "Visit https://github.com/oracle-quickstart/oci-ai-blueprints/tree/main/docs/iam_policies for more information on required IAM policies"
     required: true
 
   is_admin_user:
@@ -484,8 +484,8 @@ variables:
 
   corrino_version:
     type: string
-    title: "Corrino Version"
-    description: "This is the version of Corrino software that will be installed."
+    title: "OCI AI Blueprints Version"
+    description: "This is the version of OCI AI Blueprints software that will be installed."
     required: true
     default: "latest"
     visible: false
@@ -496,20 +496,20 @@ variables:
 
   corrino_admin_username:
     type: string
-    title: "Corrino admin username"
-    description: "Corrino admin username used to login to API or portal."
+    title: "OCI AI Blueprints admin username"
+    description: "OCI AI Blueprints admin username used to login to API or portal."
     required: true
 
   corrino_admin_email:
     type: string
-    title: "Corrino admin email address"
-    description: "Corrino admin email address for tracking who owns this account"
+    title: "OCI AI Blueprints admin email address"
+    description: "OCI AI Blueprints admin email address for tracking who owns this account"
     required: true
 
   corrino_admin_nonce:
     type: string
-    title: "Corrino admin password"
-    description: "Corrino admin password / nonce -- you will be required to change this at first usage"
+    title: "OCI AI Blueprints admin password"
+    description: "OCI AI Blueprints admin password / nonce -- you will be required to change this at first usage"
     required: true
 
   # --------------------
@@ -917,12 +917,11 @@ variables:
 
   fqdn_domain_mode_selector:
     title: "Domain Options"
-    description: "Select which type of domain you want to use for this workspace.  The 'nip.io' default generates a subdomain based on the public IP address associated with your Workspace's load balancer.  If you have a custom domain to use, select 'custom'.  Finally, the 'corrino-oci.com' option requires that you contact the Corrino team to create a DNS A-Record before it can be used."
+    description: "Select which type of domain you want to use for this workspace.  The 'nip.io' default generates a subdomain based on the public IP address associated with your Workspace's load balancer.  If you have a custom domain to use, select 'custom'."
     type: enum
     # enumerated values
     enum:
     - nip.io
-    - corrino-oci.com
     - custom
     default: nip.io
     required: true
@@ -1015,12 +1014,12 @@ variables:
   kuberay_enabled:
     type: boolean
     title: "Install KubeRay?"
-    description: "Kuberay is an open-source Kubernetes operator that simplifies the deployment and management of Ray application on Kubernetes. Ray is a framework for scaling AI workloads which allows Corrino to do multi-node inferencing recipes."
+    description: "Kuberay is an open-source Kubernetes operator that simplifies the deployment and management of Ray application on Kubernetes. Ray is a framework for scaling AI workloads which allows OCI AI Blueprints to do multi-node inferencing recipes."
 
   # Data Sharing
   share_data_with_corrino_team_enabled:
     type: boolean
-    title: "Allow your Corrino workspace to share operational insights with Oracle?"
+    title: "Allow your OCI AI Blueprints workspace to share operational insights with Oracle?"
     description: "If enabled, your workspace will securely report limited types of operational insights to Oracle for the purpose of improving the overall experience.  Such reporting will never include any private / sensitive information."
 
 

@@ -1,4 +1,4 @@
-# OCI AI Blueprints OKE Toolkit for AI/ML Workloads
+# OCI AI Blueprints
 
 **Note:** We are transitioning our name from "Corrino" to "OCI AI Blueprints". We are currently in the process of updating our documentation to reflect this.
 
@@ -44,13 +44,13 @@ When deploying recipes, you can configure:
 
 ### What is in this repo?
 
-The OCI AI Blueprints OKE Toolkit is a comprehensive collection of Terraform scripts which provisions the following resources:
+The OCI AI Blueprints is a comprehensive collection of Terraform scripts which provisions the following resources:
 
 1. An ATP database instance
 2. Grafana and Prometheus for infrastructure monitoring
 3. MLFlow for tracking experiment-level metrics
 4. KEDA for dynamic auto-scaling based on AI/ML workload metrics rather than infrastructure metrics
-5. Corrino’s front-end and back-end containers deployed to an OKE cluster of your choice
+5. OCI AI Blueprint's front-end and back-end containers deployed to an OKE cluster of your choice
 
 This combination provides a scalable, monitored environment optimized for easy deployment and management of AI/ML workloads. After installing this kit, you will be able to:
 
@@ -97,12 +97,12 @@ More fine-grained policies for OCI AI Blueprints can be used if necessary and ar
 
 1. Click on the “Deploy to Oracle Cloud” button below:
 
-[![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?region=home&zipUrl=https://github.com/oracle-quickstart/oci-corrino-oke-ai-ml-toolkit/releases/download/release-2025-03-11/release-2025-03-11.zip)
+[![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?region=home&zipUrl=https://github.com/oracle-quickstart/oci-ai-blueprints/releases/download/release-2025-03-11/release-2025-03-11.zip)
 
 2. Follow the on-screen instructions on the Create Stack screen
 3. Select “Run apply” in the “Review” section and click on Create
 4. Monitor the deployment status by going to Resource Manager -> Stacks in OCI Console.
-5. After the Job status changes to `Succeeded`, go to the Application Information tab under Stack Details in the OCI Console. Click on “Corrino API URL” button to access the OCI AI Blueprints API. Click on "OCI AI Blueprints Portal URL" to access the OCI AI Blueprints Portal.
+5. After the Job status changes to `Succeeded`, go to the Application Information tab under Stack Details in the OCI Console. Click on "API URL” to access the OCI AI Blueprints API. Click on "Portal URL" to access the OCI AI Blueprints Portal.
 
 ### Step 4: Deploy a vLLM Inference recipe
 
@@ -147,17 +147,17 @@ Known Issues & Solutions: [Ongoing List Here](docs/known_issues/README.md)
 
 ## Features
 
-| Feature                    | Description                                                                                                                                                                                                                                                                                                         | Instructions                                        |
-| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
-| Customizing Recipes        | Existing recipes provided by the OCI AI Blueprints team can be customized to fit your specific AI workload needs                                                                                                                                                                                                    | [Documentation](docs/customizing_recipes/README.md) |
-| Updating OCI AI Blueprints | Get the latest version of OCI AI Blueprints's control plane and portal (front-end) after new updates have been released                                                                                                                                                                                             | [Documentation](docs/updating_corrino/README.md)    |
-| Shared Node Pool           | By default, infrastructure is provisioned and terminated with each OCI AI Blueprints recipe deployment. For workloads requiring longer-lived resources (e.g., Bare Metal machines), you can use shared node pools to deploy multiple recipes on shared infrastructure or keep resources running after undeployment. | [Documentation](docs/shared_node_pools/README.md)   |
-| File Storage Service       | Use OCI's File Storage Service to store and supply the model weights for OCI AI Blueprints recipe deployments.                                                                                                                                                                                                      | [Documentation](docs/fss/README.md)                 |
-| Autoscaling                | Adjust the number of nodes in your deployment based on infrastructure and/or application metrics to prevent resource over utilization and under utilization.                                                                                                                                                        | [Documentation](docs/auto_scaling/README.md)        |
+| Feature                    | Description                                                                                                                                                                                                                                                                                                         | Instructions                                           |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| Customizing Recipes        | Existing recipes provided by the OCI AI Blueprints team can be customized to fit your specific AI workload needs                                                                                                                                                                                                    | [Documentation](docs/customizing_recipes/README.md)    |
+| Updating OCI AI Blueprints | Get the latest version of OCI AI Blueprints's control plane and portal (front-end) after new updates have been released                                                                                                                                                                                             | [Documentation](docs/installing_new_updates/README.md) |
+| Shared Node Pool           | By default, infrastructure is provisioned and terminated with each OCI AI Blueprints recipe deployment. For workloads requiring longer-lived resources (e.g., Bare Metal machines), you can use shared node pools to deploy multiple recipes on shared infrastructure or keep resources running after undeployment. | [Documentation](docs/shared_node_pools/README.md)      |
+| File Storage Service       | Use OCI's File Storage Service to store and supply the model weights for OCI AI Blueprints recipe deployments.                                                                                                                                                                                                      | [Documentation](docs/fss/README.md)                    |
+| Autoscaling                | Adjust the number of nodes in your deployment based on infrastructure and/or application metrics to prevent resource over utilization and under utilization.                                                                                                                                                        | [Documentation](docs/auto_scaling/README.md)           |
 
 ## Ways to Access OCI AI Blueprints
 
-[Click Here](docs/api_documentation/accessing_corrino/README.md)
+[Click Here](docs/api_documentation/accessing_oci_ai_blueprints/README.md)
 
 ## IAM Policies
 
@@ -169,9 +169,9 @@ Known Issues & Solutions: [Ongoing List Here](docs/known_issues/README.md)
 Create a seperate compartment, create a new OKE cluster, and then deploy OCI AI Blueprints to the cluster.
 
 **What containers and resources exactly get deployed to my tenancy when I deploy OCI AI Blueprints?**
-Corrino’s installation Terraform deploys the following:
+OCI AI Blueprint’s installation Terraform deploys the following:
 
-1. Corrino’s front-end and back-end containers
+1. OCI AI Blueprint’s front-end and back-end containers
 2. Grafana and Prometheus for infrastructure monitoring
 3. MLFlow for tracking experiment-level metrics
 4. KEDA for dynamic auto-scaling based on AI/ML workload metrics rather than infrastructure metrics
