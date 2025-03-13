@@ -1,4 +1,4 @@
-# Updating OCI AI Blueprints
+# Installing New Updates
 
 ## Overview
 
