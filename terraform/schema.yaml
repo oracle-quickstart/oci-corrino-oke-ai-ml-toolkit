@@ -1014,7 +1014,7 @@ variables:
   kuberay_enabled:
     type: boolean
     title: "Install KubeRay?"
-    description: "Kuberay is an open-source Kubernetes operator that simplifies the deployment and management of Ray application on Kubernetes. Ray is a framework for scaling AI workloads which allows OCI AI Blueprints to do multi-node inferencing recipes."
+    description: "Kuberay is an open-source Kubernetes operator that simplifies the deployment and management of Ray application on Kubernetes. Ray is a framework for scaling AI workloads which allows OCI AI Blueprints to do multi-node inferencing blueprints."
 
   # Data Sharing
   share_data_with_corrino_team_enabled:

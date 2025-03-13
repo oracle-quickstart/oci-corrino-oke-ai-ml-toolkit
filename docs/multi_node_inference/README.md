@@ -27,42 +27,42 @@ Use multi-node inference whenever you are trying to use a very large model that 
 1. Find the number of parameters in your model (usually in the name of the model such as Llama-3.3-70B-Instruct would have 70 billion parameters)
 2. Determine the precision of the model (FP32 vs FP16 vs FP8) - you can find this in the config.json of the model if on hugging face (look for the torch_dtype); a good assumption is that the model was trained on FP32 and is served on FP16 so FP16 is what you would use for your model precision
 3. Use formula here: https://ksingh7.medium.com/calculate-how-much-gpu-memory-you-need-to-serve-any-llm-67301a844f21 or https://www.substratus.ai/blog/calculating-gpu-memory-for-llm to determine the amount of GPU memory needed
-4. Determine which shapes you have access to and how much GPU memory each instance of that shape has: https://docs.oracle.com/en-us/iaas/Content/Compute/References/computeshapes.htm (ex: VM.GPU2.1 has 16 GB of GPU memory per instance). Note that as of right now, you must use the same shape across the entire node pool when using multi-node inference. Mix and match of shape types is not supported within the node pool used for the multi-node inference recipe.
+4. Determine which shapes you have access to and how much GPU memory each instance of that shape has: https://docs.oracle.com/en-us/iaas/Content/Compute/References/computeshapes.htm (ex: VM.GPU2.1 has 16 GB of GPU memory per instance). Note that as of right now, you must use the same shape across the entire node pool when using multi-node inference. Mix and match of shape types is not supported within the node pool used for the multi-node inference blueprint.
 5. Divide the total GPU memory size needed (from Step #3) by the amount of GPU memory per instance of the shape you chose in Step #4. Round up to the nearest whole number. This will be the total number of nodes you will need in your node pool for the given shape and model.
 
 ## How to use it?
 
 We are using [vLLM](https://docs.vllm.ai/en/latest/serving/distributed_serving.html) and [KubeRay](https://github.com/ray-project/kuberay?tab=readme-ov-file) which is the Kubernetes operator for [Ray applications](https://github.com/ray-project/ray).
 
-In order to use multi-node inference in an OCI Blueprint, use the following recipe as a starter: [LINK](../sample_recipes/multinode_inference_VM_A10.json)
+In order to use multi-node inference in an OCI Blueprint, use the following blueprint as a starter: [LINK](../sample_blueprints/multinode_inference_VM_A10.json)
 
-The recipe creates a RayCluster which is made up of one head node and worker nodes. The head node is identical to other worker nodes (in terms of ability to run workloads on it), except that it also runs singleton processes responsible for cluster management.
+The blueprint creates a RayCluster which is made up of one head node and worker nodes. The head node is identical to other worker nodes (in terms of ability to run workloads on it), except that it also runs singleton processes responsible for cluster management.
 
 More documentation on RayCluster terminology [here](https://docs.ray.io/en/latest/cluster/key-concepts.html#ray-cluster).
 
-## Required Recipe Parameters
+## Required Blueprint Parameters
 
 The following parameters are required:
 
-- `"recipe_mode": "raycluster"` -> recipe_mode must be set to raycluster
+- `"blueprint_mode": "raycluster"` -> blueprint_mode must be set to raycluster
 
-- `recipe_container_port` -> the port to access the inference endpoint
+- `blueprint_container_port` -> the port to access the inference endpoint
 
 - `deployment_name` -> name of this deployment
 
-- `recipe_node_shape` -> OCI name of the Compute shape chosen (use exact names as found here: https://docs.oracle.com/en-us/iaas/Content/Compute/References/computeshapes.htm)
+- `blueprint_node_shape` -> OCI name of the Compute shape chosen (use exact names as found here: https://docs.oracle.com/en-us/iaas/Content/Compute/References/computeshapes.htm)
 
 - `input_object_storage` (plus the parameters required inside this object)
 
-- `recipe_node_pool_size` -> the number of physical nodes to launch (will be equal to `num_worker_nodes` plus 1 for the head node)
+- `blueprint_node_pool_size` -> the number of physical nodes to launch (will be equal to `num_worker_nodes` plus 1 for the head node)
 
-- `recipe_node_boot_volume_size_in_gbs` -> size of boot volume for each node launched in the node pool (make sure it is at least 1.5x the size of your model)
+- `blueprint_node_boot_volume_size_in_gbs` -> size of boot volume for each node launched in the node pool (make sure it is at least 1.5x the size of your model)
 
-- `recipe_ephemeral_storage_size` -> size of the attached block volume that will be used to store the model for reference by each node (make sure it is at least 1.5x the size of your model)
+- `blueprint_ephemeral_storage_size` -> size of the attached block volume that will be used to store the model for reference by each node (make sure it is at least 1.5x the size of your model)
 
-- `recipe_nvidia_gpu_count` -> the number of GPUs per node (since head and worker nodes are identical, it is the number of GPUs in the shape you have specified. Ex: VM.GPU.A10.2 would have 2 GPUs)
+- `blueprint_nvidia_gpu_count` -> the number of GPUs per node (since head and worker nodes are identical, it is the number of GPUs in the shape you have specified. Ex: VM.GPU.A10.2 would have 2 GPUs)
 
-- `"recipe_raycluster_params"` object -> which includes the following properties:
+- `"blueprint_raycluster_params"` object -> which includes the following properties:
 
 - `model_path_in_container` : the file path to the model in the container
 
@@ -72,7 +72,7 @@ The following parameters are required:
 
 - `head_node_cpu_mem_in_gbs` : the amount of CPU memory allocated to the head node (must match `worker_node_cpu_mem_in_gbs`)
 
-- `num_worker_nodes` : the number of worker nodes you want to deploy (must be equal to `recipe_node_pool_size` - 1)
+- `num_worker_nodes` : the number of worker nodes you want to deploy (must be equal to `blueprint_node_pool_size` - 1)
 
 - `worker_node_num_cpus` : the number of OCPUs allocated to the head node (must match `head_node_num_cpus`)
 
@@ -104,14 +104,14 @@ The following parameters are required:
 
 - Only job supported right now using Ray cluster and OCI Blueprints is vLLM Distributed Inference. This will change in the future.
 
-- All nodes in the multi-node inferencing recipe's node pool will be allocated to Ray (subject to change). You cannot assign just a portion; the entire node pool is reserved for the Ray cluster.
+- All nodes in the multi-node inferencing blueprint's node pool will be allocated to Ray (subject to change). You cannot assign just a portion; the entire node pool is reserved for the Ray cluster.
 
 ## Interacting with Ray Cluster
 
-Once the multi-node inference recipe has been successfully deployed, you will have access to the following URLs:
+Once the multi-node inference blueprint has been successfully deployed, you will have access to the following URLs:
 
 1. **Ray Dashboard:** Ray provides a web-based dashboard for monitoring and debugging Ray applications. The visual representation of the system state, allows users to track the performance of applications and troubleshoot issues.
-   **To find the URL for the API Inference Endpoint:** Go to `workspace` API endpoint and the URL will be under "recipes" object. The object will be labeled `<deployment_name>-raycluster-dashboard`. The format for the URL is `<deployment_name>.<assigned_service_endpoint>.com`
+   **To find the URL for the API Inference Endpoint:** Go to `workspace` API endpoint and the URL will be under "blueprints" object. The object will be labeled `<deployment_name>-raycluster-dashboard`. The format for the URL is `<deployment_name>.<assigned_service_endpoint>.com`
    **Example URL:** `https://dashboard.rayclustervmtest10.132-226-50-64.nip.io`
 
 2. **API Inference Endpoint:** This is the API endpoint you will use to do inferencing across the multiple nodes. It follows the [OpenAI API spec](https://platform.openai.com/docs/api-reference/introduction)
@@ -122,21 +122,21 @@ Once the multi-node inference recipe has been successfully deployed, you will ha
 
 Follow these 6 simple steps to deploy your multi-node RayCluster using OCI AI Blueprints.
 
-1. **Create Your Deployment Recipe**
-   - Create a JSON configuration (recipe) that defines your RayCluster. Key parameters include:
+1. **Create Your Deployment Blueprint**
+   - Create a JSON configuration (blueprint) that defines your RayCluster. Key parameters include:
      - `"recipe_mode": "raycluster"`
      - `deployment_name`, `recipe_node_shape`, `recipe_container_port`
      - `input_object_storage` (and its required parameters)
      - `recipe_node_pool_size` (head node + worker nodes)
      - `recipe_nvidia_gpu_count` (GPUs per node)
      - A nested `"recipe_raycluster_params"` object with properties like `model_path_in_container`, `head_node_num_cpus`, `head_node_num_gpus`, `head_node_cpu_mem_in_gbs`, `num_worker_nodes`, etc.
-   - Refer to the [sample recipe for parameter value examples](../sample_recipes/multinode_inference_VM_A10.json)
-   - Refer to the [Required Recipe Parameters](#Required_Recipe_Parameters) section for full parameter details.
+   - Refer to the [sample blueprint for parameter value examples](../sample_blueprints/multinode_inference_VM_A10.json)
+   - Refer to the [Required Blueprint Parameters](#Required_Blueprint_Parameters) section for full parameter details.
    - Ensure that the head and worker nodes are provisioned uniformly, as required by the cluster’s configuration.
-2. **Deploy the Recipe via OCI AI Blueprints**
-   - Deploy the recipe json via the `deployment` POST API
+2. **Deploy the Blueprint via OCI AI Blueprints**
+   - Deploy the blueprint json via the `deployment` POST API
 3. **Monitor Your Deployment**
-   - Check deployment status using Corrino’s logs via the `deployment_logs` API endpoint
+   - Check deployment status using OCI AI Blueprint’s logs via the `deployment_logs` API endpoint
 4. **Verify Cluster Endpoints**
 
    - Once deployed, locate your service endpoints:

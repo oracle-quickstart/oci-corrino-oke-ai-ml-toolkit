@@ -1,6 +1,6 @@
 # Model Storage
 
-You have two options to store your model so that a recipe has access to it:
+You have two options to store your model so that a blueprint has access to it:
 
 ## Option 1: Object Storage
 

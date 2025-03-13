@@ -7,7 +7,7 @@ Place to record issues that arise and there corresponding workarounds.
 1. Check your permissions and verify that they match exactly as shown here: [IAM Policies](../iam_policies)
 2. Did you choose `*.nip.io` as your domain name when setting up OCI AI Blueprints? If so, this is an untrusted domain and will be blocked when behind VPN. Either choose to deploy OCI AI Blueprints via custom domain or access your `*.nip.io` OCI AI Blueprints domain outside of VPN
 
-## Shape BM.GPU4.8 Cannot Schedule Recipes
+## Shape BM.GPU4.8 Cannot Schedule Blueprints
 
 Currently, there is an Oracle Kubernetes Engine (OKE) bug with the `BM.GPU4.8` shape. Since the toolkit runs on top of an OKE cluster, this shape cannot be used with the toolkit until the issue is resolved by OKE. We have diagnosed and reported the issue, and are following up with the OKE team for resolution. The error for this issue presents like:
 

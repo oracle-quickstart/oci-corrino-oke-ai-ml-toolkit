@@ -1,35 +1,33 @@
-# OCI AI Blueprints Recipe Documentation
+# OCI AI Blueprints Blueprint Documentation
 
-## Deploy a Recipe
+## Deploy a Blueprint
 
 `POST /deployment`
 
 ### Request Body
 
-| Parameter                | Type   | Required | Description                                                                                                                                                                                                                                                                                                                                                                       |
-| ------------------------ | ------ | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| recipe_id                | string | Yes      | One of the following: `llm_inference_nvidia`, `lora_finetune_nvidia`, or `mlcommons_lora_finetune_nvidia`                                                                                                                                                                                                                                                                         |
-| deployment_name          | string | Yes      | Any deployment name to identify the deployment details easily. Must be unique from other recipe deployments.                                                                                                                                                                                                                                                                      |
-| recipe_mode              | string | Yes      | One of the following: `service`, `job`, `update`, `shared_node_pool` or `raycluster`. Enter `service` for inference recipe deployments, `job` for fine-tuning recipe deployments, `update` for updating existing deployments (currently only supported for MIG), `shared_node_pool` for creating a shared node pool, and `raycluster` when doing multinode inference deployments. |
-| recipe_node_labels       | object | No       | Additional labels to apply to a node pool in the form `{"label": "value"}`                                                                                                                                                                                                                                                                                                        |
-| service_endpoint_domain  | string | No       | Required for inference recipe deployments. Inference endpoint will point to this domain.                                                                                                                                                                                                                                                                                          |
-| recipe_max_pods_per_node | int    | No       | Allow a node to schedule more pods than default 31 from kubernetes. Required for certain MIG configurations which can slice up to 56 times.                                                                                                                                                                                                                                       |
-|                          |
-
-| recipe_container_port | string | No | Required for inference recipe deployments. Inference endpoint will point to this port. |
-| recipe_node_shape | string | Yes | Enter the shape of the node that you want to deploy the recipe on to. Example: `BM.GPU.A10.4` |
-| recipe_node_pool_size | int | Yes | Number of nodes that you want to allocate for this recipe deployment. Ensure you have sufficient capacity. This feature is under development. Always enter 1. |
-| recipe_nvidia_gpu_count | int | Yes | Number of GPUs within the node that you want to deploy the recipe's artifacts on to. Must be greater than 0. Must be less than the total number of GPUs available in the node shape. For example, `VM.GPU.A10.2` has 2 GPUs, so this parameter cannot exceed 2 if the `recipe_node_shape` is `VM.GPU.A10.2`. |
-| recipe_replica_count | int | Yes | Number of replicas of the recipe container pods to create. This feature is under development. Always enter 1. |
-| recipe_ephemeral_storage_size | int | Yes | Ephemeral (will be deleted) storage in GB to add to node. If pulling large models from huggingface directly, set this value to be reasonably high. Cannot be higher than `boot_volume_size`. |
-| recipe_node_boot_volume_size_in_gbs | int | Yes | Size of boot volume in GB for image. Recommend entering 500.??? |
-| recipe_shared_memory_volume_size_limit_in_mb | int | Yes | ???. Recommend entering 100.?? |
-| input_object_storage | object | Yes | Name of bucket to mount at location “mount_location”. Mount size will be `volume_size_in_gbs`. Will copy all objects in bucket to mount location. Store your LLM model (and in the case of fine-tuning recipes, your input dataset as well) in this bucket. Example: `[{"bucket_name": "corrino_hf_oss_models", "mount_location": "/models", "volume_size_in_gbs": 500}]` |
-| output_object_storage | object | No | Required for fine-tuning deployments. Name of bucket to mount at location “mount_location”. Mount size will be “volume_size_in_gbs”. Will copy all items written here during program runtime to bucket on program completion. Example: `[{“bucket_name”: “output”,“mount_location”: “/output”,“volume_size_in_gbs”: 500}]` |
-| recipe_image_uri | string | Yes | Location of the recipe container image. Each recipe points to a specific container image. See the recipe.json examples below. Example: `iad.ocir.io/iduyx1qnmway/oci-ai-blueprints-devops-repository:vllmv0.6.2` |
-| recipe_container_command_args | string | No | Container init arguments to pass. Each recipe has specific container arguments that it expects. See the Recipe Arguments section below for details. Example: `["--model","$(Model_Path)","--tensor-parallel-size","$(tensor_parallel_size)"]` |
-| recipe_container_env | string | No | Values of the recipe container init arguments. See the Recipe Arguments section below for details. Example: `[{"key": "tensor_parallel_size","value": "2"},{"key": "model_name","value": "NousResearch/Meta-Llama-3.1-8B-Instruct"},{"key": "Model_Path","value": "/models/NousResearch/Meta-Llama-3.1-8B-Instruct"}]` |
-| skip_capacity_validation | boolean | No | Determines whether validation checks on shape capacity are performed before initiating deployment. If your deployment is failing validation due to capacity errors but you believe this not to be true, you should set `skip_capacity_validation` to be `true` in the recipe JSON to bypass all checks for Shape capacity. |
+| Parameter                                    | Type    | Required | Description                                                                                                                                                                                                                                                                                                                                                                       |
+| -------------------------------------------- | ------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| recipe_id                                    | string  | Yes      | One of the following: `llm_inference_nvidia`, `lora_finetune_nvidia`, or `mlcommons_lora_finetune_nvidia`                                                                                                                                                                                                                                                                         |
+| deployment_name                              | string  | Yes      | Any deployment name to identify the deployment details easily. Must be unique from other recipe deployments.                                                                                                                                                                                                                                                                      |
+| recipe_mode                                  | string  | Yes      | One of the following: `service`, `job`, `update`, `shared_node_pool` or `raycluster`. Enter `service` for inference recipe deployments, `job` for fine-tuning recipe deployments, `update` for updating existing deployments (currently only supported for MIG), `shared_node_pool` for creating a shared node pool, and `raycluster` when doing multinode inference deployments. |
+| recipe_node_labels                           | object  | No       | Additional labels to apply to a node pool in the form `{"label": "value"}`                                                                                                                                                                                                                                                                                                        |
+| service_endpoint_domain                      | string  | No       | Required for inference recipe deployments. Inference endpoint will point to this domain.                                                                                                                                                                                                                                                                                          |
+| recipe_max_pods_per_node                     | int     | No       | Allow a node to schedule more pods than default 31 from kubernetes. Required for certain MIG configurations which can slice up to 56 times.                                                                                                                                                                                                                                       |
+| recipe_container_port                        | string  | No       | Required for inference recipe deployments. Inference endpoint will point to this port.                                                                                                                                                                                                                                                                                            |
+| recipe_node_shape                            | string  | Yes      | Enter the shape of the node that you want to deploy the recipe on to. Example: `BM.GPU.A10.4`                                                                                                                                                                                                                                                                                     |
+| recipe_node_pool_size                        | int     | Yes      | Number of nodes that you want to allocate for this recipe deployment. Ensure you have sufficient capacity. This feature is under development. Always enter 1.                                                                                                                                                                                                                     |
+| recipe_nvidia_gpu_count                      | int     | Yes      | Number of GPUs within the node that you want to deploy the recipe's artifacts on to. Must be greater than 0. Must be less than the total number of GPUs available in the node shape. For example, `VM.GPU.A10.2` has 2 GPUs, so this parameter cannot exceed 2 if the `recipe_node_shape` is `VM.GPU.A10.2`.                                                                      |
+| recipe_replica_count                         | int     | Yes      | Number of replicas of the recipe container pods to create. This feature is under development. Always enter 1.                                                                                                                                                                                                                                                                     |
+| recipe_ephemeral_storage_size                | int     | Yes      | Ephemeral (will be deleted) storage in GB to add to node. If pulling large models from huggingface directly, set this value to be reasonably high. Cannot be higher than `boot_volume_size`.                                                                                                                                                                                      |
+| recipe_node_boot_volume_size_in_gbs          | int     | Yes      | Size of boot volume in GB for image. Recommend entering 500.???                                                                                                                                                                                                                                                                                                                   |
+| recipe_shared_memory_volume_size_limit_in_mb | int     | Yes      | ???. Recommend entering 100.??                                                                                                                                                                                                                                                                                                                                                    |
+| input_object_storage                         | object  | Yes      | Name of bucket to mount at location “mount_location”. Mount size will be `volume_size_in_gbs`. Will copy all objects in bucket to mount location. Store your LLM model (and in the case of fine-tuning blueprints, your input dataset as well) in this bucket. Example: `[{"bucket_name": "corrino_hf_oss_models", "mount_location": "/models", "volume_size_in_gbs": 500}]`      |
+| output_object_storage                        | object  | No       | Required for fine-tuning deployments. Name of bucket to mount at location “mount_location”. Mount size will be “volume_size_in_gbs”. Will copy all items written here during program runtime to bucket on program completion. Example: `[{“bucket_name”: “output”,“mount_location”: “/output”,“volume_size_in_gbs”: 500}]`                                                        |
+| recipe_image_uri                             | string  | Yes      | Location of the recipe container image. Each recipe points to a specific container image. See the recipe.json examples below. Example: `iad.ocir.io/iduyx1qnmway/oci-ai-blueprints-devops-repository:vllmv0.6.2`                                                                                                                                                                  |
+| recipe_container_command_args                | string  | No       | Container init arguments to pass. Each recipe has specific container arguments that it expects. See the Blueprint Arguments section below for details. Example: `["--model","$(Model_Path)","--tensor-parallel-size","$(tensor_parallel_size)"]`                                                                                                                                  |
+| recipe_container_env                         | string  | No       | Values of the recipe container init arguments. See the Blueprint Arguments section below for details. Example: `[{"key": "tensor_parallel_size","value": "2"},{"key": "model_name","value": "NousResearch/Meta-Llama-3.1-8B-Instruct"},{"key": "Model_Path","value": "/models/NousResearch/Meta-Llama-3.1-8B-Instruct"}]`                                                         |
+| skip_capacity_validation                     | boolean | No       | Determines whether validation checks on shape capacity are performed before initiating deployment. If your deployment is failing validation due to capacity errors but you believe this not to be true, you should set `skip_capacity_validation` to be `true` in the recipe JSON to bypass all checks for Shape capacity.                                                        |
 
 For autoscaling parameters, visit [autoscaling](../auto_scaling/README.md#basic-configurations).
 
@@ -37,7 +35,7 @@ For multinode inference parameters, visit [multinode inference](../multi_node_in
 
 For MIG parameters, visit [MIG shared pool configurations](../mig_multi_instance_gpu/README.md#mig-recipe-configuration), [update MIG configuration](../mig_multi_instance_gpu/README.md#update-mig-configuration), and [MIG recipe configuration](../mig_multi_instance_gpu/README.md#use-mig-resource-in-recipe).
 
-### Recipe Container Arguments
+### Blueprint Container Arguments
 
 #### LLM Inference using NVIDIA shapes and vLLM
 
@@ -45,15 +43,15 @@ This recipe deploys the vLLM container image. Follow the vLLM docs to pass the c
 
 #### MLCommons Llama-2 Quantized 70B LORA Fine-Tuning on A100
 
-???
+(section in progress)
 
 #### LORA Fine-Tune
 
 | Argument                      | Example                                                 | Description                                                                                                                                                            |
 | ----------------------------- | ------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Mlflow_Endpoint               | http://mlflow.default.svc.cluster.local:5000            | Internal routing to mlflow endpoint. Should not change.                                                                                                                |
-| Mlflow_Exp_Name               | Corrino_nvidia_recipe                                   | Top level MLFlow experiment name                                                                                                                                       |
-| Mlflow_Run_Name               | Corrino_run                                             | Lower level MLFlow run name inside experiment                                                                                                                          |
+| Mlflow_Exp_Name               | oci_ai_blueprints_nvidia_recipe                         | Top level MLFlow experiment name                                                                                                                                       |
+| Mlflow_Run_Name               | oci_ai_blueprints_run                                   | Lower level MLFlow run name inside experiment                                                                                                                          |
 | Hf_Token                      | hf_123456dfsalkj                                        | Huggingface token used to authenticate for private models or datasets                                                                                                  |
 | Download_Dataset_From_Hf      | True or False                                           | True if you want to download your dataset from huggingface. False if bringing your own from object storage                                                             |
 | Dataset_Name                  | tau/scrolls                                             | Name of dataset. Only required if pulling from huggingface                                                                                                             |
@@ -84,20 +82,20 @@ This recipe deploys the vLLM container image. Follow the vLLM docs to pass the c
 | Num_Train_Epochs              | 2                                                       | Total number of training epochs to perform                                                                                                                             |
 | Require_Persistent_Output_Dir | True or False                                           | Validate that output directory is a mount location (this should be true for cloud runs wanting to write to “output_object_storage”)                                    |
 
-### Recipe.json Examples
+### Blueprint.json Examples
 
-There are 3 recipes that we are providing out of the box. Following are example recipe.json snippets that you can use to deploy the recipes quickly for a test run.
-|Recipe|Scenario|Sample JSON|
+There are 3 blueprints that we are providing out of the box. Following are example recipe.json snippets that you can use to deploy the blueprints quickly for a test run.
+|Blueprint|Scenario|Sample JSON|
 |----|----|----
 |LLM Inference using NVIDIA shapes and vLLM|Deployment with default Llama-3.1-8B model using PAR|View sample JSON here [here](./vllm_inference_sample_recipe.json)
 |MLCommons Llama-2 Quantized 70B LORA Fine-Tuning on A100|Default deployment with model and dataset ingested using PAR|View sample JSON here [here](./mlcommons_lora_finetune_nvidia_sample_recipe.json)
-|LORA Fine-Tune Recipe|Open Access Model Open Access Dataset Download from Huggingface (no token required)|View sample JSON [here](./open_model_open_dataset_hf.backend.json)
-|LORA Fine-Tune Recipe|Closed Access Model Open Access Dataset Download from Huggingface (Valid Auth Token Is Required!!)|View sample JSON [here](./closed_model_open_dataset_hf.backend.json)
-|LORA Fine-Tune Recipe|Bucket Model Open Access Dataset Download from Huggingface (no token required)|View sample JSON [here](./bucket_model_open_dataset_hf.backend.json)
-|LORA Fine-Tune Recipe|Get Model from Bucket in Another Region / Tenancy using Pre-Authenticated_Requests (PAR) Open Access Dataset Download from Huggingface (no token required)|View sample JSON [here](./bucket_par_open_dataset.backend.json)
-|LORA Fine-Tune Recipe|Bucket Model Bucket Checkpoint Open Access Dataset Download from Huggingface (no token required)|View sample JSON [here](./bucket_checkpoint_bucket_model_open_dataset.backend.json)
+|LORA Fine-Tune Blueprint|Open Access Model Open Access Dataset Download from Huggingface (no token required)|View sample JSON [here](./open_model_open_dataset_hf.backend.json)
+|LORA Fine-Tune Blueprint|Closed Access Model Open Access Dataset Download from Huggingface (Valid Auth Token Is Required!!)|View sample JSON [here](./closed_model_open_dataset_hf.backend.json)
+|LORA Fine-Tune Blueprint|Bucket Model Open Access Dataset Download from Huggingface (no token required)|View sample JSON [here](./bucket_model_open_dataset_hf.backend.json)
+|LORA Fine-Tune Blueprint|Get Model from Bucket in Another Region / Tenancy using Pre-Authenticated_Requests (PAR) Open Access Dataset Download from Huggingface (no token required)|View sample JSON [here](./bucket_par_open_dataset.backend.json)
+|LORA Fine-Tune Blueprint|Bucket Model Bucket Checkpoint Open Access Dataset Download from Huggingface (no token required)|View sample JSON [here](./bucket_checkpoint_bucket_model_open_dataset.backend.json)
 
-## Undeploy a Recipe
+## Undeploy a Blueprint
 
 `POST /undeploy`
 
@@ -122,10 +120,10 @@ There are 3 recipes that we are providing out of the box. Following are example 
 **Can I deploy custom models?**
 Yes. Store your custom models and datasets in an Object Storage bucket. Point to that object storage bucket using the `input_obect_storage` bucket in the `/deploy` request body to deploy the recipe using your custom model or dataset.
 
-**Can I create my own recipes?**
+**Can I create my own blueprints?**
 Yes, you must create a recipe container, move it to a container registry, and point to it using the `recipe_image_uri` field in the `/deploy` request body.
 
-**Can I orchestrate multiple models / recipes together?**
+**Can I orchestrate multiple models / blueprints together?**
 Yes
 
 **I want to test this on larger GPUs – how can I do that?**
@@ -134,7 +132,7 @@ Please contact us and we can set it up for you.
 **Where is the fine-tuned model saved?**
 In an object storage bucket in the sandbox tenancy.
 
-**Do you have a RAG recipe?** We have several other recipes that we have not exposed on the portal. If you would like any specific recipes that might better meet your needs, please contact us.
+**Do you have a RAG recipe?** We have several other blueprints that we have not exposed on the portal. If you would like any specific blueprints that might better meet your needs, please contact us.
 
 **Is this built on top of OKE?** Yes.
 
