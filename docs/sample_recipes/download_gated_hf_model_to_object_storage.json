@@ -1,0 +1,29 @@
+{
+    "recipe_id": "example",
+    "recipe_mode": "job",
+    "deployment_name": "gated_model_to_objectstorage",
+    "recipe_image_uri": "iad.ocir.io/iduyx1qnmway/corrino-devops-repository:hf_downloader_v1",
+    "recipe_container_command_args": [
+        "meta-llama/Llama-3.2-1B-Instruct",
+        "--local-dir",
+        "/models/meta-llama/Llama-3.2-1B-Instruct",
+        "--max-workers",
+        "4",
+        "--token",
+        "<hf_token>"
+    ],
+    "recipe_container_port": "5678",
+    "recipe_node_shape": "VM.Standard.E4.Flex",
+    "recipe_node_pool_size": 1,
+    "recipe_flex_shape_ocpu_count": 1,
+    "recipe_flex_shape_memory_size_in_gbs": 16,
+    "recipe_node_boot_volume_size_in_gbs": 250,
+    "recipe_ephemeral_storage_size": 50,
+    "output_object_storage": [
+        {
+            "bucket_name": "mymodels",
+            "mount_location": "/models",
+            "volume_size_in_gbs": 100
+        }
+    ]
+}
