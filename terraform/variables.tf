@@ -78,7 +78,7 @@ variable "corrino_version" {
 }
 
 variable "share_data_with_corrino_team_enabled" {
-  description = "Allow this Terraform to send a small registration file to Corrino team."
+  description = "Allow this Terraform to send a small registration file to OCI AI Blueprints team."
   type        = bool
   default     = true
 }
@@ -88,17 +88,17 @@ variable "share_data_with_corrino_team_enabled" {
 # -----------------------------------
 
 variable "corrino_admin_username" {
-  description = "The user name used to login to Corrino"
+  description = "The user name used to login to OCI AI Blueprints"
   type        = string
 }
 
 variable "corrino_admin_nonce" {
-  description = "The password used to login to Corrino"
+  description = "The password used to login to OCI AI Blueprints"
   type        = string
 }
 
 variable "corrino_admin_email" {
-  description = "The email address used to identify the Corrino user"
+  description = "The email address used to identify the OCI AI Blueprints user"
   type        = string
 }
 

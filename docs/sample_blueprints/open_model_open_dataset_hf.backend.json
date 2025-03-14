@@ -1,6 +1,6 @@
 {
   "recipe_id": "lora_finetune_nvidia",
-  "deployment_name": "dk_with_checkpoint",
+  "deployment_name": "dk_open_model_open_dataset",
   "recipe_mode": "job",
   "recipe_node_shape": "VM.GPU.A10.2",
   "recipe_image_uri": "iad.ocir.io/iduyx1qnmway/corrino-devops-repository:finetune_lora_dev",
@@ -12,64 +12,64 @@
   "recipe_shared_memory_volume_size_limit_in_mb": 100,
   "recipe_container_env": [
     {
-        "key": "Mlflow_Endpoint",
-        "value": "http://mlflow.default.svc.cluster.local:5000"
+      "key": "Mlflow_Endpoint",
+      "value": "http://mlflow.default.svc.cluster.local:5000"
     },
     {
-        "key": "Mlflow_Exp_Name",
-        "value": "corrino_nvidia_recipe"
+      "key": "Mlflow_Exp_Name",
+      "value": "oci_ai_blueprints_nvidia_recipe"
     },
     {
-        "key": "Mlflow_Run_Name",
-        "value": "Meta-Llama-3.1-8B-local-quotes-checkpoint"
+      "key": "Mlflow_Run_Name",
+      "value": "oci_ai_blueprints_run"
     },
     {
-        "key": "Hf_Token",
-        "value": "None"
+      "key": "Hf_Token",
+      "value": "None"
     },
     {
-        "key": "Download_Dataset_From_Hf",
-        "value": "true"
+      "key": "Download_Dataset_From_Hf",
+      "value": "true"
     },
     {
-        "key": "Dataset_Name",
-        "value": "Abirate/english_quotes"
+      "key": "Dataset_Name",
+      "value": "Abirate/english_quotes"
     },
     {
       "key": "Dataset_Sub_Name",
       "value": "None"
     },
     {
-        "key": "Dataset_Column_To_Use",
-        "value": "quote"
+      "key": "Dataset_Column_To_Use",
+      "value": "None"
     },
     {
-        "key": "Dataset_Path",
-        "value": "/workspace/datasets"
+      "key": "Dataset_Path",
+      "value": "/workspace/datasets"
     },
     {
-        "key": "Download_Model_From_Hf",
-        "value": "false"
+      "key": "Download_Model_From_Hf",
+      "value": "true"
     },
     {
-        "key": "Model_Name",
-        "value": "NousResearch/Meta-Llama-3.1-8B"
+      "key": "Model_Name",
+      "value": "NousResearch/Meta-Llama-3.1-8B"
     },
     {
-        "key": "Model_Path",
-        "value": "/models/NousResearch/Meta-Llama-3.1-8B"
+      "key": "Model_Path",
+      "value": "/workspace/models"
     },
     {
-        "key": "Max_Model_Length",
-        "value": "4096"
+      "key": "Max_Model_Length",
+      "value": "8192"
     },
     {
-        "key": "Resume_From_Checkpoint",
-        "value": "true"
+      "key": "Resume_From_Checkpoint",
+      "value": "false"
     },
     {
-        "key": "Checkpoint_Path",
-        "value": "/checkpoint/Bucket-Llama-3.1-8B-english_quotes/checkpoint-1400"
+      "key": "Checkpoint_Path",
+      "value": "/checkpoint"
     },
     {
       "key": "Lora_R",
@@ -77,15 +77,15 @@
     },
     {
       "key": "Lora_Alpha",
-      "value": "16"
+      "value": "32"
     },
     {
       "key": "Lora_Dropout",
       "value": "0.1"
     },
     {
-        "key": "Lora_Target_Modules",
-        "value": "q_proj,up_proj,o_proj,k_proj,down_proj,gate_proj,v_proj"
+      "key": "Lora_Target_Modules",
+      "value": "q_proj,up_proj,o_proj,k_proj,down_proj,gate_proj,v_proj"
     },
     {
       "key": "Bias",
@@ -124,8 +124,8 @@
       "value": "1"
     },
     {
-        "key": "Output_Dir",
-        "value": "/tunedmodels/Bucket-Llama-3.1-8B-english_quotes"
+      "key": "Output_Dir",
+      "value": "/tunedmodels/Llama-3.1-8B-english_quotes"
     },
     {
       "key": "Optim",
@@ -138,18 +138,6 @@
     {
       "key": "Require_Persistent_Output_Dir",
       "value": "true"
-    }
-  ],
-  "input_object_storage": [
-    {
-      "bucket_name": "corrino_hf_oss_models",
-      "mount_location": "/models",
-      "volume_size_in_gbs": 500
-    },
-    {
-      "bucket_name": "corrino_tuned_hf_oss_models",
-      "mount_location": "/checkpoint",
-      "volume_size_in_gbs": 500
     }
   ],
   "output_object_storage": [

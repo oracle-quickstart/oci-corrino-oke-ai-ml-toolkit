@@ -4,9 +4,9 @@ OCI AI Blueprints supports automatic scaling (autoscaling) of inference workload
 
 To achieve this, OCI AI Blueprints uses [Kubernetes Event-driven Autoscaling](https://keda.sh) along with [Horizontal Pod Autoscaling](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) (HPA) and the [OCI Cluster Autoscaler Add-on](https://docs.oracle.com/en-us/iaas/Content/ContEng/Tasks/contengusingclusterautoscaler_topic-Working_with_Cluster_Autoscaler_as_Cluster_Add-on.htm).
 
-## Quick Reference: Add the following to your inference recipe to use autoscaling:
+## Quick Reference: Add the following to your inference blueprint to use autoscaling:
 
-This is the minimum you need to add to your recipe json to add pod autoscaling to an inference recipe:
+This is the minimum you need to add to your blueprint json to add pod autoscaling to an inference blueprint:
 
 ```json
     "recipe_pod_autoscaling_params": {
@@ -15,7 +15,7 @@ This is the minimum you need to add to your recipe json to add pod autoscaling t
     }
 ```
 
-This is the minimum you need to add to your recipe json to add pod + node autoscaling to an inference recipe:
+This is the minimum you need to add to your blueprint json to add pod + node autoscaling to an inference blueprint:
 
 ```json
     "recipe_pod_autoscaling_params": {
@@ -28,7 +28,7 @@ This is the minimum you need to add to your recipe json to add pod + node autosc
     }
 ```
 
-This will be added to the recipe payload JSON in the `/deployment` POST request.
+This will be added to the blueprint payload JSON in the `/deployment` POST request.
 
 ## How it works
 
@@ -49,7 +49,7 @@ To prevent frequent scaling due to sudden traffic spikes, OCI AI Blueprints incl
 
 When setting up autoscaling, it's important to define:
 
-1. Number of GPUs required per recipe
+1. Number of GPUs required per blueprint
 2. Total number of GPU nodes available
 3. Maximum number of replicas (inference pods) you want to run
 
@@ -57,7 +57,7 @@ When setting up autoscaling, it's important to define:
 
 Suppose you have the following configuration:
 
-- Inference recipe: Requires 1 GPU
+- Inference blueprint: Requires 1 GPU
 - Node type: VM.GPU.A10.2 (which has 2 GPUs)
 - Starting replicas: 1
 - Each replica is set to require 1 GPU
@@ -68,7 +68,7 @@ Suppose you have the following configuration:
 
 1. Optimize GPU allocation
    - Ensure the number of GPUs required per replica divides evenly into the total GPUs on a node.
-   - Example: If a recipe needs 2 GPUs, running it on a 4-GPU node allows for 1 scale-up before requiring a new node.
+   - Example: If a blueprint needs 2 GPUs, running it on a 4-GPU node allows for 1 scale-up before requiring a new node.
 2. Avoid setting more replicas than available GPUs
    - If the max replicas are set to 8, but your cluster can only fit 4, the extra 4 replicas will remain in a pending state due to insufficient resources.
 
@@ -101,10 +101,10 @@ In addition to the basic configuration which should be sufficient for most users
 
 ### Adjusting the Prometheus Query
 
-This is an advanced topic, and will materially affect autoscaling but is fully supported in OCI AI Blueprints. Each recipe deployment comes with a prometheus endpoint that can be preprended to the base url associated with your stack. So, if my base url was:
+This is an advanced topic, and will materially affect autoscaling but is fully supported in OCI AI Blueprints. Each blueprint deployment comes with a prometheus endpoint that can be preprended to the base url associated with your stack. So, if my base url was:
 `100-200-160-20.nip.io` then my prometheus url would be `prometheus.100-200-160-20.nip.io`.
 
-When I have deployed a recipe with autoscaling enabled, I can visit this endpoint and see the available metrics that vllm surfaces for users by typing `vllm:` in the search bar. A full list of production metrics can be found [here](https://docs.vllm.ai/en/v0.6.6/serving/metrics.html). The end goal of query adjustment is to:
+When I have deployed a blueprint with autoscaling enabled, I can visit this endpoint and see the available metrics that vllm surfaces for users by typing `vllm:` in the search bar. A full list of production metrics can be found [here](https://docs.vllm.ai/en/v0.6.6/serving/metrics.html). The end goal of query adjustment is to:
 
 1. Find a value that reflects the criteria you want to scale on
 2. Write a query that gives you a time averaged result (generally used with the `rate` function in promQL)
@@ -138,11 +138,11 @@ Similar logic should be applied when considering your own queries for best perfo
 
 ## Pod Autoscaling (Single Node Scaling)
 
-Pod auto-scaling allows a recipe to scale within a single node, up to the number of GPUs available on that node. Below are two examples:
+Pod auto-scaling allows a blueprint to scale within a single node, up to the number of GPUs available on that node. Below are two examples:
 
-### Example 1: Recipe with 2 GPUs on an H100 Node
+### Example 1: Blueprint with 2 GPUs on an H100 Node
 
-- Recipe requires 2 GPUs.
+- Blueprint requires 2 GPUs.
 - A BM.GPU.H100.8 node has 8 GPUs, meaning it can support up to 4 replicas before needing another node.
 
 ```json
@@ -158,7 +158,7 @@ Pod auto-scaling allows a recipe to scale within a single node, up to the number
 }
 ```
 
-### Example 2: Recipe with 1 GPU on an A10 Node
+### Example 2: Blueprint with 1 GPU on an A10 Node
 
 - recipe requires 1 GPU
 - A VM.GPU.A10.2 node has 2 GPUs, meaning it can support up to 2 replicas
@@ -178,7 +178,7 @@ Pod auto-scaling allows a recipe to scale within a single node, up to the number
 
 #### Additional Considerations:
 
-Pod autoscaling can be paired with startup and liveness probes to verify that a recipe is both ready to receive requests and continuing to function properly. For more information, visit [our startup and liveness probe doc](../startup_liveness_probes/README.md).
+Pod autoscaling can be paired with startup and liveness probes to verify that a blueprint is both ready to receive requests and continuing to function properly. For more information, visit [our startup and liveness probe doc](../startup_liveness_probes/README.md).
 
 ## Node + Pod Auto-Scaling (Scaling Beyond a Single Node)
 
@@ -186,7 +186,7 @@ When a single node can no longer handle additional replicas, OCI AI Blueprints w
 
 ### Example 1: Scaling Across Two H100 Nodes
 
-- Recipe requires 2 GPUs.
+- Blueprint requires 2 GPUs.
 - A BM.GPU.H100.8 node has 8 GPUs, meaning it can support up to 4 replicas per node.
   With node autoscaling, up to 2 nodes can be added, supporting 8 replicas total.
 
@@ -209,7 +209,7 @@ When a single node can no longer handle additional replicas, OCI AI Blueprints w
 
 ### Example 2: Scaling Across 4 A10 Nodes
 
-- Recipe requires 1 GPU.
+- Blueprint requires 1 GPU.
 - A VM.GPU.A10.2 node has 2 GPUs, meaning it can support up to 2 replicas per node.
 - With node autoscaling, up to 4 nodes can be added, supporting 8 replicas total.
 
@@ -232,7 +232,7 @@ When a single node can no longer handle additional replicas, OCI AI Blueprints w
 
 ### Example 3: Scaling Across 4 A10 Nodes with Advanced Pod Parameters
 
-- Recipe requires 1 GPU.
+- Blueprint requires 1 GPU.
 - A VM.GPU.A10.2 node has 2 GPUs, meaning it can support up to 2 replicas per node.
 - With node autoscaling, up to 4 nodes can be added, supporting 8 replicas total.
 - We want to adjust the scale up and scale down times and smoothening windows to scale very quickly.
@@ -262,15 +262,15 @@ When a single node can no longer handle additional replicas, OCI AI Blueprints w
 }
 ```
 
-## Example Recipe and Testing
+## Example Blueprint and Testing
 
-The following [example_recipe](../sample_recipes/autoscaling_recipe.json) shows a minimum basic example of how to use autoscaling with vLLM. Paste this in your deployment, and then post to launch the recipe.
+The following [example_blueprint](../sample_blueprints/autoscaling_blueprint.json) shows a minimum basic example of how to use autoscaling with vLLM. Paste this in your deployment, and then post to launch the blueprint.
 
 Note, the `scaling_threshold` parameter here is intentionally set very low to kick off scaling at a lighter load. It is better to use the defaults.
 
-Once the recipe is ready, follow the example steps to test autoscaling:
+Once the blueprint is ready, follow the example steps to test autoscaling:
 
-1. Get your workspace url. It will be everything after `api` in your deployment. So for example, my api endpoint is api.100-200-160-20.nip.io, so my workspace endpoint is `100-200-160-20.nip.io`. Using my endpoint, the vllm endpoint is the `deployment_name` from the `example_recipe.json` + my workspace endpoint, so:
+1. Get your workspace url. It will be everything after `api` in your deployment. So for example, my api endpoint is api.100-200-160-20.nip.io, so my workspace endpoint is `100-200-160-20.nip.io`. Using my endpoint, the vllm endpoint is the `deployment_name` from the `example_blueprint.json` + my workspace endpoint, so:
 
 `autoscalevllmexample.100-200-160-20.nip.io`
 
@@ -309,4 +309,4 @@ python3 token_benchmark_ray.py \
   --llm-api openai
 ```
 
-3. Advanced users can check the kubernetes cluster locally by watching `kubectl get pods` to see both node and pod autoscaling. Otherwise, go to the OKE cluster in the console, click node pools, go to the recipe specific node pool, and after a few minutes you'll see a new node appear in the pool. This new node creation typically appears between 8-10% on the llmperf completion bar you see in the terminal when launching the requests (based on the example recipe provided).
+3. Advanced users can check the kubernetes cluster locally by watching `kubectl get pods` to see both node and pod autoscaling. Otherwise, go to the OKE cluster in the console, click node pools, go to the blueprint specific node pool, and after a few minutes you'll see a new node appear in the pool. This new node creation typically appears between 8-10% on the llmperf completion bar you see in the terminal when launching the requests (based on the example blueprint provided).
