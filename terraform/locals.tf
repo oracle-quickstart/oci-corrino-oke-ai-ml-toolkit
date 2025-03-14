@@ -13,13 +13,16 @@ locals {
     #    backend_image_uri_base                       = join(":", [local.ocir.base_uri, local.ocir.backend_image])
     backend_image_uri = format("${local.ocir.base_uri}:${local.ocir.backend_image}-${local.versions.corrino_version}")
     #frontend_image_uri                           = join(":", [local.ocir.base_uri, local.ocir.frontend_image])
-    blueprint_portal_image_uri                   = join(":", [local.ocir.base_uri, local.ocir.blueprint_portal_image])
-    recipe_bucket_name                           = "corrino-recipes"
-    recipe_validation_enabled                    = "True"
-    recipe_validation_shape_availability_enabled = "True"
-    https_flag                                   = "False"
-    portal_demo_flag                             = "False"
-    blueprints_object_storage_url                = "https://iduyx1qnmway.objectstorage.us-ashburn-1.oci.customer-oci.com/n/iduyx1qnmway/b/blueprints/o/blueprints.json"
+    blueprint_portal_image_uri                     = join(":", [local.ocir.base_uri, local.ocir.blueprint_portal_image])
+    recipe_bucket_name                             = "corrino-recipes"
+    recipe_validation_enabled                      = "True"
+    recipe_validation_shape_availability_enabled   = "True"
+    https_flag                                     = "False"
+    portal_demo_flag                               = "False"
+    blueprints_object_storage_url                  = "https://iduyx1qnmway.objectstorage.us-ashburn-1.oci.customer-oci.com/n/iduyx1qnmway/b/blueprints/o/blueprints.json"
+    shared_node_pool_blueprints_object_storage_url = "https://objectstorage.us-ashburn-1.oraclecloud.com/p/Fg9xXHJ0jreGQlI7t0tjjbHQ4TTZrtMb8vEaaN1apQn1JrtPk-iXzxXFXhfTMv6F/n/iduyx1qnmway/b/blueprints/o/shared_node_pools.json"
+    shared_node_pool_documentation_url             = "https://github.com/oracle-quickstart/oci-ai-blueprints/tree/main/docs/shared_node_pools"
+    blueprint_documentation_url                    = "https://github.com/oracle-quickstart/oci-ai-blueprints/tree/main/docs/api_documentation"
   }
 
   registration = {
@@ -318,6 +321,21 @@ locals {
       name            = "BLUEPRINTS_OBJECT_STORAGE_URL"
       config_map_name = "corrino-configmap"
       config_map_key  = "BLUEPRINTS_OBJECT_STORAGE_URL"
+    },
+    {
+      name            = "SHARED_NODE_POOL_BLUEPRINTS_OBJECT_STORAGE_URL"
+      config_map_name = "corrino-configmap"
+      config_map_key  = "SHARED_NODE_POOL_BLUEPRINTS_OBJECT_STORAGE_URL"
+    },
+    {
+      name            = "SHARED_NODE_POOL_DOCUMENTATION_URL"
+      config_map_name = "corrino-configmap"
+      config_map_key  = "SHARED_NODE_POOL_DOCUMENTATION_URL"
+    },
+    {
+      name            = "BLUEPRINT_DOCUMENTATION_URL"
+      config_map_name = "corrino-configmap"
+      config_map_key  = "BLUEPRINT_DOCUMENTATION_URL"
     }
   ]
 
