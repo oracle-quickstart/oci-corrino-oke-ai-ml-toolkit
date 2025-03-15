@@ -199,7 +199,7 @@ You can accomplish this by using shared node pools. Documentation is [here](docs
 
 ### Cleanup
 
-With the use of Terraform, the [Resource Manager][orm] stack is also responsible for terminating the OKE Starter Kit application.
+With the use of Terraform, the [Resource Manager][orm] stack is also responsible for terminating the OCI AI Blueprints application.
 
 Follow these steps to completely remove all provisioned resources:
 

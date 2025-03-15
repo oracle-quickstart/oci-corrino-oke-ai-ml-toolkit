@@ -2,27 +2,35 @@
 
 Once OCI AI Blueprints has been deployed into your tenancy via Resource Manager, you can work with OCI AI Blueprints three ways:
 
-## **Option #1: OCI AI Blueprints APIs via Web:**
-
-Corrino's APIs are accessible via web interface. The APIs are shown as human-friendly HTML output for each OCI AI Blueprints API resource . These pages allow for easy browsing of resources, as well as forms for submitting data to the resources using `POST`, `PUT`, and `DELETE`.
+## **Option #1: OCI AI Blueprints UI Portal:**
 
 1. Inside the OCI Console > Resource Manager, select the stack you created for OCI AI Blueprints
 
-2. Go to "Variables" on the left-hand side under Resources section and copy the values for "corrino_admin_username" and "corrino_admin_nonce"
+2. Go to the "Application Information" tab under Stack Details.
 
-3. Go to the "Application Information" tab under Stack Details
+3. Copy the "Portal URL" into your browser
 
-4. Copy the "OCI AI Blueprints API URL" into your browser
+4. Upon first access, you must login - providing the "Admin Username" and "Admin Password" from the "Application Information" tab under Stack Details
 
-5. Upon first access, you must login - providing the "corrino_admin_username" for username and "corrino_admin_nonce" for password
+## **Option #2: OCI AI Blueprints APIs via Web:**
 
-6. Now, you can view and access all API endpoints for your instance of OCI AI Blueprints
+OCI AI Blueprint's APIs are accessible via web interface. The APIs are shown as human-friendly HTML output for each OCI AI Blueprints API resource . These pages allow for easy browsing of resources, as well as forms for submitting data to the resources using `POST`, `PUT`, and `DELETE`.
 
-## **Option #2: OCI AI Blueprints APIs via Curl/Postman**
+1. Inside the OCI Console > Resource Manager, select the stack you created for OCI AI Blueprints
+
+2. Go to the "Application Information" tab under Stack Details.
+
+3. Copy the "OCI AI Blueprints API URL" into your browser
+
+4. Upon first access, you must login - providing the "Admin Username" and "Admin Password" from the "Application Information" tab under Stack Details
+
+5. Now, you can view and access all API endpoints for your instance of OCI AI Blueprints
+
+## **Option #3: OCI AI Blueprints APIs via Curl/Postman**
 
 You can interact with the APIs locally using Postman, curl or any API platform by doing the following:
 
-1. Get your `OCI AI Blueprints API URL` (will reference this as **API URL** going forward), `corrino_admin_username` (will reference this as **username** going forward) and `corrino_admin_nonce` (will reference this as **password** going forward) by following steps 1 - 3 above in Option #1
+1. Get your `OCI AI Blueprints API URL` (will reference this as **API URL** going forward), `Admin Usernmae` (will reference this as **username** going forward) and `Admin Password` (will reference this as **password** going forward) by following steps 1 - 3 above in Option #1
 2. Once you have your username, password and API URL make a POST request to`<your-oci-ai-blueprints-api-url>/login` API to get your auth token:
 
 ```
@@ -60,7 +68,3 @@ curl --location --request GET '<your_api_url_here>/oci_shapes/' \
 2. Select Auth Type = OAuth 2.0
 3. Paste your token value
 4. Leave Header Prefix as "Token"
-
-## **Option #3: OCI AI Blueprints UI Portal (Under Construction):**
-
-For now, we recommend working with OCI AI Blueprints via the API server. An updated UI experience is being developed currently.
