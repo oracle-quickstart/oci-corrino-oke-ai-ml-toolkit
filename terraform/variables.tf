@@ -6,17 +6,17 @@
 # OCI
 # -----------------------------------
 
-variable "existent_oke_cluster_id" {}
+# variable "existent_oke_cluster_id" {}
 
-variable "existent_vcn_ocid" {}
+# variable "existent_vcn_ocid" {}
 
-variable "existent_vcn_compartment_ocid" {}
+# variable "existent_vcn_compartment_ocid" {}
 
-variable "existent_oke_k8s_endpoint_subnet_ocid" {}
+# variable "existent_oke_k8s_endpoint_subnet_ocid" {}
 
-variable "existent_oke_nodes_subnet_ocid" {}
+# variable "existent_oke_nodes_subnet_ocid" {}
 
-variable "existent_oke_load_balancer_subnet_ocid" {}
+# variable "existent_oke_load_balancer_subnet_ocid" {}
 
 # -----------------------------------
 # OCI

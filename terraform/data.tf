@@ -5,7 +5,9 @@ data "oci_objectstorage_namespace" "ns" {
 }
 
 data "oci_containerengine_cluster_kube_config" "oke_special" {
-  cluster_id = var.existent_oke_cluster_id
+  cluster_id = module.cluster-module.oke_cluster_ocid
+
+  depends_on = [module.cluster-module]
 }
 
 #data "kubernetes_ingress" "corrino_cp_ingress" {
@@ -33,7 +35,7 @@ data "kubernetes_service" "ingress_nginx_controller_service" {
     namespace = "cluster-tools"
   }
   depends_on = [module.oke-quickstart.helm_release_ingress_nginx]
-  count = var.ingress_nginx_enabled ? 1 : 0
+  count      = var.ingress_nginx_enabled ? 1 : 0
 }
 
 data "kubernetes_secret" "grafana_password" {
@@ -42,6 +44,6 @@ data "kubernetes_secret" "grafana_password" {
     namespace = "cluster-tools"
   }
   depends_on = [module.oke-quickstart.helm_release_grafana]
-  count = var.grafana_enabled ? 1 : 0
+  count      = var.grafana_enabled ? 1 : 0
 }
 

@@ -138,15 +138,15 @@ variableGroups:
     variables:
     - policy_creation_enabled
 
-  - title: "OKE Cluster & VCN"
-    variables:
-      - existent_oke_cluster_compartment_ocid
-      - existent_oke_cluster_id
-      - existent_vcn_compartment_ocid
-      - existent_vcn_ocid
-      - existent_oke_nodes_subnet_ocid
-      - existent_oke_load_balancer_subnet_ocid
-      - existent_oke_k8s_endpoint_subnet_ocid
+  # - title: "OKE Cluster & VCN"
+  #   variables:
+  #     - existent_oke_cluster_compartment_ocid
+  #     - existent_oke_cluster_id
+  #     - existent_vcn_compartment_ocid
+  #     - existent_vcn_ocid
+  #     - existent_oke_nodes_subnet_ocid
+  #     - existent_oke_load_balancer_subnet_ocid
+  #     - existent_oke_k8s_endpoint_subnet_ocid
 
 #          existent_vcn_ocid:
     #    type: oci:identity:compartment:id
@@ -388,67 +388,67 @@ variables:
     description: "The compartment in which to create compute instance(s)"
     required: true
 
-  existent_oke_cluster_compartment_ocid:
-    type: oci:identity:compartment:id
-    title: "Existent OKE Cluster Compartment"
-    description: "The compartment where you find the existent OKE Cluster"
-    default: compartment_ocid
-    required: true
+  # existent_oke_cluster_compartment_ocid:
+  #   type: oci:identity:compartment:id
+  #   title: "Existent OKE Cluster Compartment"
+  #   description: "The compartment where you find the existent OKE Cluster"
+  #   default: compartment_ocid
+  #   required: true
 
-  existent_vcn_compartment_ocid:
-    type: oci:identity:compartment:id
-    default: compartment_ocid
-    title: "OKE VCN Compartment"
-    description: "OKE VCN Compartment"
-    required: true
+  # existent_vcn_compartment_ocid:
+  #   type: oci:identity:compartment:id
+  #   default: compartment_ocid
+  #   title: "OKE VCN Compartment"
+  #   description: "OKE VCN Compartment"
+  #   required: true
 
-  existent_vcn_ocid:
-    type: oci:core:vcn:id
-    title: "OKE VCN"
-    description: "OKE VCN OCID"
-    required: true
-    dependsOn:
-      compartmentId: existent_vcn_compartment_ocid
+  # existent_vcn_ocid:
+  #   type: oci:core:vcn:id
+  #   title: "OKE VCN"
+  #   description: "OKE VCN OCID"
+  #   required: true
+  #   dependsOn:
+  #     compartmentId: existent_vcn_compartment_ocid
 
-  existent_oke_k8s_endpoint_subnet_ocid:
-    type: oci:core:subnet:id
-    title: "OKE VCN Endpoint Subnet"
-    description: "OKE VCN Endpoint Subnet OCID (oke-k8sApiEndpoint)"
-    required: true
-    dependsOn:
-      vcnId: ${existent_vcn_ocid}
-      compartmentId: existent_vcn_compartment_ocid
+  # existent_oke_k8s_endpoint_subnet_ocid:
+  #   type: oci:core:subnet:id
+  #   title: "OKE VCN Endpoint Subnet"
+  #   description: "OKE VCN Endpoint Subnet OCID (oke-k8sApiEndpoint)"
+  #   required: true
+  #   dependsOn:
+  #     vcnId: ${existent_vcn_ocid}
+  #     compartmentId: existent_vcn_compartment_ocid
 
 
-  existent_oke_nodes_subnet_ocid:
-    type: oci:core:subnet:id
-    title: "Node Subnet"
-    description: "OKE VCN Node Subnet OCID (oke-nodesubnet)"
-    required: true
-    dependsOn:
-      vcnId: ${existent_vcn_ocid}
-      compartmentId: existent_vcn_compartment_ocid
+  # existent_oke_nodes_subnet_ocid:
+  #   type: oci:core:subnet:id
+  #   title: "Node Subnet"
+  #   description: "OKE VCN Node Subnet OCID (oke-nodesubnet)"
+  #   required: true
+  #   dependsOn:
+  #     vcnId: ${existent_vcn_ocid}
+  #     compartmentId: existent_vcn_compartment_ocid
 
-  existent_oke_load_balancer_subnet_ocid:
-    type: oci:core:subnet:id
-    title: "Service Load Balancer Subnet"
-    description: "OKE VCN Load Balancer Subnet OCID (oke-svclbsubnet)"
-    required: true
-    dependsOn:
-      vcnId: ${existent_vcn_ocid}
-      compartmentId: existent_vcn_compartment_ocid
+  # existent_oke_load_balancer_subnet_ocid:
+  #   type: oci:core:subnet:id
+  #   title: "Service Load Balancer Subnet"
+  #   description: "OKE VCN Load Balancer Subnet OCID (oke-svclbsubnet)"
+  #   required: true
+  #   dependsOn:
+  #     vcnId: ${existent_vcn_ocid}
+  #     compartmentId: existent_vcn_compartment_ocid
 
-  # ---------------------------------
-  # OKE Elements
-  # ---------------------------------
+  # # ---------------------------------
+  # # OKE Elements
+  # # ---------------------------------
 
-  existent_oke_cluster_id:
-    type: oci:container:cluster:id
-    title: "OKE Cluster"
-    description: "OKE Cluster OCID"
-    required: true
-    dependsOn:
-      compartmentId: existent_oke_cluster_compartment_ocid
+  # existent_oke_cluster_id:
+  #   type: oci:container:cluster:id
+  #   title: "OKE Cluster"
+  #   description: "OKE Cluster OCID"
+  #   required: true
+  #   dependsOn:
+  #     compartmentId: existent_oke_cluster_compartment_ocid
 
 
 

@@ -2,6 +2,16 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
 #
 
+module "cluster-module" {
+  source = "./modules/cluster-module"
+
+  tenancy_ocid     = var.tenancy_ocid
+  compartment_ocid = var.compartment_ocid
+  region           = var.region
+}
+
+
+
 module "oke-quickstart" {
   #  source = "github.com/oracle-quickstart/terraform-oci-corrino?ref=0.9.0"
   source = "./modules/corrino"
@@ -42,10 +52,10 @@ module "oke-quickstart" {
   grafana_enabled        = var.grafana_enabled
 
   create_new_oke_cluster  = false
-  existent_oke_cluster_id = var.existent_oke_cluster_id
+  existent_oke_cluster_id = module.cluster-module.oke_cluster_ocid
 
   create_new_vcn    = false
-  existent_vcn_ocid = var.existent_vcn_ocid
+  existent_vcn_ocid = module.cluster-module.oke_vcn_ocid
 
   create_new_compartment_for_oke = false
   existent_vcn_compartment_ocid  = var.compartment_ocid
@@ -53,10 +63,12 @@ module "oke-quickstart" {
   create_vault_policies_for_group = false
 
   create_subnets                         = false
-  existent_oke_k8s_endpoint_subnet_ocid  = var.existent_oke_k8s_endpoint_subnet_ocid
-  existent_oke_nodes_subnet_ocid         = var.existent_oke_nodes_subnet_ocid
-  existent_oke_load_balancer_subnet_ocid = var.existent_oke_load_balancer_subnet_ocid
+  existent_oke_k8s_endpoint_subnet_ocid  = module.cluster-module.oke_k8s_endpoint_subnet_ocid
+  existent_oke_nodes_subnet_ocid         = module.cluster-module.oke_nodes_subnet_ocid
+  existent_oke_load_balancer_subnet_ocid = module.cluster-module.oke_lb_subnet_ocid
   #  existent_oke_vcn_native_pod_networking_subnet_ocid = "" # Optional. Existent VCN Native POD Networking subnet if the CNI Type is "OCI_VCN_IP_NATIVE"
+
+  depends_on = [module.cluster-module]
 
 }
 

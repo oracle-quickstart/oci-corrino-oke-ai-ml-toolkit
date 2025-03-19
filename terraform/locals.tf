@@ -52,7 +52,9 @@ locals {
 
   oke = {
     deploy_id    = local.deploy_id
-    cluster_ocid = var.existent_oke_cluster_id
+    cluster_ocid = module.cluster-module.oke_cluster_ocid
+
+    depends_on = [module.cluster-module]
   }
 
   db = {
@@ -86,7 +88,9 @@ locals {
     loopback           = "127.0.0.1"
     loopback_origin    = "http://127.0.0.1"
     external_ip        = var.ingress_nginx_enabled ? data.kubernetes_service.ingress_nginx_controller_service.0.status.0.load_balancer.0.ingress.0.ip : "#Ingress_Not_Deployed"
-    oke_node_subnet_id = var.existent_oke_nodes_subnet_ocid
+    oke_node_subnet_id = module.cluster-module.oke_nodes_subnet_ocid
+
+    depends_on = [module.cluster-module]
   }
 
   registry = {
