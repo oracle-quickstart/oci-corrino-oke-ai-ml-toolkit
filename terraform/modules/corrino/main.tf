@@ -182,7 +182,8 @@ module "oke_cluster_autoscaler" {
   region = var.region
 
   ## Enable Cluster Autoscaler for node pools
-  oke_node_pools = [for node_pool in values(module.oke_node_pools) : node_pool if node_pool.node_pool_autoscaler_enabled]
+  oke_node_pools            = [for node_pool in values(module.oke_node_pools) : node_pool if node_pool.node_pool_autoscaler_enabled]
+  enable_cluster_autoscaler = anytrue([for node_pool in values(module.oke_node_pools) : node_pool.node_pool_autoscaler_enabled if node_pool.node_pool_autoscaler_enabled])
 
   depends_on = [module.oke, module.oke_node_pools]
 }

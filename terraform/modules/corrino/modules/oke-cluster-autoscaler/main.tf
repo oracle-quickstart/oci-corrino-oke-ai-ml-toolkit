@@ -15,7 +15,7 @@ locals {
   cluster_autoscaler_scale_down_delay_after_add       = var.cluster_autoscaler_scale_down_delay_after_add
   cluster_autoscaler_scale_down_unneeded_time         = var.cluster_autoscaler_scale_down_unneeded_time
   cluster_autoscaler_unremovable_node_recheck_timeout = var.cluster_autoscaler_unremovable_node_recheck_timeout
-  cluster_autoscaler_enabled                          = alltrue([contains(keys(local.cluster_autoscaler_supported_k8s_versions), local.k8s_major_minor_version)]) ? anytrue(var.oke_node_pools[*].node_pool_autoscaler_enabled) : false
+  cluster_autoscaler_enabled                          = var.enable_cluster_autoscaler
   cluster_autoscaler_cloud_provider                   = local.k8s_major_minor_version < "1.24" ? "oci" : "oci-oke"
   k8s_major_minor_version                             = regex("\\d+(?:\\.(?:\\d+|x)(?:))", try(var.oke_node_pools.0.node_k8s_version, "1.0"))
 }

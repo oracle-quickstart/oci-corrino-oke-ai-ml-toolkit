@@ -4,10 +4,11 @@
 
 # OKE Variables
 ## OKE Autoscaler
-# variable "cluster_autoscaler_enabled" {
-#   default     = true
-#   description = "Enables OKE cluster autoscaler. Node pools will auto scale based on the resources usage"
-# }
+variable "enable_cluster_autoscaler" {
+  type        = bool
+  default     = false
+  description = "Explicitly enables or disables the OKE cluster autoscaler"
+}
 variable "cluster_autoscaler_supported_k8s_versions" {
   type = map(string)
 
