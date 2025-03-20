@@ -69,6 +69,7 @@ resource "oci_containerengine_node_pool" "oke_node_pool" {
     boot_volume_size_in_gbs = var.node_pool_boot_volume_size_in_gbs
   }
 
+
   initial_node_labels {
     key   = "name"
     value = var.node_pool_name
