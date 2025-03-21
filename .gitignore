@@ -20,3 +20,4 @@ terraform.tfstate
 terraform.tfstate.backup
 test*json
 generated/
+*.zip
