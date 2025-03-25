@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "blueprintSchema",
+  "title": "Blueprint Schema",
+  "description": "Use this schema for creating new blueprints or updating existing blueprints.",
+  "type": "object",
+  "properties": {
+    "blueprint_type": {
+      "type": "string",
+      "enum": ["oci_blueprint", "community_blueprint"],
+      "description": "Type of blueprint, either OCI-provided or community-contributed."
+    },
+    "blueprint_title": {
+      "type": "string",
+      "description": "Title of the blueprint. Users see this in the portal and in GitHub docs."
+    },
+    "blueprint_short_description": {
+      "type": "string",
+      "description": "Short 100-150 character description of the blueprint. Users see this in the Blueprints List screen on the portal and in GitHub docs."
+    },
+    "blueprint_long_description": {
+      "type": "string",
+      "description": "Longer 250-500 word description of the blueprint. Users see this in the Blueprint Detail screen on the portal and in GitHub docs."
+    },
+    "pre_filled_samples": {
+      "type": "array",
+      "items": {
+        "$ref": "https://github.com/oracle-quickstart/oci-ai-blueprints/tree/main/docs/custom_blueprints/payloadSchema.json"
+      },
+      "description": "Pre-filled samples of blueprints."
+    }
+  },
+  "required": [
+    "blueprint_type",
+    "blueprint_title",
+    "blueprint_short_description",
+    "blueprint_long_description",
+    "pre_filled_samples"
+  ],
+  "additionalProperties": false
+}
