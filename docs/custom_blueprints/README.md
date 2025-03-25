@@ -1,4 +1,3 @@
-````markdown
 # Custom Blueprints
 
 Welcome to the world of **OCI AI Blueprints**! This guide provides a detailed walkthrough on how to create, publish, and maintain custom blueprints. By the end, you will understand how custom blueprints, pre-filled samples, and the associated JSON schemas all come together to streamline AI deployments on Oracle Cloud Infrastructure (OCI).
@@ -177,7 +176,6 @@ Below is an **example** demonstrating how you might configure one entry in the `
   "recipe_shared_memory_volume_size_limit_in_mb": 200
 }
 ```
-````
 
 **Key elements to note in this sample:**
 
@@ -199,7 +197,3 @@ By adapting these fields to your own project requirements—such as using a diff
 Creating and sharing **Custom Blueprints** and **Pre-Filled Samples** is a powerful way to **scale AI deployments** and **foster community collaboration** within OCI AI Blueprints. By adhering to both the **Blueprint JSON Schema** and the **Pre-Filled Sample JSON Schema**, you ensure your configurations are consistent, testable, and easy to adopt. We encourage you to contribute your innovations, learn from existing community samples, and help build a richer ecosystem for all.
 
 **Thank you** for choosing OCI AI Blueprints. We look forward to seeing your next custom creation!
-
-```
-
-```
