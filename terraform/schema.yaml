@@ -19,9 +19,15 @@ source:
   type: quickstart
 
 outputGroups:
-  - title: "OCI AI Blueprints API"
+
+  - title: "OCI AI Blueprints Portal"
     outputs:
       - blueprints_portal_url
+      - corrino_admin_username_output
+      - corrino_admin_nonce_output
+
+  - title: "OCI AI Blueprints API"
+    outputs:
       - corrino_api_url
       - corrino_admin_username_output
       - corrino_admin_nonce_output
