@@ -24,10 +24,23 @@
     },
     "pre_filled_samples": {
       "type": "array",
+      "description": "Pre-filled samples of blueprints.",
       "items": {
-        "$ref": "https://github.com/oracle-quickstart/oci-ai-blueprints/tree/main/docs/custom_blueprints/payloadSchema.json"
-      },
-      "description": "Pre-filled samples of blueprints."
+        "allOf": [
+          {
+            "$ref": "https://github.com/oracle-quickstart/oci-ai-blueprints/tree/main/docs/custom_blueprints/payloadSchema.json"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "pre_filled_sample_name": {
+                "type": "string"
+              }
+            },
+            "required": ["pre_filled_sample_name"]
+          }
+        ]
+      }
     }
   },
   "required": [
