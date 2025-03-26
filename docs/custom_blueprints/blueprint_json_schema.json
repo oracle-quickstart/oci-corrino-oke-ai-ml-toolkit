@@ -28,7 +28,7 @@
       "items": {
         "allOf": [
           {
-            "$ref": "https://github.com/oracle-quickstart/oci-ai-blueprints/tree/main/docs/custom_blueprints/payloadSchema.json"
+            "$ref": "https://raw.githubusercontent.com/oracle-quickstart/oci-ai-blueprints/96b098f8c1acd830981b6cbe6e11bafb83bd6e93/docs/custom_blueprints/prefilled_sample_json_schema.json"
           },
           {
             "type": "object",
