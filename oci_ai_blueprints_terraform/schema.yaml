@@ -45,63 +45,6 @@ outputGroups:
       - external_ip
     
 
-#outputGroups:
-#  - title: Mushop endpoints (Corrino)
-#    outputs:
-#      - mushop_url
-#      - grafana_url
-#      - external_ip
-#      - domain_name
-#      - mushop_url_https
-#      - mushop_url_alternative
-#
-#  - title: Passwords and Keys (Corrino)
-#    outputs:
-#      - autonomous_database_password
-#      - grafana_admin_password
-#      - generated_private_key_pem
-#
-#  - title: Comments (Corrino)
-#    outputs:
-#      - comments
-#      - deploy_id
-#      - deployed_to_region
-#      - deployed_oke_kubernetes_version
-#
-#  - title: Dev Notes (Corrino)
-#    outputs:
-#      - dev
-#      - mushop_source_code
-#      - mushop_version
-#
-#  - title: Corrino Services
-#    outputs:
-#      - domain_name
-#      - ${api_url}
-#      - portal_url
-#      - ${domain_name}
-#      - ${external_ip}
-#
-#  - title: Workspace
-#    outputs:
-#      - domain_name
-#      - deploy_id
-#      - deployed_to_region
-#      - deployed_oke_kubernetes_version
-#
-#  - title: Autonomous DB
-#    outputs:
-#      - domain_name
-#      - autonomous_database_password
-#      - generated_private_key_pem
-#
-#  - title: Observability
-#      - domain_name
-#      - prometheus_url
-#      - mlflow_url
-#      - grafana_url
-#      - grafana_admin_password
-
 locale: "en"
 variableGroups:
   - title: "Basic Hidden"
@@ -418,7 +361,7 @@ variables:
 
   existent_oke_k8s_endpoint_subnet_ocid:
     type: oci:core:subnet:id
-    title: "OKE VCN Endpoint Subnet"
+    title: "K8s API Endpoint Subnet"
     description: "OKE VCN Endpoint Subnet OCID (oke-k8sApiEndpoint)"
     required: true
     dependsOn:
@@ -437,7 +380,7 @@ variables:
 
   existent_oke_load_balancer_subnet_ocid:
     type: oci:core:subnet:id
-    title: "Service Load Balancer Subnet"
+    title: "Load Balancer Subnet"
     description: "OKE VCN Load Balancer Subnet OCID (oke-svclbsubnet)"
     required: true
     dependsOn:
@@ -1192,23 +1135,6 @@ variables:
 #      - corrino_version
 
 outputs:
-#  mushop_url_button:
-#    type: link
-#    title: MuShop URL Button
-#    displayText: Open MuShop
-#    visible: true
-#
-#  mushop_url:
-#    type: link
-#    title: MuShop
-#    displayText: Storefront
-#    visible: true
-
-#  mushop_url_https:
-#    type: string
-#    title: MuShop URL with HTTPS and Hostname
-#    displayText: https://<hostname>
-#    visible: false
 
   external_ip:
     visible: true
@@ -1247,20 +1173,6 @@ outputs:
   blueprints_portal_url:
     title: "Portal URL"
     visible: true
-
-  # corrino_portal_url:
-  #   visible: false
-#
-#  domain_name:
-#    type: link
-#    title: Domain Name
-#    displayText: Full Qualified Domain Name
-#    visible: true
-
-#  mushop_url_alternative:
-#    type: link
-#    title: "Alternative Hostname"
-#    visible: true
 
   autonomous_database_password:
     type: string
@@ -1335,41 +1247,3 @@ outputs:
 
   cluster_endpoint:
     visible: false
-
-
-#  comments:
-#    type: string
-#    title: Comments
-#    displayText: Comments
-#    visible: true
-#
-#  dev:
-#    type: string
-#    title: dev
-#    displayText: dev note from Oracle Developers
-#    visible: true
-
-#  corrino_source_code:
-#    type: link
-#    title: MuShop Repo with sources and deployment scripts
-#    visible: true
-#
-#  corrino_version:
-#    type: string
-#    title: MuShop Version used
-#    visible: true
-
-#  kubeconfig_for_kubectl:
-#    type: string
-#    title: kubeconfig
-#    displayText: kubeconfig for local kubectl run. Not used by ORM
-#    visible: false
-#
-#  sensitive_comments_local_tf:
-#    type: string
-#    title: Sensitive Output Comments
-#    displayText: Instructions to get sensitive outputs on local Terraform/OpenToFu cli. Not used by ORM
-#    visible: false
-
-#primaryOutputButton: mushop_url_button
-#primaryOutputButton: corrino_api_url

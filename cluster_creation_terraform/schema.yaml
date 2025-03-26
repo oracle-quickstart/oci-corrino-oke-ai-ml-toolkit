@@ -29,80 +29,12 @@ variableGroups:
     - k8s_version
     - cluster_workers_visibility
     - cluster_endpoint_visibility
-    - create_new_compartment_for_oke
 
   - title: "OKE Worker Nodes"
     variables:
     - num_pool_workers
     - node_pool_instance_shape
-    - generate_public_ssh_key
-    - public_ssh_key
-    - image_operating_system
     - node_pool_name
-
-  # - title: "Cluster Utilities (MuShop Utilities) - Ingress"
-  #   variables:
-  #   - ingress_nginx_enabled
-  #   - ingress_load_balancer_shape
-  #   - ingress_load_balancer_shape_flex_min
-  #   - ingress_load_balancer_shape_flex_max
-  #   - ingress_hosts
-  #   - cert_manager_enabled
-  #   - ingress_tls
-  #   - ingress_cluster_issuer
-  #   visible:
-  #     and:
-  #       - show_advanced
-
-  - title: "Network Configuration"
-    variables:
-      - network_strategy
-      - vcn_id
-      - vcn_display_name
-      - vcn_cidr_block
-      - vcn_dns_label
-      - subnet_type
-      - subnet_span
-      - subnet_id
-      - subnet_display_name
-      - subnet_cidr_block
-      - subnet_dns_label
-    visible:
-      and:
-        - show_advanced
-
-  - title: "Extras Hidden"
-    variables:
-      - user_ocid
-      - fingerprint
-      - private_key_path
-      - network_cidrs
-      - cluster_options_admission_controller_options_is_pod_security_policy_enabled
-      - cluster_options_add_ons_is_kubernetes_dashboard_enabled
-      - ingress_load_balancer_shape
-      - node_pool_boot_volume_size_in_gbs
-      - oke_compartment_description
-    visible: false
-
-  # - title: "OCI Services Hidden"
-  #   variables:
-  #     - autonomous_database_cpu_core_count
-  #     - autonomous_database_data_storage_size_in_tbs
-  #     - autonomous_database_data_safe_status
-  #     - autonomous_database_db_version
-  #     - autonomous_database_license_model
-  #     - autonomous_database_is_auto_scaling_enabled
-  #     - autonomous_database_is_free_tier
-  #     - autonomous_database_wallet_generate_type
-  #     - autonomous_database_visibility
-  #     - db_admin_name
-  #     - db_connection_name
-  #     - db_wallet_name
-  #     - oos_bucket_name
-  #     - newsletter_email_sender
-  #     - newsletter_subscription_function_image
-  #     - newsletter_subscription_function_image_version
-  #   visible: false
 
 variables:
   compartment_ocid:
@@ -155,13 +87,6 @@ variables:
       and:
         - show_advanced
 
-  create_new_compartment_for_oke:
-    type: boolean
-    title: "Create new Compartment"
-    visible:
-      and:
-        - show_advanced
-
   num_pool_workers:
     type: integer
     title: "Number of Worker Nodes"
@@ -191,336 +116,103 @@ variables:
     title: "Kubernetes Dashboard Enabled"
     visible: false
 
-  generate_public_ssh_key:
-    type: boolean
-    title: "Auto generate public ssh key?"
-    required: true
-    visible:
-      and:
-        - show_advanced
+  network_cidrs:
+    visible: false
 
-  public_ssh_key:
-    type: oci:core:ssh:publickey
-    title: "Import your own SSH public key"
-    additionalProps:
-      allowMultiple: true
-    required: false
-    pattern: "((^(ssh-rsa AAAAB3NzaC1yc2|ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNT|ecdsa-sha2-nistp384 AAAAE2VjZHNhLXNoYTItbmlzdHAzODQAAAAIbmlzdHAzOD|ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1Mj|ssh-ed25519 AAAAC3NzaC1lZDI1NTE5|ssh-dss AAAAB3NzaC1kc3)[0-9A-Za-z+\/]+[=]{0,3})( [^,]*)?)(,((ssh-rsa AAAAB3NzaC1yc2|ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNT|ecdsa-sha2-nistp384 AAAAE2VjZHNhLXNoYTItbmlzdHAzODQAAAAIbmlzdHAzOD|ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1Mj|ssh-ed25519 AAAAC3NzaC1lZDI1NTE5|ssh-dss AAAAB3NzaC1kc3)[0-9A-Za-z+\/]+[=]{0,3})( [^,]*)?)*$"
-    visible:
-      and:
-        - and:
-          - show_advanced
-        - not:
-          - generate_public_ssh_key
+  node_pool_boot_volume_size_in_gbs:
+    visible: false
 
-  image_operating_system:
-    type: enum
-    title: "Image OS"
-    enum:
-      - "Oracle Linux"
-    required: true
-    visible:
-      and:
-        - show_advanced
+  user_ocid:
+    visible: false
 
-  # image_operating_system_version:
-  #   type: string
-  #   title: "Image OS Version"
-  #   required: true
-  #   visible:
-  #     and:
-  #       - show_advanced
+  oci_ai_blueprints_link_variable:
+    visible: false
 
-  # # Cluster Utilities - Ingress
-  # ingress_nginx_enabled:
-  #   type: boolean
-  #   title: "Ingress NGINX"
-
-  # ingress_load_balancer_shape:
-  #   type: enum
-  #   enum:
-  #   - "flexible"
-  #   - "10Mbps"
-  #   - "100Mbps"
-  #   - "400Mbps"
-  #   - "8000Mbps"
-  #   title: "Select a shape for the load balancer created by the Ingress"
-  #   visible:
-  #     and:
-  #       - show_advanced
-  #       - ingress_nginx_enabled
-
-  # ingress_load_balancer_shape_flex_min:
-  #   type: integer
-  #   minimum: 10
-  #   maximum: 8000
-  #   title: "Choose the minimum bandwidth"
-  #   required: true
-  #   visible:
-  #     and:
-  #       - and:
-  #         - show_advanced
-  #         - ingress_nginx_enabled
-  #       - eq:
-  #         - ingress_load_balancer_shape
-  #         - "flexible"
-
-  # ingress_load_balancer_shape_flex_max:
-  #   type: integer
-  #   minimum: 10
-  #   maximum: 8000
-  #   title: "Choose the maximum bandwidth"
-  #   required: true
-  #   visible:
-  #     and:
-  #       - and:
-  #         - show_advanced
-  #         - ingress_nginx_enabled
-  #       - eq:
-  #         - ingress_load_balancer_shape
-  #         - "flexible"
-
-  # ingress_hosts:
-  #   type: string
-  #   title: "Optional valid domain name"
-  #   visible:
-  #     and:
-  #       - show_advanced
-  #       - ingress_nginx_enabled
-
-  # cert_manager_enabled:
-  #   type: boolean
-  #   title: "Certificate Management"
-
-  # ingress_tls:
-  #   type: boolean
-  #   title: "Use TLS to enable HTTPS on the valid domain name"
-  #   visible:
-  #     and:
-  #       - show_advanced
-  #       - ingress_nginx_enabled
-  #       - cert_manager_enabled
-
-  # ingress_cluster_issuer:
-  #   type: enum
-  #   enum:
-  #   - "letsencrypt-prod"
-  #   - "letsencrypt-staging"
-  #   - "selfsigned"
-  #   title: "Certificate Issuer"
-  #   required: true
-  #   visible:
-  #     and:
-  #       - show_advanced
-  #       - ingress_nginx_enabled
-  #       - ingress_tls
-  #       - cert_manager_enabled
-
-
-  # mushop_atp:
-  #   visible: yes
-  #   type: boolean
-  #   default: true
-  #   required: true
-  #   title: "Deploy ATP for services"
-  #   description: "Enable Oracle Autonomous Database ATP for all Services"
-
-  # mushop_oss:
-  #   visible: yes
-  #   type: boolean
-  #   default: true
-  #   required: true
-  #   title: "Deploy Streaming for services"
-  #   description: "Enable Oracle Streaming for all Services"
-
-  # Network Type Options
-  # network_strategy:
-  #   type: enum
-  #   title: Network Strategy
-  #   description: Create or use existing Network Stack (VCN and Subnet)
-  #   enum:
-  #     - "Create New VCN and Subnet"
-  #     # - "Use Existing VCN and Subnet"
-  #   required: true
-  #   default: "Create New VCN and Subnet"
-  #   visible:
-  #     and:
-  #       - show_advanced
-
-  # subnet_type:
-  #   visible: #($network_strategy  == ""Create New VCN and Subnet"")
-  #     eq:
-  #       - network_strategy 
-  #       - "Create New VCN and Subnet"
-  #   type: enum
-  #   title: Subnet Type
-  #   description: Choose between private and public subnets
-  #   enum:
-  #     - "Private Subnet"
-  #     - "Public Subnet"
-  #   required: true
-  #   default: "Private Subnet"
-
-  # vcn_id:
-  #   visible: #($network_strategy  == "Use Existing VCN and Subnet")
-  #     eq:
-  #       - network_strategy 
-  #       - "Use Existing VCN and Subnet"
-  #   type: oci:core:vcn:id
-  #   dependsOn:
-  #     compartmentId: compartment_ocid 
-  #   required: true
-  #   title: Existing Network
-  #   description: An existing Virtual Cloud Network (VCN) in which to create the compute instances, network resources, and load balancers. If not specified, a new VCN is created.
-
-  # vcn_cidr_block:
-  #   visible: #($network_strategy  == ""Create New VCN and Subnet"")
-  #     eq:
-  #       - network_strategy 
-  #       - "Create New VCN and Subnet"
-  #   type: string
-  #   required: true
-  #   default: 10.20.0.0/16
-  #   pattern: "^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\/(3[0-2]|[1-2]?[0-9])$"
-  #   title: VCN CIDR BLOCK
-  #   description: The CIDR of the new Virtual Cloud Network (VCN). If you plan to peer this VCN with another VCN, the VCNs must not have overlapping CIDRs.
-
-  # subnet_cidr_block:
-  #   visible: #($network_strategy  == ""Create New VCN and Subnet"")
-  #     eq:
-  #       - network_strategy 
-  #       - "Create New VCN and Subnet"
-  #   type: string
-  #   default: 10.20.10.0/24
-  #   pattern: "^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\/(3[0-2]|[1-2]?[0-9])$"
-  #   required: true
-  #   title: Subnet CIDR
-  #   description: The CIDR of the new Subnet. The new subnet's CIDR should not overlap with any other subnet CIDRs.
-
-outputGroups:
-  - title: Mushop endpoints
-    outputs:
-      - mushop_url
-      - grafana_url
-      - external_ip
-      - domain_name
-      - mushop_url_https
-      - mushop_url_alternative
-
-  - title: Passwords and Keys
-    outputs:
-      - autonomous_database_password
-      - grafana_admin_password
-      - generated_private_key_pem
-
-  - title: Comments
-    outputs:
-      - comments
-      - deploy_id
-      - deployed_to_region
-      - deployed_oke_kubernetes_version
-
-  - title: Dev Notes
-    outputs:
-      - dev
-      - mushop_source_code
-      - mushop_version
 
 outputs:
-  # mushop_url_button:
-  #   type: link
-  #   title: MuShop URL Button
-  #   displayText: Open MuShop
-  #   visible: true
 
-  # mushop_url:
-  #   type: link
-  #   title: MuShop
-  #   displayText: Storefront
-  #   visible: true
-
-  # mushop_url_https:
-  #   type: string
-  #   title: MuShop URL with HTTPS and Hostname
-  #   displayText: https://<hostname>
-  #   visible: false
-
-  # external_ip:
-  #   type: string
-  #   title: Ingress LoadBalancer External IP
-  #   displayText: Ingress Nginx LoadBalancer External IP Address
-  #   visible: true
-
-  # grafana_url:
-  #   type: link
-  #   title: Grafana
-  #   displayText: Dashboards
-  #   visible: true
-
-  # domain_name:
-  #   type: string
-  #   title: Domain Name
-  #   displayText: Full Qualified Domain Name
-  #   visible: true
-
-  # mushop_url_alternative:
-  #   type: link
-  #   title: "Alternative Hostname"
-  #   visible: true
-
-  # autonomous_database_password:
-  #   type: string
-  #   title: DB Admin Password
-  #   displayText: Autonomous Database Admin Password
-  #   visible: true
-
-  # grafana_admin_password:
-  #   type: string
-  #   title: Grafana Admin Password
-  #   displayText: Grafana Admin Password
-  #   visible: true
-
-  deploy_id:
+  oke_cluster_name:
     type: string
-    title: "Deployment Id"
+    title: "OKE Cluster Name"
     visible: true
 
-  deployed_to_region:
-    type: string
-    title: "Deployed using Region"
+  oke_cluster_id:
+    type: ocid
+    title: "OKE Cluster OCID"
     visible: true
 
-  deployed_oke_kubernetes_version:
+  oci_ai_blueprints_link_for_section:
+    type: link
+    title: "Click"
+    visible: true
+    displayText: "Deploy OCI AI Blueprints onto this Cluster"
+
+  oci_ai_blueprints_link_for_button:
+    type: link
+    visible: true
+    displayText: "Next Step: Deploy OCI AI Blueprints"
+
+  vcn_name:
     type: string
-    title: "OKE Kubernetes version deployed"
+    title: "VCN Name"
     visible: true
 
-  comments:
-    type: string
-    title: Comments
-    displayText: Comments
+  vcn_id:
+    type: ocid
+    title: "VCN OCID"
     visible: true
 
-  # mushop_source_code:
-  #   type: link
-  #   title: MuShop Repo with sources and deployment scripts
-  #   visible: true
-
-  # mushop_version:
-  #   type: string
-  #   title: MuShop Version used
-  #   visible: true
-
-  kubeconfig_for_kubectl:
+  node_subnet_name:
     type: string
-    title: kubeconfig
-    displayText: kubeconfig for local kubectl run. Not used by ORM
-    visible: false
+    title: "Node Subnet Name"
+    visible: true
 
-  sensitive_comments_local_tf:
+  lb_subnet_name:
+    type: string  
+    title: "Load Balancer Subnet Name"
+    visible: true
+
+  endpoint_subnet_name:
     type: string
-    title: Sensitive Output Comments
-    displayText: Instructions to get sensitive outputs on local Terraform/OpenToFu cli. Not used by ORM
-    visible: false
+    title: "K8s API Endpoint Subnet Name"
+    visible: true
 
-# primaryOutputButton: mushop_url_button
+  node_subnet_id:
+    type: ocid
+    title: "Node Subnet OCID"
+    visible: true
+
+  lb_subnet_id: 
+    type: ocid
+    title: "Load Balancer Subnet OCID"
+    visible: true
+
+  endpoint_subnet_id:
+    type: ocid  
+    title: "K8s API Endpoint Subnet OCID"
+    visible: true
+outputGroups:
+  - title: "Next Step: Deploy OCI AI Blueprints"
+    outputs:
+      - oci_ai_blueprints_link_for_section
+
+  - title: OKE Cluster Details
+    outputs:
+      - oke_cluster_name
+      - oke_cluster_id
+
+  - title: VCN Details
+    outputs:
+      - vcn_name
+      - vcn_id
+      - node_subnet_name
+      - node_subnet_id
+      - lb_subnet_name
+      - lb_subnet_id
+      - endpoint_subnet_name
+      - endpoint_subnet_id
+
+
+
+primaryOutputButton: ${oci_ai_blueprints_link_for_button}
+

@@ -20,7 +20,7 @@ resource "oci_containerengine_cluster" "oke_cluster" {
       is_tiller_enabled               = false # Default is false, left here for reference
     }
     admission_controller_options {
-      is_pod_security_policy_enabled = var.cluster_options_admission_controller_options_is_pod_security_policy_enabled
+      is_pod_security_policy_enabled = false
     }
     kubernetes_network_config {
       services_cidr = lookup(var.network_cidrs, "KUBERNETES-SERVICE-CIDR")
@@ -41,7 +41,7 @@ resource "oci_containerengine_node_pool" "oke_node_pool" {
   kubernetes_version = (var.k8s_version == "Latest") ? local.node_pool_k8s_latest_version : var.k8s_version
   name               = var.node_pool_name
   node_shape         = var.node_pool_instance_shape.instanceShape
-  ssh_public_key     = var.generate_public_ssh_key ? tls_private_key.oke_worker_node_ssh_key.public_key_openssh : var.public_ssh_key
+  ssh_public_key     = tls_private_key.oke_worker_node_ssh_key.public_key_openssh
 
   node_config_details {
     dynamic "placement_configs" {
@@ -78,16 +78,8 @@ resource "oci_containerengine_node_pool" "oke_node_pool" {
   count = 1
 }
 
-resource "oci_identity_compartment" "oke_compartment" {
-  compartment_id = var.compartment_ocid
-  name           = "${local.app_name_normalized}-${random_string.deploy_id.result}"
-  description    = "${local.app_name} ${var.oke_compartment_description} (Deployment ${random_string.deploy_id.result})"
-  enable_delete  = true
-
-  count = var.create_new_compartment_for_oke ? 1 : 0
-}
 locals {
-  oke_compartment_ocid = var.create_new_compartment_for_oke ? oci_identity_compartment.oke_compartment.0.id : var.compartment_ocid
+  oke_compartment_ocid = var.compartment_ocid
 }
 
 # Local kubeconfig for when using Terraform locally. Not used by Oracle Resource Manager

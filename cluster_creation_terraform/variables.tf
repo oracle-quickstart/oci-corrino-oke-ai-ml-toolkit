@@ -1,22 +1,14 @@
 # Copyright (c) 2021 Oracle and/or its affiliates. All rights reserved.
 # Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
 # 
+variable "oci_ai_blueprints_link_variable" {
+  default = "https://cloud.oracle.com/resourcemanager/stacks/create?region=home&zipUrl=https://github.com/oracle-quickstart/oci-ai-blueprints/releases/download/oci_ai_blueprints_app_release-2025-03-26/oci_ai_blueprints_release-2025-03-26.zip"
+}
 
 # OKE Variables
 ## OKE Cluster Details
-variable "create_new_compartment_for_oke" {
-  default     = false
-  description = "Creates new compartment for OKE Nodes and OCI Services deployed.  NOTE: The creation of the compartment increases the deployment time by at least 3 minutes, and can increase by 15 minutes when destroying"
-}
-variable "oke_compartment_description" {
-  default = "Compartment for OKE, Nodes and Services"
-}
 variable "cluster_options_add_ons_is_kubernetes_dashboard_enabled" {
   default = false
-}
-variable "cluster_options_admission_controller_options_is_pod_security_policy_enabled" {
-  description = "If true: The pod security policy admission controller will use pod security policies to restrict the pods accepted into the cluster."
-  default     = false
 }
 
 ## OKE Visibility (Workers and Endpoint)
@@ -48,11 +40,11 @@ variable "node_pool_name" {
   description = "Name of the node pool"
 }
 variable "k8s_version" {
-  default     = "Latest"
+  default     = "v1.31.1"
   description = "Kubernetes version installed on your master and worker nodes"
 }
 variable "num_pool_workers" {
-  default     = 3
+  default     = 6
   description = "The number of worker nodes in the node pool. If select Cluster Autoscaler, will assume the minimum number of nodes configured"
 }
 
@@ -60,29 +52,14 @@ variable "node_pool_instance_shape" {
   type = map(any)
   default = {
     "instanceShape" = "VM.Standard.E3.Flex"
-    "ocpus"         = 3
-    "memory"        = 36
+    "ocpus"         = 6
+    "memory"        = 64
   }
   description = "A shape is a template that determines the number of OCPUs, amount of memory, and other resources allocated to a newly created instance for the Worker Node. Select at least 2 OCPUs and 16GB of memory if using Flex shapes"
 }
 variable "node_pool_boot_volume_size_in_gbs" {
   default     = "60"
   description = "Specify a custom boot volume size (in GB)"
-}
-variable "image_operating_system" {
-  default     = "Oracle Linux"
-  description = "The OS/image installed on all nodes in the node pool."
-}
-# variable "image_operating_system_version" {
-#   default     = "8.10"
-#   description = "The OS/image version installed on all nodes in the node pool."
-# }
-variable "generate_public_ssh_key" {
-  default = true
-}
-variable "public_ssh_key" {
-  default     = ""
-  description = "In order to access your private nodes with a public SSH key you will need to set up a bastion host (a.k.a. jump box). If using public nodes, bastion is not needed. Left blank to not import keys."
 }
 
 # Network Details
@@ -106,12 +83,6 @@ variable "tenancy_ocid" {}
 variable "compartment_ocid" {}
 variable "region" {}
 variable "user_ocid" {
-  default = ""
-}
-variable "fingerprint" {
-  default = ""
-}
-variable "private_key_path" {
   default = ""
 }
 
