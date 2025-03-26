@@ -152,14 +152,6 @@ output "grafana_admin_password" {
   value = module.oke-quickstart.grafana_admin_password
 }
 
-# Mushop example
-#output "grafana_url" {
-#  value       = var.grafana_enabled ? format("${local.mushop_url_protocol}://%s/grafana", local.mushop_ingress_hostname) : null
-#  description = "Grafana Dashboards URL"
-#
-#  depends_on = [helm_release.ingress_nginx]
-#}
-
 output "corrino_prometheus_url" {
   value       = var.prometheus_enabled ? format("https://${local.public_endpoint.prometheus}") : null
   description = "Prometheus Service"

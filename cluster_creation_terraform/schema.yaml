@@ -1,0 +1,218 @@
+# Copyright (c) 2020-2024 Oracle and/or its affiliates. All rights reserved.
+# Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
+# 
+
+title: "OCI AI Blueprints Cluster Creation"
+description: "Creates a new OKE cluster that is required to deploy OCI AI Blueprints."
+informationalText: "This stack provisions a new OKE cluster that is required to deploy OCI AI Blueprints."
+schemaVersion: 1.1.0
+version: "20190304"
+
+source:
+  type: quickstart
+
+locale: "en"
+variableGroups:
+  - title: "Basic Hidden"
+    variables:
+    - compartment_ocid
+    - tenancy_ocid
+    - region
+    visible: false
+
+  - title: "Advanced Configuration?"
+    variables: 
+    - show_advanced
+    
+  - title: "OKE Cluster Configuration"
+    variables:
+    - k8s_version
+    - cluster_workers_visibility
+    - cluster_endpoint_visibility
+
+  - title: "OKE Worker Nodes"
+    variables:
+    - num_pool_workers
+    - node_pool_instance_shape
+    - node_pool_name
+
+variables:
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    title: "Compartment"
+    description: "The compartment in which to create compute instance(s)"
+    required: true
+
+  show_advanced:
+    type: boolean
+    title: "Show advanced options?"
+    description: "Shows advanced options, allowing enable customer-managed encryption keys, select your ssh key, select/unselect cluster utilities, do not create policies, and other advanced options"
+    visible: true
+
+  k8s_version:
+    type: enum
+    enum: # Necessary hardcoded supported versions, as ORM does not retrieve the versions from OKE.
+    - "Latest"
+    - "v1.31.1"
+    - "v1.30.1"
+    - "v1.29.10"
+    - "v1.29.1"
+    - "1.28.10"
+    - "v1.28.2"
+    title: "Kubernetes Version"
+    required: true
+    visible:
+      and:
+        - show_advanced
+
+  cluster_workers_visibility:
+    type: enum
+    enum:
+    - "Private"
+    - "Public"
+    title: "Choose Worker Nodes visibility type"
+    required: true
+    visible:
+      and:
+        - show_advanced
+
+  cluster_endpoint_visibility:
+    type: enum
+    enum:
+    # - "Private"
+    - "Public"
+    title: "Choose Kubernetes API Endpoint visibility type"
+    required: true
+    visible:
+      and:
+        - show_advanced
+
+  num_pool_workers:
+    type: integer
+    title: "Number of Worker Nodes"
+    minimum: 1
+    maximum: 1000
+    required: true
+    visible: true
+
+  node_pool_instance_shape:
+    type: oci:core:instanceshapewithflex:name
+    title: "Select a shape for the Worker Nodes instances"
+    required: true
+    dependsOn:
+      compartmentId: compartment_ocid
+    visible: true
+
+  node_pool_name:
+    type: string
+    title: "Node Pool Name"
+    required: true
+    visible:
+      and:
+        - show_advanced
+
+  cluster_options_add_ons_is_kubernetes_dashboard_enabled:
+    type: boolean
+    title: "Kubernetes Dashboard Enabled"
+    visible: false
+
+  network_cidrs:
+    visible: false
+
+  node_pool_boot_volume_size_in_gbs:
+    visible: false
+
+  user_ocid:
+    visible: false
+
+  oci_ai_blueprints_link_variable:
+    visible: false
+
+
+outputs:
+
+  oke_cluster_name:
+    type: string
+    title: "OKE Cluster Name"
+    visible: true
+
+  oke_cluster_id:
+    type: ocid
+    title: "OKE Cluster OCID"
+    visible: true
+
+  oci_ai_blueprints_link_for_section:
+    type: link
+    title: "Click"
+    visible: true
+    displayText: "Deploy OCI AI Blueprints onto this Cluster"
+
+  oci_ai_blueprints_link_for_button:
+    type: link
+    visible: true
+    displayText: "Next Step: Deploy OCI AI Blueprints"
+
+  vcn_name:
+    type: string
+    title: "VCN Name"
+    visible: true
+
+  vcn_id:
+    type: ocid
+    title: "VCN OCID"
+    visible: true
+
+  node_subnet_name:
+    type: string
+    title: "Node Subnet Name"
+    visible: true
+
+  lb_subnet_name:
+    type: string  
+    title: "Load Balancer Subnet Name"
+    visible: true
+
+  endpoint_subnet_name:
+    type: string
+    title: "K8s API Endpoint Subnet Name"
+    visible: true
+
+  node_subnet_id:
+    type: ocid
+    title: "Node Subnet OCID"
+    visible: true
+
+  lb_subnet_id: 
+    type: ocid
+    title: "Load Balancer Subnet OCID"
+    visible: true
+
+  endpoint_subnet_id:
+    type: ocid  
+    title: "K8s API Endpoint Subnet OCID"
+    visible: true
+outputGroups:
+  - title: "Next Step: Deploy OCI AI Blueprints"
+    outputs:
+      - oci_ai_blueprints_link_for_section
+
+  - title: OKE Cluster Details
+    outputs:
+      - oke_cluster_name
+      - oke_cluster_id
+
+  - title: VCN Details
+    outputs:
+      - vcn_name
+      - vcn_id
+      - node_subnet_name
+      - node_subnet_id
+      - lb_subnet_name
+      - lb_subnet_id
+      - endpoint_subnet_name
+      - endpoint_subnet_id
+
+
+
+primaryOutputButton: ${oci_ai_blueprints_link_for_button}
+
