@@ -75,7 +75,6 @@ Follow these steps to create, validate, and publish your custom blueprint. This 
 3. **Create the `custom-blueprint.json` File**
 
    - Construct a new JSON file that follows the [Blueprint JSON Schema](../custom_blueprints/blueprint_json_schema.json).
-   - Inside this file, include an array named `pre_filled_samples`. Each entry in that array must adhere to the [Pre-Filled Sample JSON Schema](./prefilled_sample_json_schema.json).
    - Provide **2–3 Pre-Filled Samples** to help users get started quickly.
 
 4. **Validate Your JSON Schemas**
@@ -121,10 +120,7 @@ You can find the blueprint schema here:
 
 ## Pre-Filled Sample JSON Schema
 
-All **pre-filled sample** objects within the `pre_filled_samples` array of your blueprint must conform to the **Pre-Filled Sample JSON Schema**. This schema dictates exactly which fields a valid pre-filled sample must include (e.g., `deployment_name`, `recipe_node_shape`, environment variables, etc.).
-
-You can find the pre-filled sample schema here:  
-[**Pre-Filled Sample JSON Schema**](./prefilled_sample_json_schema.json)
+All pre-filled sample objects will be objects inside the `pre_filled_samples` array in the [**Blueprint JSON Schema**](../custom_blueprints/blueprint_json_schema.json). This schema dictates exactly which fields a valid pre-filled sample must include (e.g., `deployment_name`, `recipe_node_shape`, environment variables, etc.).
 
 ---
 
