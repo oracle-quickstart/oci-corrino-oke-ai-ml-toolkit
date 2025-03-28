@@ -198,6 +198,7 @@ variableGroups:
     variables:
     - grafana_enabled
     - prometheus_enabled
+    - existing_prometheus_namespace
     - mlflow_enabled
     - nvidia_dcgm_enabled
     visible: true
@@ -206,11 +207,13 @@ variableGroups:
     variables:
     - metrics_server_enabled
     - keda_enabled
+    - existing_keda_namespace
     visible: true
 
   - title: "Multi-Node Inferencing"
     variables:
     - kuberay_enabled
+    - existing_kuberay_namespace
     visible: true
 
   - title: "Operational Insight Sharing"
@@ -479,8 +482,46 @@ variables:
           - eq:
             - ${policies_created}
             - NO
-    
-    
+
+  # --------------------
+  # Pre-existing cluster namespaces
+  # --------------------
+
+
+  existing_prometheus_namespace:
+    type: string
+    title: "Existing namespace of prometheus install if installing blueprints into pre-existing cluster"
+    required: true
+    default: ""
+    visible:
+      and:
+        - eq:
+          - ${prometheus_enabled}
+          - false
+  
+  existing_keda_namespace:
+    type: string
+    title: "Existing namespace of keda install if installing blueprints into pre-existing cluster"
+    required: true
+    default: ""
+    visible:
+      and:
+        - eq:
+          - ${keda_enabled}
+          - false
+
+  existing_kuberay_namespace:
+    type: string
+    title: "Existing namespace of kuberay install if installing blueprints into pre-existing cluster"
+    required: true
+    default: ""
+    visible:
+      and:
+        - eq:
+          - ${kuberay_enabled}
+          - false
+
+
   # --------------------
   # ADB
   # --------------------

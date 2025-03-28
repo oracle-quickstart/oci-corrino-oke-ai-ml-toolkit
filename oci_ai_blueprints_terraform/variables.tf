@@ -164,6 +164,24 @@ variable "kuberay_enabled" {
 }
 
 # -----------------------------------
+# Existing Helm Install Namespaces
+# -----------------------------------
+variable "existing_prometheus_namespace" {
+  type    = string
+  default = ""
+}
+
+variable "existing_keda_namespace" {
+  type    = string
+  default = ""
+}
+
+variable "existing_kuberay_namespace" {
+  type    = string
+  default = ""
+}
+
+# -----------------------------------
 # Autonomous Database
 # -----------------------------------
 

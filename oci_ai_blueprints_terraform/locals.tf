@@ -138,6 +138,12 @@ locals {
     grafana          = join(".", ["grafana", local.fqdn.name])
   }
 
+  third_party_namespaces = {
+    prometheus_namespace = var.prometheus_enabled ? kubernetes_namespace.cluster_tools.0.id : var.existing_prometheus_namespace
+    keda_namespace       = var.keda_enabled ? "keda" : var.existing_keda_namespace
+    kuberay_namespace    = var.kuberay_enabled ? "kuberay" : var.existing_kuberay_namespace
+  }
+
   env_universal = [
     {
       name  = "OCI_CLI_PROFILE"
@@ -336,6 +342,31 @@ locals {
       name            = "BLUEPRINT_DOCUMENTATION_URL"
       config_map_name = "corrino-configmap"
       config_map_key  = "BLUEPRINT_DOCUMENTATION_URL"
+    },
+    {
+      name            = "PROMETHEUS_NAMESPACE"
+      config_map_name = "corrino-configmap"
+      config_map_key  = "PROMETHEUS_NAMESPACE"
+    },
+    {
+      name            = "KEDA_NAMESPACE"
+      config_map_name = "corrino-configmap"
+      config_map_key  = "KEDA_NAMESPACE"
+    },
+    {
+      name            = "KUBERAY_NAMESPACE"
+      config_map_name = "corrino-configmap"
+      config_map_key  = "KUBERAY_NAMESPACE"
+    },
+    {
+      name            = "DATA_SHARING_ENABLED"
+      config_map_name = "corrino-configmap"
+      config_map_key  = "DATA_SHARING_ENABLED"
+    },
+    {
+      name            = "DATA_UPLOAD_PATH"
+      config_map_name = "corrino-configmap"
+      config_map_key  = "DATA_UPLOAD_PATH"
     }
   ]
 

@@ -35,5 +35,8 @@ resource "kubernetes_config_map" "corrino-configmap" {
     SHARED_NODE_POOL_BLUEPRINTS_OBJECT_STORAGE_URL = local.app.shared_node_pool_blueprints_object_storage_url
     SHARED_NODE_POOL_DOCUMENTATION_URL             = local.app.shared_node_pool_documentation_url
     BLUEPRINT_DOCUMENTATION_URL                    = local.app.blueprint_documentation_url
+    PROMETHEUS_NAMESPACE                           = local.third_party_namespaces.prometheus_namespace
+    KEDA_NAMESPACE                                 = local.third_party_namespaces.keda_namespace
+    KUBERAY_NAMESPACE                              = local.third_party_namespaces.kuberay_namespace
   }
 }
