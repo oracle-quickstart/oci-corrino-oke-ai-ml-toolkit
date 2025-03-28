@@ -8,6 +8,7 @@ This guide helps you install and use **OCI AI Blueprints** for the first time on
 4. Learn how to add existing nodes in the cluster to be used by blueprints.
 5. Deploy a sample recipe to that node.
 6. Test your deployment and undeploy
+7. Destroy the stack
 
 There is an additional section at the bottom for users who have the nvidia-gpu-operator installed, and would like to use Multi-Instance GPUs with H100 nodes visit [this section](./INSTALLING_ONTO_EXISTING_CLUSTER_README.md#multi-instance-gpu-setup).
 
@@ -175,6 +176,12 @@ curl -L -H "Content-Type: application/json" -d '{"model": "/models/NousResearch/
 6. Monitor the undeploy:
    - go to Api Root -> deployment_logs
    - Look for: Directive decommission -> Ingress deleted -> Deployment deleted -> Service deleted -> Directive / decommission / completed.
+
+## Step 7: Destroy the stack
+Destroying the OCI AI Blueprints stack will not destroy any resources which were created or destroyed outside of the stack such as node pools or helm installs. Only things created by the stack will be destroyed for the stack. To destroy the stack:
+
+1. Go to the console and navigate to Developer Services -> Resource Manager -> Stacks -> Your OCI AI Blueprints stack
+2. Click "Destroy" at the top
 
 ## Multi-Instance GPU Setup
 If you have the nvidia gpu operator already installed, and would like to reconfigure it because you plan on using Multi-Instance GPUs (MIG) with your H100 nodes, you will need to manually update / reconfigure your cluster with helm.
