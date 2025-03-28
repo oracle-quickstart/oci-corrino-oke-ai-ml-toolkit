@@ -9,6 +9,10 @@ This guide helps you install and use **OCI AI Blueprints** for the first time on
 5. Deploy a sample recipe to that node.
 6. Test your deployment and undeploy
 
+There is an additional section at the bottom for users who have the nvidia-gpu-operator installed, and would like to use Multi-Instance GPUs with H100 nodes visit [this section](./INSTALLING_ONTO_EXISTING_CLUSTER_README.md#multi-instance-gpu-setup).
+
+Additionally, visit [this section](./INSTALLING_ONTO_EXISTING_CLUSTER_README.md#need-help) if you need to contact the team about setup issues.
+
 ---
 
 ## Overview
@@ -171,6 +175,33 @@ curl -L -H "Content-Type: application/json" -d '{"model": "/models/NousResearch/
 6. Monitor the undeploy:
    - go to Api Root -> deployment_logs
    - Look for: Directive decommission -> Ingress deleted -> Deployment deleted -> Service deleted -> Directive / decommission / completed.
+
+## Multi-Instance GPU Setup
+If you have the nvidia gpu operator already installed, and would like to reconfigure it because you plan on using Multi-Instance GPUs (MIG) with your H100 nodes, you will need to manually update / reconfigure your cluster with helm.
+
+This can be done like below:
+```bash
+# Get the deployment name
+helm list -n gpu-operator
+
+NAME                   	NAMESPACE   	REVISION	UPDATED                             	STATUS  	CHART               	APP VERSION
+gpu-operator-1742982512	gpu-operator	1       	2025-03-26 05:48:41.913183 -0400 EDT	deployed	gpu-operator-v24.9.2	v24.9.2    
+
+# Upgrade the deployment
+helm upgrade gpu-operator-1742982512 nvidia/gpu-operator \
+   --namespace gpu-operator \
+   --set mig.strategy="mixed" \
+   --set migManager.enabled=true
+
+Release "gpu-operator-1742982512" has been upgraded. Happy Helming!
+NAME: gpu-operator-1742982512
+LAST DEPLOYED: Wed Mar 26 05:59:23 2025
+NAMESPACE: gpu-operator
+STATUS: deployed
+REVISION: 2
+TEST SUITE: None
+```
+
 
 ## Need Help?
 - Check out [Known Issues & Solutions](docs/known_issues/README.md) for troubleshooting common problems.
