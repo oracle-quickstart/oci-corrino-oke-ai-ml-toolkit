@@ -16,6 +16,7 @@ Looking to install and use OCI AI Blueprints right away? **[Click here](./GETTIN
 
 We recommend following the Getting Started guide if this is your first time.
 
+If you are looking to install OCI AI Blueprints onto an existing OKE cluster which already has running workloads and node pools, visit [this doc](./INSTALLING_ONTO_EXISTING_CLUSTER_README.md).
 ---
 
 ## Introduction

@@ -1,0 +1,9 @@
+{
+    "recipe_mode": "update",
+    "deployment_name": "startupaddnode",
+    "recipe_node_name": "10.0.10.164",
+    "recipe_node_labels": {
+        "corrino": "a10pool",
+        "corrino/pool-shared-any": "true"
+    }
+}
