@@ -38,5 +38,6 @@ resource "kubernetes_config_map" "corrino-configmap" {
     PROMETHEUS_NAMESPACE                           = local.third_party_namespaces.prometheus_namespace
     KEDA_NAMESPACE                                 = local.third_party_namespaces.keda_namespace
     KUBERAY_NAMESPACE                              = local.third_party_namespaces.kuberay_namespace
+    NVIDIA_GPU_OPERATOR_NAMESPACE                  = local.third_party_namespaces.nvidia_gpu_operator_namespace
   }
 }

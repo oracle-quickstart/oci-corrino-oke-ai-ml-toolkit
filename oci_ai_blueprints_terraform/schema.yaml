@@ -201,6 +201,7 @@ variableGroups:
     - existing_prometheus_namespace
     - mlflow_enabled
     - nvidia_dcgm_enabled
+    - existing_nvidia_gpu_operator_namespace
     visible: true
 
   - title: "Autoscaling"
@@ -490,7 +491,7 @@ variables:
 
   existing_prometheus_namespace:
     type: string
-    title: "Existing namespace of prometheus install if installing blueprints into pre-existing cluster"
+    title: "Only use if bringing your own cluster which has prometheus installed. Namespace of prometheus in that cluster."
     required: true
     default: ""
     visible:
@@ -501,7 +502,7 @@ variables:
   
   existing_keda_namespace:
     type: string
-    title: "Existing namespace of keda install if installing blueprints into pre-existing cluster"
+    title: "Only use if bringing your own cluster which has keda installed. Namespace of keda in that cluster."
     required: true
     default: ""
     visible:
@@ -512,7 +513,7 @@ variables:
 
   existing_kuberay_namespace:
     type: string
-    title: "Existing namespace of kuberay install if installing blueprints into pre-existing cluster"
+    title: "Only use if bringing your own cluster which has kuberay installed. Namespace of kuberay in that cluster."
     required: true
     default: ""
     visible:
@@ -521,6 +522,16 @@ variables:
           - ${kuberay_enabled}
           - false
 
+  existing_nvidia_gpu_operator_namespace:
+    type: string
+    title: "Only use if bringing your own cluster which has nvidia gpu operator installed. Namespace of nvidia gpu operator in that cluster."
+    required: true
+    default: ""
+    visible:
+      and:
+        - eq:
+          - ${nvidia_dcgm_enabled}
+          - false
 
   # --------------------
   # ADB

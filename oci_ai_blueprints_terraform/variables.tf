@@ -181,6 +181,11 @@ variable "existing_kuberay_namespace" {
   default = ""
 }
 
+variable "existing_nvidia_gpu_operator_namespace" {
+  type    = string
+  default = ""
+}
+
 # -----------------------------------
 # Autonomous Database
 # -----------------------------------
