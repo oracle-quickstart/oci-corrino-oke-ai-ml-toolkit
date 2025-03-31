@@ -336,6 +336,21 @@ locals {
       name            = "BLUEPRINT_DOCUMENTATION_URL"
       config_map_name = "corrino-configmap"
       config_map_key  = "BLUEPRINT_DOCUMENTATION_URL"
+    },
+    {
+      name            = "DATA_SHARING_ENABLED"
+      config_map_name = "corrino-configmap"
+      config_map_key  = "DATA_SHARING_ENABLED"
+    },
+    {
+      name            = "DATA_UPLOAD_PATH"
+      config_map_name = "corrino-configmap"
+      config_map_key  = "DATA_UPLOAD_PATH"
+    },
+    {
+      name            = "DEPLOYMENT_UUID"
+      config_map_name = "corrino-configmap"
+      config_map_key  = "DEPLOYMENT_UUID"
     }
   ]
 
