@@ -139,7 +139,7 @@ locals {
   }
 
   third_party_namespaces = {
-    prometheus_namespace          = var.prometheus_enabled ? kubernetes_namespace.cluster_tools.0.id : var.existing_prometheus_namespace
+    prometheus_namespace          = var.prometheus_enabled ? data.kubernetes_namespace.cluster_tools_namespace.0.id : var.existing_prometheus_namespace
     keda_namespace                = var.keda_enabled ? "keda" : var.existing_keda_namespace
     kuberay_namespace             = var.kuberay_enabled ? "kuberay" : var.existing_kuberay_namespace
     nvidia_gpu_operator_namespace = var.nvidia_dcgm_enabled ? "gpu-operator" : var.existing_nvidia_gpu_operator_namespace
