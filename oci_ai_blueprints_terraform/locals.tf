@@ -76,8 +76,8 @@ locals {
 
   oci = {
     tenancy_id        = var.tenancy_ocid
-    tenancy_namespace = (data.oci_objectstorage_namespace.ns.namespace == null) ? var.os_namespace_name : data.oci_objectstorage_namespace.ns.namespace
-    namespace_name    = (data.oci_objectstorage_namespace.ns.namespace == null) ? var.os_namespace_name : data.oci_objectstorage_namespace.ns.namespace
+    tenancy_namespace = data.oci_objectstorage_namespace.ns.namespace
+    namespace_name    = data.oci_objectstorage_namespace.ns.namespace
     compartment_id    = var.compartment_ocid
     oke_cluster_id    = local.oke.cluster_ocid
     region_name       = var.region

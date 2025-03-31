@@ -58,15 +58,6 @@ variableGroups:
   - title: "Prerequisites"
     variables:
     - is_oke_cluster_setup
-    - oke_cluster_active_state
-    - oke_node_pool_active_state
-    - policies_created
-    - is_admin_user
-
-  - title: "Tenancy Level Details"
-    variables:
-    - home_region
-    - os_namespace_name
 
   # - title: "Corrino Workspace"
   #   variables:
@@ -291,44 +282,8 @@ variables:
     enum:
       - YES 
       - NO
-    title: Have you created your OKE Cluster to deploy OCI AI Blueprints onto?
+    title: Is your OKE Cluster created?
     description: "An OKE Cluster must be created before moving past this step."
-    required: true
-
-  oke_cluster_active_state:
-    type: enum
-    enum:
-      - YES 
-      - NO
-    title: Is your OKE Cluster (to deploy OCI AI Blueprints onto) in Active state?
-    description: "The OKE Cluster must be in Active state before deploying OCI AI Blueprints."
-    required: true
-
-  oke_node_pool_active_state:
-    type: enum
-    enum:
-      - YES 
-      - NO
-    title: Is the node pool in your OKE Cluster (to deploy OCI AI Blueprints onto) in a Active state?
-    description: "The OKE Cluster must be in a Active state before deploying OCI AI Blueprints."
-    required: true
-
-  policies_created:
-    type: enum
-    enum:
-      - YES 
-      - NO
-    title: Have you enabled the required policies in the root tenancy for OCI AI Blueprints?
-    description: "Visit https://github.com/oracle-quickstart/oci-ai-blueprints/tree/main/docs/iam_policies for more information on required IAM policies"
-    required: true
-
-  is_admin_user:
-    type: enum
-    enum:
-      - YES 
-      - NO
-    title: Are you an administrator for this tenancy?
-    description: "If your user is in the Administrators group, you are considered an admin for this tenancy."
     required: true
 
   compartment_ocid:
@@ -467,18 +422,10 @@ variables:
 
   policy_creation_enabled:
     type: boolean
-    title: "Create OCI policy and dynamic group for control plane?"
+    title: "Create neccessary OCI policies and dynamic group?"
     required: true
     default: false
-    visible:
-      and:
-        - eq:
-          - ${is_admin_user}
-          - YES
-        - and:
-          - eq:
-            - ${policies_created}
-            - NO
+    visible: true
     
     
   # --------------------
@@ -506,18 +453,6 @@ variables:
 
   fingerprint:
     visible: false
-
-  home_region:
-    type: oci:identity:region:name
-    title: "Home Region"
-    description: "The home region of the tenancy"
-    required: true
-
-  os_namespace_name:
-    type: string
-    title: "Object Storage Namespace for Tenancy"
-    visible: true
-    description: "You can leave blank if your user has full admin access to tenancy"
 
   user_ocid:
     visible: false
