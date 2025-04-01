@@ -109,5 +109,5 @@ data "oci_identity_regions" "home_region" {
 }
 
 locals {
-  home_region = lookup(data.oci_identity_regions.home_region.0.regions.0, "name")
+  home_region = lookup(data.oci_identity_regions.home_region.regions[0], "name")
 }
