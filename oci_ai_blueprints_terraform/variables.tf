@@ -34,13 +34,6 @@ variable "fingerprint" {
 variable "private_key_path" {
   default = ""
 }
-variable "home_region" {
-  default = ""
-}
-
-variable "os_namespace_name" {
-  default = ""
-}
 
 # -----------------------------------
 # Corrino App
