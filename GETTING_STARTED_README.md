@@ -21,7 +21,7 @@ This guide helps you install and use **OCI AI Blueprints** for the first time. Y
 
 Instead of creating an OKE cluster manually, you can deploy a **VCN + OKE cluster** in one click. Use the button below to open Oracle Cloud’s Resource Manager:
 
-[![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?region=home&zipUrl=https://github.com/oracle-quickstart/oci-ai-blueprints/releases/download/cluster_creation_release-2025-03-26/cluster_creation_release-2025-03-26.zip)
+[![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?region=home&zipUrl=https://github.com/oracle-quickstart/oci-ai-blueprints/releases/download/release-2025-04-01/cluster_release-2025-04-01.zip)
 
 1. Click **Deploy to Oracle Cloud** above.
 2. In **Create Stack**:
@@ -39,7 +39,7 @@ Now that your cluster is ready, follow these steps to install OCI AI Blueprints 
 
 1. Click the **Deploy to Oracle Cloud** button below to open another Resource Manager stack—this one for OCI AI Blueprints:
 
-   [![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?region=home&zipUrl=https://github.com/oracle-quickstart/oci-ai-blueprints/releases/download/oci_ai_blueprints_app_release-2025-04-01/oci_ai_blueprints_app_release-2025-04-01.zip)
+   [![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?region=home&zipUrl=https://github.com/oracle-quickstart/oci-ai-blueprints/releases/download/release-2025-04-01/app_release-2025-04-01.zip)
 
 2. In the **Create Stack** wizard:
    - Provide a **name** (e.g., _oci-ai-blueprints-stack_).
