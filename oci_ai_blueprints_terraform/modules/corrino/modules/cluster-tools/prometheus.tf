@@ -8,6 +8,11 @@ variable "prometheus_enabled" {
   description = "Enable Prometheus"
 }
 
+variable "existent_prometheus_namespace" {
+  default     = ""
+  description = "Existing prometheus namespace if bringing your own cluster."
+}
+
 # Prometheus Helm chart
 ## https://github.com/prometheus-community/helm-charts/blob/main/charts/prometheus/README.md
 ## https://artifacthub.io/packages/helm/prometheus-community/prometheus

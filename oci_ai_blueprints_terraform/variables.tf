@@ -116,6 +116,85 @@ variable "fqdn_custom_domain" {
 }
 
 # -----------------------------------
+# Bring your own cluster
+# -----------------------------------
+
+variable "bring_your_own_cluster" {
+  type    = bool
+  default = false
+}
+
+variable "bring_your_own_grafana" {
+  type    = bool
+  default = false
+}
+
+variable "existent_grafana_namespace" {
+  type    = string
+  default = ""
+}
+
+variable "bring_your_own_prometheus" {
+  type    = bool
+  default = false
+}
+
+variable "existent_prometheus_namespace" {
+  type    = string
+  default = ""
+}
+
+variable "bring_your_own_mlflow" {
+  type    = bool
+  default = false
+}
+
+variable "existent_mlflow_namespace" {
+  type    = string
+  default = ""
+}
+
+variable "bring_your_own_nvidia_gpu_operator" {
+  type    = bool
+  default = false
+}
+
+variable "existent_nvidia_gpu_operator_namespace" {
+  type    = string
+  default = ""
+}
+
+variable "bring_your_own_metrics_server" {
+  type    = bool
+  default = false
+}
+
+variable "existent_metrics_server_namespace" {
+  type    = string
+  default = ""
+}
+
+variable "bring_your_own_keda" {
+  type    = bool
+  default = false
+}
+
+variable "existent_keda_namespace" {
+  type    = string
+  default = ""
+}
+
+variable "bring_your_own_kuberay" {
+  type    = bool
+  default = false
+}
+
+variable "existent_kuberay_namespace" {
+  type    = string
+  default = ""
+}
+
+# -----------------------------------
 # Helm
 # -----------------------------------
 

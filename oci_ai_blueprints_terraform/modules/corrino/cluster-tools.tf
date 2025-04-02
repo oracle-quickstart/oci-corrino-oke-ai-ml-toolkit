@@ -41,7 +41,8 @@ module "cluster-tools" {
   metrics_server_enabled = var.metrics_server_enabled
 
   ## Prometheus
-  prometheus_enabled = var.prometheus_enabled
+  prometheus_enabled            = var.prometheus_enabled
+  existent_prometheus_namespace = var.existent_prometheus_namespace
 
   ## Grafana
   grafana_enabled = var.grafana_enabled
@@ -109,6 +110,11 @@ variable "metrics_server_enabled" {
 variable "prometheus_enabled" {
   default     = false
   description = "Enable Prometheus"
+}
+
+variable "existent_prometheus_namespace" {
+  default     = ""
+  description = "Existing prometheus namespace if bringing your own cluster"
 }
 
 ## Grafana

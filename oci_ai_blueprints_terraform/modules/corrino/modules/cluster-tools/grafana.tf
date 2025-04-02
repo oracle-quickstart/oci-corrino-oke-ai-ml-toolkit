@@ -124,7 +124,7 @@ datasources:
     datasources:
     - name: Prometheus
       type: prometheus
-      url: http://prometheus-server.${kubernetes_namespace.cluster_tools.0.id}.svc.cluster.local
+      url: http://prometheus-server.${coalesce(var.existent_prometheus_namespace, kubernetes_namespace.cluster_tools.0.id)}.svc.cluster.local
       access: proxy
       isDefault: true
       disableDeletion: true
