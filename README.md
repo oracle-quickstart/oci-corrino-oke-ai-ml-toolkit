@@ -28,6 +28,11 @@ OCI AI Blueprints is a streamlined, no-code solution for deploying and managing 
 - [Repository Contents](./docs/about/README.md#repository-contents)
 - [Known Issues](docs/known_issues/README.md)
 
+## Getting Started
+Install OCI AI Blueprints by clicking on the button below:
+
+[![Install OCI AI Blueprints](https://raw.githubusercontent.com/oracle-quickstart/oci-ai-blueprints/9d1d61b3b79e61dabe19d1672c3e54704b294a93/docs/install.svg)](./GETTING_STARTED_README.md)
+
 ## Blueprints
 
 Blueprints go beyond basic Terraform templates. Each blueprint:
