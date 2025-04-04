@@ -64,7 +64,10 @@ Now that your cluster is ready, follow these steps to install OCI AI Blueprints 
 4. **Monitor Deployment**: The portal will show the status of your deployment. Once it transitions to a **Running** or **Monitoring** state, you can test the endpoint as described in the portal UI.
 
 ---
+## Step 5: Access the AI Blueprints API
+1. Follow the instruction to access the AI Blueprints API via web and/or CURL/Postman: [Ways to Access OCI AI Blueprints](./docs/api_documentation/accessing_oci_ai_blueprints/README.md#ways-to-access-oci-ai-blueprints)
 
+---
 ## Cleanup
 
 When you are finished, you can remove the resources you created in **two steps**, in this order:
