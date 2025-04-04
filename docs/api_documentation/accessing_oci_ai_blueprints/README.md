@@ -68,3 +68,6 @@ curl --location --request GET '<your_api_url_here>/oci_shapes/' \
 2. Select Auth Type = OAuth 2.0
 3. Paste your token value
 4. Leave Header Prefix as "Token"
+
+## **API Reference Documentation**
+[API Reference Documentation](./docs/api_documentation)
