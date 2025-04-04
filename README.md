@@ -39,11 +39,11 @@ After you install OCI AI Blueprints to an OKE cluster in your tenancy, you can d
 
 | Blueprint                    | Description                                                                                                                             |
 | ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------|
-| **LLM Inference with vLLM**  | Deploy Llama 2/3/3.1 7B/8B models using NVIDIA GPU shapes and the vLLM inference engine with auto-scaling.                              |
-| **Fine-Tuning Benchmarking** | Run MLCommons quantized Llama-2 70B LoRA finetuning on A100 for performance benchmarking.                                               |
-| **LoRA Fine-Tuning**         | LoRA fine-tuning of custom or HuggingFace models using any dataset. Includes flexible hyperparameter tuning.                            |
-| **Health Check**             | Comprehensive evaluation of GPU performance to ensure optimal hardware readiness before initiating any intensive computational workload.|
-| **CPU Inference**            | Leverage Ollama to test CPU-based inference with models like Mistral, Gemma, and more.                                                  |
+| [**LLM Inference with vLLM**](./docs/sample_blueprints/vllm-inference)  | Deploy Llama 2/3/3.1 7B/8B models using NVIDIA GPU shapes and the vLLM inference engine with auto-scaling.                              |
+| [**Fine-Tuning Benchmarking**](./docs/sample_blueprints/lora-benchmarking) | Run MLCommons quantized Llama-2 70B LoRA finetuning on A100 for performance benchmarking.                                               |
+| [**LoRA Fine-Tuning**](./docs/sample_blueprints/lora-fine-tuning)         | LoRA fine-tuning of custom or HuggingFace models using any dataset. Includes flexible hyperparameter tuning.                            |
+| [**Health Check**](./docs/sample_blueprints/gpu-health-check)             | Comprehensive evaluation of GPU performance to ensure optimal hardware readiness before initiating any intensive computational workload.|
+| [**CPU Inference**](./docs/sample_blueprints/cpu-inference)            | Leverage Ollama to test CPU-based inference with models like Mistral, Gemma, and more.                                                  |
 
 ## Support & Contact
 
