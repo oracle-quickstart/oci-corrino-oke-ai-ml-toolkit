@@ -6,7 +6,7 @@
   "recipe_node_shape": "VM.GPU.A10.2",
   "input_object_storage": [
     {
-      "par": "https://objectstorage.us-ashburn-1.oraclecloud.com/p/AfJ9ZfmsA0orGnz2rzEkSqXjXdkfJ7ep7GH2RwPAcUJ7_vSKq-5fZtF7SONWXzJT/n/iduyx1qnmway/b/metallama321binstruct/o/",
+      "par": "https://objectstorage.us-ashburn-1.oraclecloud.com/p/qFv5XzocpOoEXjlxL7Q3ZrrCFkx9GkA1fpg97zmnaNEX9WB_WMXLz2rykGuU1hqQ/n/iduyx1qnmway/b/metallama321binstruct/o/",
       "mount_location": "/models",
       "volume_size_in_gbs": 100
     }

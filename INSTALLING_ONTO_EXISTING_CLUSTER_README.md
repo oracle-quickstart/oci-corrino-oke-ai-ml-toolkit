@@ -49,18 +49,21 @@ Some or all of these policies may be in place as required by OKE. Please review 
 5. Fill out additional fields for username and password, as well as Home Region.
 6. Under "OKE Cluster & VCN", select the cluster name and vcn name you found in step 2.
 7. Populate the subnets with the appropriate values. As a note, there is a "hint" under each field which corresponds to possible naming conventions. If your subnets are named differently, navigate back to the console page with the cluster and find them there.
-8. **Important**: uncheck any boxes for "add-ons" which you already have installed. The stack will fail if a box is left checked and you already have the tool installed in any namespace.
-   - if you leave a box checked and the stack fails:
-     - click on stack details at the top
-     - click on variables
-     - Click "Edit variables" box
-     - Click "Next"
-     - Fill the drop downs back in at the top (the rest will persist)
-     - Uncheck the box of the previously installed application.
-     - Click "Next"
-     - Check the "Run apply" box"
-     - Click "Save changes"
-   - **Currently autoscaling requires prometheus to be installed in the `cluster-tools` namespace** and keda in the `default` namespace. This will change in an upcoming release.
+8. **Important ADVANCED**: When installing onto your own cluster, it is likely that you have some tools already installed, such as prometheus, grafana, or the gpu-operator. If this is the case, **click the box** under the section **"ADVANCED: Bringing your own cluster?"**. This will prompt several drop-downs to appear containing all the tools we `helm install`.
+   - **Critical**: If you have that tool installed, you must click the box which says, "Bring your own X" where "X" is the tool name.
+   - This will prompt you for the `kubernetes namespace` in which the tool was installed. This is because internal tooling uses some of these namespaces.
+   - If this tool was installed with helm, you can do:
+   ```bash
+   helm list --all-namespaces
+   ```
+   - To get a specific tool's namespace, like prometheus:
+   ```bash
+   helm list --all-namespaces | grep prometheus
+   # outputs
+   prometheus    monitoring    1 ...
+   ```
+9. After you've added all the relevant tooling namespaces, apply the stack by hitting "Next", then click the "run apply" box.
+
 
 ## Step 4: Add Existing Nodes to Cluster (optional)
 If you have existing node pools in your original OKE cluster that you'd like Blueprints to be able to use, follow these steps after the stack is finished:

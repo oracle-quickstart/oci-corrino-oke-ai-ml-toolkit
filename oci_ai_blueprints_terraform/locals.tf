@@ -138,6 +138,10 @@ locals {
     grafana          = join(".", ["grafana", local.fqdn.name])
   }
 
+  third_party_namespaces = {
+    prometheus_namespace = var.bring_your_own_prometheus ? var.existent_prometheus_namespace : data.kubernetes_namespace.cluster_tools_namespace.0.id 
+  }
+
   env_universal = [
     {
       name  = "OCI_CLI_PROFILE"
@@ -351,6 +355,11 @@ locals {
       name            = "DEPLOYMENT_UUID"
       config_map_name = "corrino-configmap"
       config_map_key  = "DEPLOYMENT_UUID"
+    },
+    {
+      name            = "PROMETHEUS_NAMESPACE"
+      config_map_name = "corrino-configmap"
+      config_map_key  = "PROMETHEUS_NAMESPACE"
     }
   ]
 

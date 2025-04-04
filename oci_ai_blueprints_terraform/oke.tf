@@ -35,11 +35,13 @@ module "oke-quickstart" {
   # VCN for OKE arguments
   vcn_cidr_blocks = "10.22.0.0/16"
 
-  metrics_server_enabled = var.metrics_server_enabled
   ingress_nginx_enabled  = var.ingress_nginx_enabled
   cert_manager_enabled   = var.cert_manager_enabled
-  prometheus_enabled     = var.prometheus_enabled
-  grafana_enabled        = var.grafana_enabled
+  # Inverse - we only want to install if the user is NOT brining their own.
+  metrics_server_enabled        = !var.bring_your_own_metrics_server
+  prometheus_enabled            = !var.bring_your_own_prometheus
+  grafana_enabled               = !var.bring_your_own_grafana
+  existent_prometheus_namespace = var.existent_prometheus_namespace
 
   create_new_oke_cluster  = false
   existent_oke_cluster_id = var.existent_oke_cluster_id

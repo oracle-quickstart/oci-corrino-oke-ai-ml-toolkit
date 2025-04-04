@@ -45,3 +45,10 @@ data "kubernetes_secret" "grafana_password" {
   count = var.grafana_enabled ? 1 : 0
 }
 
+data "kubernetes_namespace" "cluster_tools_namespace" {
+   metadata {
+     name      = "cluster-tools"
+   }
+   depends_on = [module.oke-quickstart.cluster_tools_namespace]
+   count = var.bring_your_own_prometheus ? 0 : 1
+ }

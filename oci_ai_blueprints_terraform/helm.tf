@@ -14,7 +14,7 @@ resource "helm_release" "mlflow" {
   namespace  = "default"
   wait       = false
 
-  count = var.mlflow_enabled ? 1 : 0
+  count = var.bring_your_own_mlflow ? 0 : 1
 }
 
 #    REPO_NAME="nvidia"
@@ -33,10 +33,10 @@ resource "helm_release" "nvidia-dcgm" {
   wait             = false
 
   # Create the release if either DCGM or MIG is enabled.
-  count = var.nvidia_dcgm_enabled ? 1 : 0
+  count = var.bring_your_own_nvidia_gpu_operator ? 0 : 1
 
   dynamic "set" {
-    for_each = var.nvidia_dcgm_enabled ? [1] : []
+    for_each = var.bring_your_own_nvidia_gpu_operator ? [] : [1]
     content {
       name  = "mig.strategy"
       value = "mixed"
@@ -52,7 +52,7 @@ resource "helm_release" "keda" {
   create_namespace = true
   wait             = false
 
-  count = var.keda_enabled ? 1 : 0
+  count = var.bring_your_own_keda ? 0 : 1
 }
 
 resource "helm_release" "kuberay" {
@@ -63,5 +63,5 @@ resource "helm_release" "kuberay" {
   create_namespace = true
   wait             = false
 
-  count = var.kuberay_enabled ? 1 : 0
+  count = var.bring_your_own_kuberay ? 0 : 1
 }
