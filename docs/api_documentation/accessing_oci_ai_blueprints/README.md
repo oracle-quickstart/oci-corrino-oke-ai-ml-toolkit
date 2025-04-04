@@ -70,4 +70,4 @@ curl --location --request GET '<your_api_url_here>/oci_shapes/' \
 4. Leave Header Prefix as "Token"
 
 ## **API Reference Documentation**
-[API Reference Documentation](./docs/api_documentation)
+[API Reference Documentation](../../docs/api_documentation)
