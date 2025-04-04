@@ -1,6 +1,6 @@
 # Ways to Access OCI AI Blueprints
 
-Once OCI AI Blueprints has been deployed into your tenancy via Resource Manager, you can work with OCI AI Blueprints three ways:
+Once you've installed OCI AI Blueprints into your tenancy (see [here](./GETTING_STARTED_README.md) for the steps to install OCI AI Blueprints), you can work with OCI AI Blueprints three ways:
 
 ## **Option #1: OCI AI Blueprints UI Portal:**
 
