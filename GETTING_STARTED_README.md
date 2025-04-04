@@ -6,7 +6,8 @@ This guide helps you install and use **OCI AI Blueprints** for the first time. Y
 2. Deploy a dedicated **VCN and OKE cluster** stack.
 3. Deploy the **OCI AI Blueprints** application onto the new cluster.
 4. Access the OCI AI Blueprints portal to deploy a sample blueprint.
-5. Clean up resources when you’re done.
+5. Access the OCI AI Blueprints API to deploy a sample blueprint.
+6. Clean up resources when you’re done.
 
 ---
 
