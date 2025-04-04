@@ -7,7 +7,7 @@ OCI AI Blueprints is a streamlined, no-code solution for deploying and managing 
 
 ## Table of Contents
 **Getting Started**
-- [Install AI Blueprints]((./GETTING_STARTED_README.md))
+- [Install AI Blueprints](./GETTING_STARTED_README.md)
 - [Access AI Blueprints Portal and API](./docs/api_documentation/accessing_oci_ai_blueprints/README.md)
 
 **About OCI AI Blueprints**
