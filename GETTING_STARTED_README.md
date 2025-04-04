@@ -1,8 +1,6 @@
 # Getting Started with OCI AI Blueprints
 
-**❗❗IMPORTANT: The instructions below are for creating a new OKE cluster and installing OCI AI Blueprints to it. If you'd like to install OCI AI Blueprints to an existing OKE cluster, follow the steps here:**
-
-[Install OCI AI Blueprints to an Existing OKE Cluster](./INSTALLING_ONTO_EXISTING_CLUSTER_README.md)
+**❗❗IMPORTANT: The instructions below are for creating a new OKE cluster and installing OCI AI Blueprints to it. If you'd like to install OCI AI Blueprints to an existing OKE cluster, follow the steps here: [Install OCI AI Blueprints to an Existing OKE Cluster](./INSTALLING_ONTO_EXISTING_CLUSTER_README.md)**
 
 This guide helps you install and use **OCI AI Blueprints** for the first time. You will:
 
