@@ -13,6 +13,7 @@ This blueprint explains how to use CPU inference for running large language mode
 |CPU inference with Gemma and BM.Standard.E5.192   |Deploys CPU inference with Gemma and BM.Standard.E5.192 on BM.Standard.E5.192 with undefined GPU(s).    |
 |CPU inference with mistral and VM.Standard.E4.Flex|Deploys CPU inference with mistral and VM.Standard.E4.Flex on VM.Standard.E4.Flex with undefined GPU(s).|
 
+You can access these pre-filled samples from the portal.
 
 ---
 
