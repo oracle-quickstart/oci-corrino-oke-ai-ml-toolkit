@@ -1,12 +1,15 @@
 # Getting Started with OCI AI Blueprints
 
+**❗❗IMPORTANT: The instructions below are for creating a new OKE cluster and installing OCI AI Blueprints to it. If you'd like to install OCI AI Blueprints to an existing OKE cluster, follow the steps here: [Install OCI AI Blueprints to an Existing OKE Cluster](./INSTALLING_ONTO_EXISTING_CLUSTER_README.md)**
+
 This guide helps you install and use **OCI AI Blueprints** for the first time. You will:
 
 1. Ensure you have the correct IAM policies in place.
 2. Deploy a dedicated **VCN and OKE cluster** stack.
 3. Deploy the **OCI AI Blueprints** application onto the new cluster.
 4. Access the OCI AI Blueprints portal to deploy a sample blueprint.
-5. Clean up resources when you’re done.
+5. Access the OCI AI Blueprints API to deploy a sample blueprint.
+6. Clean up resources when you’re done.
 
 ---
 
@@ -64,7 +67,10 @@ Now that your cluster is ready, follow these steps to install OCI AI Blueprints 
 4. **Monitor Deployment**: The portal will show the status of your deployment. Once it transitions to a **Running** or **Monitoring** state, you can test the endpoint as described in the portal UI.
 
 ---
+## Step 5: Access the AI Blueprints API
+1. Follow the instruction to access the AI Blueprints API via web and/or CURL/Postman: [Ways to Access OCI AI Blueprints](./docs/api_documentation/accessing_oci_ai_blueprints/README.md#ways-to-access-oci-ai-blueprints)
 
+---
 ## Cleanup
 
 When you are finished, you can remove the resources you created in **two steps**, in this order:

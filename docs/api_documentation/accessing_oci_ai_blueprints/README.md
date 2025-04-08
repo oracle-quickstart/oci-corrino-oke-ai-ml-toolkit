@@ -1,6 +1,6 @@
 # Ways to Access OCI AI Blueprints
 
-Once OCI AI Blueprints has been deployed into your tenancy via Resource Manager, you can work with OCI AI Blueprints three ways:
+Once you've installed OCI AI Blueprints into your tenancy (see [here](./GETTING_STARTED_README.md) for the steps to install OCI AI Blueprints), you can work with OCI AI Blueprints three ways:
 
 ## **Option #1: OCI AI Blueprints UI Portal:**
 
@@ -68,3 +68,6 @@ curl --location --request GET '<your_api_url_here>/oci_shapes/' \
 2. Select Auth Type = OAuth 2.0
 3. Paste your token value
 4. Leave Header Prefix as "Token"
+
+## **API Reference Documentation**
+[API Reference Documentation](../../../docs/api_documentation)
