@@ -14,7 +14,7 @@ OCI AI Blueprints is a streamlined, no-code solution for deploying and managing 
 - [What is OCI AI Blueprints?](./docs/about/README.md#what-is-oci-ai-blueprints)
 - [Why use OCI AI Blueprints?](./docs/about/README.md#why-use-oci-ai-blueprints)
 - [Features](./docs/about/README.md#features)
-- [List of Blueprints](?tab=readme-ov-file#blueprints)
+- [List of Blueprints](#blueprints)
 - [FAQ](./docs/about/README.md#frequently-asked-questions-faq)
 - [Support & Contact](https://github.com/oracle-quickstart/oci-ai-blueprints/blob/vkammari/doc_improvements/docs/about/README.md#frequently-asked-questions-faq)
 
