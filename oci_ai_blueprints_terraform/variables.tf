@@ -184,7 +184,7 @@ variable "existent_keda_namespace" {
   default = ""
 }
 
-variable "bring_your_own_kuberay" {
+variable "bring_your_own_lws" {
   type    = bool
   default = false
 }
@@ -219,18 +219,6 @@ variable "grafana_enabled" {
   default = true
 }
 variable "mlflow_enabled" {
-  type    = bool
-  default = true
-}
-variable "nvidia_dcgm_enabled" {
-  type    = bool
-  default = true
-}
-variable "keda_enabled" {
-  type    = bool
-  default = true
-}
-variable "kuberay_enabled" {
   type    = bool
   default = true
 }

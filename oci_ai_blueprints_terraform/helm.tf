@@ -55,13 +55,14 @@ resource "helm_release" "keda" {
   count = var.bring_your_own_keda ? 0 : 1
 }
 
-resource "helm_release" "kuberay" {
-  name             = "kuberay"
-  repository       = "https://ray-project.github.io/kuberay-helm/"
-  chart            = "kuberay-operator"
-  namespace        = "kuberay"
+resource "helm_release" "lws" {
+  name             = "lws"
+  chart            = "${path.module}/lws" # Use the local path to the chart folder
+  namespace        = "lws-system"
   create_namespace = true
   wait             = false
+  version          = "0.1.0" // Optional: specify the version if needed
 
-  count = var.bring_your_own_kuberay ? 0 : 1
+  count = var.bring_your_own_lws ? 0 : 1
 }
+

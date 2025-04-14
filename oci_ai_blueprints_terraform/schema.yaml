@@ -225,8 +225,8 @@ variableGroups:
 
   - title: "Multi-Node Inferencing"
     variables:
-    - bring_your_own_kuberay
-    - existent_kuberay_namespace
+    - bring_your_own_lws
+    - existent_lws_namespace
     visible:
       and:
         - eq:
@@ -984,12 +984,6 @@ variables:
       and:
         - bring_your_own_mlflow
 
-  nvidia_dcgm_enabled:
-    type: boolean
-    title: "Install NVIDIA DCGM Metrics Exporter?"
-    description: "DCGM-Exporter is an exporter for Prometheus to monitor the health and get metrics from GPUs. It leverages DCGM using Go bindings to collect GPU telemetry and exposes GPU metrics to Prometheus using an http endpoint ( /metrics ). DCGM-Exporter can be used either standalone or deployed as part of the NVIDIA GPU Operator"
-    visible: false
-
   bring_your_own_nvidia_gpu_operator:
     type: boolean
     title: "Use your own NVIDIA GPU Operator installation from existing cluster?"
@@ -1006,12 +1000,6 @@ variables:
     visible:
       and:
         - bring_your_own_nvidia_gpu_operator
-
-  keda_enabled:
-    type: boolean
-    title: "Install Kubernetes Event-driven Autoscaler (KEDA)?"
-    description: "KEDA is a tool that allows users to scale Kubernetes workloads based on events or metrics.  It is an Event Driven Autoscaler. With KEDA, you can drive the scaling of any container in Kubernetes based on the number of events needing to be processed"
-    visible: false
 
   bring_your_own_keda:
     type: boolean
@@ -1030,28 +1018,22 @@ variables:
       and:
         - bring_your_own_keda
 
-  kuberay_enabled:
+  bring_your_own_lws:
     type: boolean
-    title: "Install KubeRay?"
-    description: "Kuberay is an open-source Kubernetes operator that simplifies the deployment and management of Ray application on Kubernetes. Ray is a framework for scaling AI workloads which allows OCI AI Blueprints to do multi-node inferencing blueprints."
-    visible: false
-
-  bring_your_own_kuberay:
-    type: boolean
-    title: "Bring your own Kuberay installation from existing cluster?"
-    description: "Only use this if you already have Kuberay installed on your existing cluster."
+    title: "Bring your own Leader Worker Set (LWS) installation from existing cluster?"
+    description: "Only use this if you already have Leader Worker Set (LWS) installed on your existing cluster."
     visible:
       and:
         - bring_your_own_cluster
 
-  existent_kuberay_namespace:
+  existent_lws_namespace:
     type: string
-    title: "Existing Kuberay Namespace"
-    description: "Kubernetes namespace of existing Kuberay Installation."
+    title: "Existing Leader Worker Set (LWS) Namespace"
+    description: "Kubernetes namespace of existing Leader Worker Set (LWS) Installation."
     required: true
     visible:
       and:
-        - bring_your_own_kuberay
+        - bring_your_own_lws
   
   # Data Sharing
   share_data_with_corrino_team_enabled:
