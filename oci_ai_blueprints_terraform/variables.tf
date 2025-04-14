@@ -188,12 +188,6 @@ variable "bring_your_own_lws" {
   type    = bool
   default = false
 }
-
-variable "existent_kuberay_namespace" {
-  type    = string
-  default = ""
-}
-
 # -----------------------------------
 # Helm
 # -----------------------------------
