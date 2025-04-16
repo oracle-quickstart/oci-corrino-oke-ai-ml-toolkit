@@ -2,7 +2,7 @@
 
 ## Deploy Shared Node Pool
 
-Most large models require a large machine to handle inference / finetuning of the model, therefore we reccomend you use a bare-metal shape for the large model.
+Most large models require a large machine to handle inference / finetuning of the model, therefore we recommend you use a bare-metal shape for the large model.
 
 As a first step, for bare-metal shapes we recommend deploying a shared node pool due to the large recycle times. Shared node pools allow us to deploy blueprints onto and off of the node without destroying the node resources. To deploy an H100 shared node pool, here is the JSON for the /deployment API:
 
@@ -32,7 +32,7 @@ Bare metal shapes can take up to 30 minutes to come online. If you hit a shape v
 
 ## Download the model to object storage (optional, but recommended)
 
-For repeat deployments, large models take longer to download from huggingface than they do from object storage because of how we've implemented the download from object storage vs how the huggingface download works in code (it's single threaded).
+For repeat deployments, large models take longer to download from huggingface than they do from object storage because of how we've implemented the download from object storage vs how the huggingface download works in code.
 
 **NOTE**: For any step involving a closed model for huggingface (meta models as an example), you will need to use your own token to download the model. We cannot distribute huggingface tokens as it breaks the SLA.
 
@@ -40,43 +40,13 @@ Steps:
 
 1. Create a bucket in object storage in the same region as the shared node pool (decrease copy times). In our example, we will call this something similar to the name of the model we plan to use: `llama3290Bvisioninstruct`
 
-2. Once the bucket is finished creating, copy the model using the following blueprint, replacing `<hf_token>` with your actual huggingface token:
+2. Once the bucket is finished creating, deploy [this blueprint](../../sample_blueprints/download_closed_hf_model_to_object_storage.json) to copy `meta-llama/Llama-3.2-90B-Vision-Instruct` to the bucket you created.
+   - **Note**: The blueprint assumes you created the bucket using the name `llama3290Bvisioninstruct`. If you changed the name, you will also need to modify it in the example blueprint.
 
-```json
-{
-  "recipe_id": "example",
-  "recipe_mode": "job",
-  "deployment_name": "model_to_object",
-  "recipe_image_uri": "iad.ocir.io/iduyx1qnmway/corrino-devops-repository:hf_downloader_v1",
-  "recipe_container_command_args": [
-    "meta-llama/Llama-3.2-90B-Vision-Instruct",
-    "--local-dir",
-    "/models",
-    "--max-workers",
-    "4",
-    "--token",
-    "<hf_token>"
-  ],
-  "recipe_container_port": "5678",
-  "recipe_node_shape": "VM.Standard.E4.Flex",
-  "recipe_node_pool_size": 1,
-  "recipe_flex_shape_ocpu_count": 4,
-  "recipe_flex_shape_memory_size_in_gbs": 64,
-  "recipe_node_boot_volume_size_in_gbs": 500,
-  "recipe_ephemeral_storage_size": 450,
-  "output_object_storage": [
-    {
-      "bucket_name": "mymodels",
-      "mount_location": "/models",
-      "volume_size_in_gbs": 450
-    }
-  ]
-}
-```
 
 Once this copy is done, the model can now be used for blueprint deployments. You can track this in API deployment logs.
 
-## Deploy blueprint
+## Deploy the serving blueprint
 
 Once the copy is done, we can now deploy the blueprint using the model, except copying it from our object storage in the same region as our blueprint. Note the bucket name is the name of the bucket you created for your model:
 
@@ -144,3 +114,12 @@ Then, with the `request.json` in place, run:
 ```bash
  curl -L https://90bvisioninstruct.<base_endpoint>.nip.io/v1/chat/completions --header 'Content-Type: application/json' --data-binary @request.json
 ```
+
+## Complete
+
+At this point, you have successfully deployed 3 separate blueprints:
+
+1. Spin up a bare metal shared node pool to deploy blueprints onto
+2. Deployed a blueprint to copy a large model from huggingface to your own object storage
+3. Deployed the model to an inference serving endpoint on your shared node pool
+4. Tested the inference endpoint

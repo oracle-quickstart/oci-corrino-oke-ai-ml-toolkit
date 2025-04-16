@@ -8,6 +8,14 @@ OCI AI Blueprints will automatically create an ephemeral volume, mount it to the
 
 ### How To
 
+**Step 1 [OPTIONAL]**:
+
+If serving large models from huggingface, it is recommended to first download them to object storage because they are loaded much more quickly from object storage than via python applications which build in the ability to pull them. 
+
+To download a model from huggingface to object storage, check out [this doc](../common_workflows/working_with_large_models/README.md#download-the-model-to-object-storage-optional-but-recommended).
+
+**Step 2:**
+
 You can host your model via object storage by:
 
 1. Creating a PAR for the bucket that contains your model (`par` in the example below)
@@ -17,21 +25,14 @@ You can host your model via object storage by:
 
 Include the `input_object_storage` JSON object in your deployment payload (`/deployment` POST API):
 
-```
+```json
 "input_object_storage": [
-
 	{
-
 		"par": "https://objectstorage.us-ashburn-1.oraclecloud.com/p/IFknABDAjiiF5LATogUbRCcVQ9KL6aFUC1j-P5NSeUcaB2lntXLaR935rxa-E-u1/n/iduyx1qnmway/b/corrino_hf_oss_models/o/",
-
 		"mount_location": "/models",
-
 		"volume_size_in_gbs": 500,
-
 		"include": ["NousResearch/Meta-Llama-3.1-8B-Instruct"]
-
 	}
-
 ],
 ```
 
@@ -45,6 +46,6 @@ Notes:
 - `include` field inside the `input_object_storage` object inside your payload (shown above) is used to specify which folder inside the bucket to download to the ephemeral volume (that the container has access to via the mount_location directory
 - The entire bucket will be dumped into the ephermal volume / container mount directory if include is not provided to specify the folder inside the folder to download
 
-## Option 2: File Storage Service (FSS)
+## Option 2: File Storage Service (FSS) - Full doc coming soon!
 
 [FSS Details](../fss/README.md)

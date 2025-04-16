@@ -1,0 +1,29 @@
+{
+    "recipe_id": "example",
+    "recipe_mode": "job",
+    "deployment_name": "model_to_object",
+    "recipe_image_uri": "iad.ocir.io/iduyx1qnmway/corrino-devops-repository:hf_downloader_v1",
+    "recipe_container_command_args": [
+      "meta-llama/Llama-3.2-90B-Vision-Instruct",
+      "--local-dir",
+      "/models",
+      "--max-workers",
+      "4",
+      "--token",
+      "<hf_token>"
+    ],
+    "recipe_container_port": "5678",
+    "recipe_node_shape": "VM.Standard.E4.Flex",
+    "recipe_node_pool_size": 1,
+    "recipe_flex_shape_ocpu_count": 4,
+    "recipe_flex_shape_memory_size_in_gbs": 64,
+    "recipe_node_boot_volume_size_in_gbs": 500,
+    "recipe_ephemeral_storage_size": 450,
+    "output_object_storage": [
+      {
+        "bucket_name": "llama3290Bvisioninstruct",
+        "mount_location": "/models",
+        "volume_size_in_gbs": 450
+      }
+    ]
+  }
